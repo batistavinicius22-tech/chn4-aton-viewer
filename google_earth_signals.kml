@@ -1,0 +1,3051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>BALIZAMENTO CHN-4</name>
+    <description/>
+    <Style id="icon-1899-DB4436-labelson">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+    </Style>
+    <Folder>
+      <name>Auxílios CHN4, CDP e COMPORTE.ods</name>
+      <Placemark>
+        <name>PEDRAS DA BARRA</name>
+        <description><![CDATA[NRORD: PA-05<br>TIPO: BZ<br>LATITUDE, LONGITUDE: -1.3713333, -48.4905<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-05</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3713333, -48.4905</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4905,-1.3713333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>VAL-DE-CÃES</name>
+        <description><![CDATA[NRORD: PA-10<br>TIPO: BZ<br>LATITUDE, LONGITUDE: 01.389500000S, 048.493166700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-10</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.389500000S, 048.493166700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4931667,-1.3895,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA DO MAGUARI</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5Q1itYVd0D8mXLEsiEb1PsiOPWPGQ0Wx9bota-J-yc-oJP98LJlArTcBJuGOibU7THbeFZ0xQJbY-re1uIi-lUA9fwUz_e9GW1zwhWw0XAzt6FDdurshE03dUj6L9voy6cexWtFR4n1_iR0hEQhilXkkR2R1Mi2XbGFtcLE2vF7FjmSYZIpC8XSsb9UdSrc35Ci0fz8zHgGynX4jrsCLelJ01bwpk3y70gXs8iXjWyslkNbpE-ZAGyQpI?fife=s16383" height="200" width="auto" /><br><br>NRORD: PA-20<br>TIPO: BC<br>LATITUDE, LONGITUDE: 2°46'31.8"S 55°02'13.8"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDO<br>MENSAGEM DE ALTERAÇÃO: R-251343Z/JUN/26 CFAREM]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-20</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BC</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[2°46'31.8"S 55°02'13.8"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>R-251343Z/JUN/26 CFAREM</value>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5Q1itYVd0D8mXLEsiEb1PsiOPWPGQ0Wx9bota-J-yc-oJP98LJlArTcBJuGOibU7THbeFZ0xQJbY-re1uIi-lUA9fwUz_e9GW1zwhWw0XAzt6FDdurshE03dUj6L9voy6cexWtFR4n1_iR0hEQhilXkkR2R1Mi2XbGFtcLE2vF7FjmSYZIpC8XSsb9UdSrc35Ci0fz8zHgGynX4jrsCLelJ01bwpk3y70gXs8iXjWyslkNbpE-ZAGyQpI?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.0371666666667,-2.7755,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SURUCUÁ NR 01</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6ktTH9NwAxpZCtbC6gcVmh799pk5_3B2UolGqS6eHQcdJFaMzn0dDd4fQ5u5S86SOsb2Hon7PlbFa3dstbbQlndBzY9uF_nevt6lRYE9TUccTT3HhUPOjyeB1eNi0j-IvFGuS--9xDj21enD_sCDeGB0-yqfrQQLQdcaPdteIKxueaIZqp3opfFAbLwLXmdIp0HDOkIBqASa3FdS-CsTSD6_3Z6s_gyDgIh6yBbUk6YNP72pTlOG76kz4?fife=s16383" height="200" width="auto" /><br><br>NRORD: PA-25<br>TIPO: BZ<br>LATITUDE, LONGITUDE: 2°53'12.6"S 55°09'48.0"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: R-251343Z/JUN/26 CFAREM]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-25</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[2°53'12.6"S 55°09'48.0"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>R-251343Z/JUN/26 CFAREM</value>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6ktTH9NwAxpZCtbC6gcVmh799pk5_3B2UolGqS6eHQcdJFaMzn0dDd4fQ5u5S86SOsb2Hon7PlbFa3dstbbQlndBzY9uF_nevt6lRYE9TUccTT3HhUPOjyeB1eNi0j-IvFGuS--9xDj21enD_sCDeGB0-yqfrQQLQdcaPdteIKxueaIZqp3opfFAbLwLXmdIp0HDOkIBqASa3FdS-CsTSD6_3Z6s_gyDgIh6yBbUk6YNP72pTlOG76kz4?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.1633333333333,-2.88683333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SÃO TOMÉ NR 01</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6mfpEhhx_dTElQM7jAu0mDFkZ-8fn1GGgN66lJG18wfvZ1t800IgbkkvbsZmE_OXbeYWDIL-DXj5WoERR5vZLlKET73AxvUpIqM0U7HUZrkyr5qEUp0ur-DJ3KOCbsJ9ZesB1-bScjmPphJEJfwdKJJa1iZUQE4ltGgWFL2vk53QASRRFOyXE-nObhHdJ8iV7fJTVY6vhn4Bm8R244ZZRIMI0JpNVkJIEWcjOeE6hLI52Up89e5eYztS4?fife=s16383" height="200" width="auto" /><br><br>NRORD: PA-35<br>TIPO: BZ<br>LATITUDE, LONGITUDE: -3.0730731, -55.2139859<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-35</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-3.0730731, -55.2139859</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6mfpEhhx_dTElQM7jAu0mDFkZ-8fn1GGgN66lJG18wfvZ1t800IgbkkvbsZmE_OXbeYWDIL-DXj5WoERR5vZLlKET73AxvUpIqM0U7HUZrkyr5qEUp0ur-DJ3KOCbsJ9ZesB1-bScjmPphJEJfwdKJJa1iZUQE4ltGgWFL2vk53QASRRFOyXE-nObhHdJ8iV7fJTVY6vhn4Bm8R244ZZRIMI0JpNVkJIEWcjOeE6hLI52Up89e5eYztS4?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.2139859,-3.0730731,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRA DOS PATOS NR 01</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4mmGXQFlCD-l7JnVanvd7Yu9RupaKn4sOoAoKapv1o9uZ48xR2IrXeYee9zcm4k7UMVVO5kQrM77ZipzM9yTKaieBq-4Bkg0rfKF_tVsMw3kxzvHj4J1Mutx-0S5xWLG9yhkUY7KUsWzopSgfpTZXaI9E5gmtt2fWzWbTAXHBIYGH1Q4c7IVpFQtsG9v4T8nacoBTQTRYP9_HwrjBcDxqlIzfUVNXHUW7YPg2i4AWfN19vSmH2BOLy4Lg?fife=s16383" height="200" width="auto" /><br><br>NRORD: PA-50<br>TIPO: BZ<br>LATITUDE, LONGITUDE: -3.2480752, -55.2564877<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: R-251343Z/JUN/26 CFAREM]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-50</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-3.2480752, -55.2564877</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>R-251343Z/JUN/26 CFAREM</value>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR4mmGXQFlCD-l7JnVanvd7Yu9RupaKn4sOoAoKapv1o9uZ48xR2IrXeYee9zcm4k7UMVVO5kQrM77ZipzM9yTKaieBq-4Bkg0rfKF_tVsMw3kxzvHj4J1Mutx-0S5xWLG9yhkUY7KUsWzopSgfpTZXaI9E5gmtt2fWzWbTAXHBIYGH1Q4c7IVpFQtsG9v4T8nacoBTQTRYP9_HwrjBcDxqlIzfUVNXHUW7YPg2i4AWfN19vSmH2BOLy4Lg?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.2564877,-3.2480752,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ NR 01</name>
+        <description><![CDATA[NRORD: 32<br>TIPO: BL<br>LATITUDE, LONGITUDE: 1.0733333, -49.6491667<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-011533Z/JUL/21 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>32</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>1.0733333, -49.6491667</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-011533Z/JUL/21 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.6491667,1.0733333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ NR 02 </name>
+        <description><![CDATA[NRORD: 40<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.061666700N, 049.635000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-011533Z/JUL/21 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>40</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.061666700N, 049.635000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-011533Z/JUL/21 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.635,1.0616667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ NR 04</name>
+        <description><![CDATA[NRORD: 44<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.998000000N, 049.707166700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-011533Z/JUL/21 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>44</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.998000000N, 049.707166700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-011533Z/JUL/21 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.7071667,0.998,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ NR 06 </name>
+        <description><![CDATA[NRORD: 56<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.906666700N, 049.792333300W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-011533Z/JUL/21 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>56</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.906666700N, 049.792333300W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-011533Z/JUL/21 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.7923333,0.9066667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ NR 08</name>
+        <description><![CDATA[NRORD: 58<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.880000000N, 049.841000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-182013Z/DEZ/23 CHNNOR ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>58</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.880000000N, 049.841000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-182013Z/DEZ/23 CHNNOR </value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.841,0.88,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CAROLINA</name>
+        <description><![CDATA[NRORD: 80<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.444470900N, 050.463298500W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: AVARIADA<br>MENSAGEM DE ALTERAÇÃO: P-121903Z/MAR/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>80</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.444470900N, 050.463298500W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>AVARIADA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-121903Z/MAR/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.4632985,0.4444709,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CAÇÃO GRANDE</name>
+        <description><![CDATA[NRORD: 90<br>TIPO: BL<br>LATITUDE, LONGITUDE: 0°11'00.0"S 50°42'00.0"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>90</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[0°11'00.0"S 50°42'00.0"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.7,-0.183333333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FUGITIVO</name>
+        <description><![CDATA[NRORD: 100<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.117513900N, 050.941666700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-121903Z/MAR/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>100</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.117513900N, 050.941666700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-121903Z/MAR/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.9416667,0.1175139,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CHAGAS</name>
+        <description><![CDATA[NRORD: 120<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.010500000S, 051.028000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: AVARIADA<br>MENSAGEM DE ALTERAÇÃO: P-121903Z/MAR/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>120</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.010500000S, 051.028000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>AVARIADA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-121903Z/MAR/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -51.028,-0.0105,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CASCALHEIRA</name>
+        <description><![CDATA[NRORD: 122<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.046666700S, 051.057666700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: AVARIADA<br>MENSAGEM DE ALTERAÇÃO: P-121903Z/MAR/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>122</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.046666700S, 051.057666700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>AVARIADA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-121903Z/MAR/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -51.0576667,-0.0466667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO SALVADOR</name>
+        <description><![CDATA[NRORD: 140<br>TIPO: BL<br>LATITUDE, LONGITUDE: 00.189500000S, 051.257500000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>140</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.189500000S, 051.257500000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -51.2575,-0.1895,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PASSAGEM DE MAZAGÃO</name>
+        <description><![CDATA[NRORD: 141<br>TIPO: BL<br>LATITUDE, LONGITUDE: 0°12'28.8"S 51°17'09.6"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-131813Z/MAR/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>141</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[0°12'28.8"S 51°17'09.6"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-131813Z/MAR/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -51.286,-0.208,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ILHA CAMALEÃO</name>
+        <description><![CDATA[NRORD: 142<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.152228200S, 048.910812000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADO<br>MENSAGEM DE ALTERAÇÃO: P-082233Z/FEV/24 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>142</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.152228200S, 048.910812000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-082233Z/FEV/24 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.910812,-0.1522282,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MACHADINHO</name>
+        <description><![CDATA[NRORD: 144<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.180226900S, 048.765842000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADO<br>MENSAGEM DE ALTERAÇÃO: P-082233Z/FEV/24 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>144</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.180226900S, 048.765842000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-082233Z/FEV/24 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.765842,-0.1802269,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SIMÃO GRANDE</name>
+        <description><![CDATA[NRORD: 148<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.256833300S, 048.403166700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>148</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.256833300S, 048.403166700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4031667,-0.2568333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 02</name>
+        <description><![CDATA[NRORD: 150<br>TIPO: BL<br>LATITUDE, LONGITUDE: 0° 24' 18" S 47° 50' 3.5999" W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADO<br>MENSAGEM DE ALTERAÇÃO: P-101910/JUN/25 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>150</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[0° 24' 18" S 47° 50' 3.5999" W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-101910/JUN/25 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.8343333055556,-0.405,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 01</name>
+        <description><![CDATA[NRORD: 151<br>TIPO: BL<br>LATITUDE, LONGITUDE: 0° 24' 31.7999" S 47° 55' 9.5999" W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>151</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[0° 24' 31.7999" S 47° 55' 9.5999" W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.9193333055556,-0.408833305555556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 03</name>
+        <description><![CDATA[NRORD: 152<br>TIPO: BL<br>LATITUDE, LONGITUDE: -0.455, -47.9651667<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>152</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.455, -47.9651667</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.9651667,-0.455,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 04</name>
+        <description><![CDATA[NRORD: 153<br>TIPO: BL<br>LATITUDE, LONGITUDE: -0.4216667, -47.8876667<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>153</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.4216667, -47.8876667</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.8876667,-0.4216667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 06</name>
+        <description><![CDATA[NRORD: 153.2<br>TIPO: BL<br>LATITUDE, LONGITUDE: -0.4288333, -47.9168333<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>153.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.4288333, -47.9168333</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.9168333,-0.4288333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ESPADARTE NR 08</name>
+        <description><![CDATA[NRORD: 153.4<br>TIPO: BL<br>LATITUDE, LONGITUDE: -0.4676667, -47.9543333<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>153.4</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.4676667, -47.9543333</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.9543333,-0.4676667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA DA TIJOCA </name>
+        <description><![CDATA[NRORD: 156<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 0°33'26.4"S 47°53'51.0"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: Fora da posição de projeto<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>156</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[0°33'26.4"S 47°53'51.0"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>Fora da posição de projeto</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.8975,-0.557333333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>COROA DAS GAIVOTAS</name>
+        <description><![CDATA[NRORD: 158<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -0.574561, -48.0395649<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: P-011614Z/SET/15 CLSAOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>158</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.574561, -48.0395649</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-011614Z/SET/15 CLSAOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.0395649,-0.574561,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>TAIPU</name>
+        <description><![CDATA[NRORD: 160<br>TIPO: FAR<br>LATITUDE, LONGITUDE: -0.6617541, -48.0558222<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>160</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.6617541, -48.0558222</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.0558222,-0.6617541,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA MARIA TEREZA</name>
+        <description><![CDATA[NRORD: 164<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.776014200S, 048.152387200W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>164</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.776014200S, 048.152387200W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.1523872,-0.7760142,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SOURE</name>
+        <description><![CDATA[NRORD: 167<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.742088900S, 048.506228000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>167</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.742088900S, 048.506228000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.506228,-0.7420889,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SALVATERRA</name>
+        <description><![CDATA[NRORD: 168<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 00.752720300S, 048.508067800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>168</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.752720300S, 048.508067800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5080678,-0.7527203,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>JOANES</name>
+        <description><![CDATA[NRORD: 172<br>TIPO: FAR<br>LATITUDE, LONGITUDE: -0.8811422, -48.5080925<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>172</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.8811422, -48.5080925</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5080925,-0.8811422,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>COLARES</name>
+        <description><![CDATA[NRORD: 176<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -0.918000, -48.291833<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>176</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.918000, -48.291833</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.291833,-0.918,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>COROA GRANDE</name>
+        <description><![CDATA[NRORD: 180<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.027973000S, 048.595912000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADO<br>MENSAGEM DE ALTERAÇÃO: P151950Z/MAI/2025 NBTELO]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>180</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.027973000S, 048.595912000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P151950Z/MAI/2025 NBTELO</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.595912,-1.027973,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CHAPÉU VIRADO</name>
+        <description><![CDATA[NRORD: 184<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 01.135333300S, 048.469000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>184</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.135333300S, 048.469000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.469,-1.1353333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>TATUOCA</name>
+        <description><![CDATA[NRORD: 188<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.1869673, -48.491683<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>188</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.1869673, -48.491683</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.491683,-1.1869673,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>TATUOCA</name>
+        <description><![CDATA[NRORD: 192<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.199576500S, 048.505642100W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>192</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.199576500S, 048.505642100W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5056421,-1.1995765,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FORTE DA BARRA</name>
+        <description><![CDATA[NRORD: 208<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.377500000S, 048.492666700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>208</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.377500000S, 048.492666700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4926667,-1.3775,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ILHA DAS ONÇAS</name>
+        <description><![CDATA[NRORD: 214<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.3858333, -48.53<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>214</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3858333, -48.53</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.53,-1.3858333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ARSENAL</name>
+        <description><![CDATA[NRORD: 268<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.4707089, -48.5114929<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: RETIRADA TEMPORARIAMENTE <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>268</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4707089, -48.5114929</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>RETIRADA TEMPORARIAMENTE </value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5114929,-1.4707089,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UNA</name>
+        <description><![CDATA[NRORD: PA-15<br>TIPO: BZ<br>LATITUDE, LONGITUDE: 01.420000000S, 048.494000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>PA-15</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BZ</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.420000000S, 048.494000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.494,-1.42,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BUJARU</name>
+        <description><![CDATA[NRORD: 270.6<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.548666S, 48.13516666W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>270.6</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.548666S, 48.13516666W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.13516666,-1.548666,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ARARI</name>
+        <description><![CDATA[NRORD: 284<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.192044800S, 048.742768500W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>284</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.192044800S, 048.742768500W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.7427685,-1.1920448,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>COTIJUBA</name>
+        <description><![CDATA[NRORD: 288<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.266538000S, 048.563376700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>288</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.266538000S, 048.563376700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5633767,-1.266538,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CARNAPIJÓ</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6lSizf7v79LchVl5LHDhHFwZ8zWe0cIvN7T54ST9f2WJTZGAN0xX-6av6c06hXYWaSoJaOb6Zw-XmmUwYeRN7f0_hqyaB7XpZqScD9hBrurtWKtYQODzcgJbQXVDWEu8Y1EVJ61NVDbRtIHYAV2SvjajkFxqPYul4oMtunX6mxAExF5LVwC9NJg_qMSUxGmomwYHBjfG9GkpWq83F1eu4rpFNuf3ZttiXcFGn1csgztWrNummQp7rIo_Y?fife=s16383" height="200" width="auto" /><br><br>NRORD: 292<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -1.3638333, -48.6466667<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>292</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3638333, -48.6466667</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6lSizf7v79LchVl5LHDhHFwZ8zWe0cIvN7T54ST9f2WJTZGAN0xX-6av6c06hXYWaSoJaOb6Zw-XmmUwYeRN7f0_hqyaB7XpZqScD9hBrurtWKtYQODzcgJbQXVDWEu8Y1EVJ61NVDbRtIHYAV2SvjajkFxqPYul4oMtunX6mxAExF5LVwC9NJg_qMSUxGmomwYHBjfG9GkpWq83F1eu4rpFNuf3ZttiXcFGn1csgztWrNummQp7rIo_Y?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.6466667,-1.3638333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRA DO MACHADINHO</name>
+        <description><![CDATA[NRORD: 296<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.376666700S, 048.642833300W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>296</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.376666700S, 048.642833300W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.6428333,-1.3766667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ARROZAL</name>
+        <description><![CDATA[NRORD: 300<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.458961800S, 048.703093000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>300</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.458961800S, 048.703093000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.703093,-1.4589618,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BOCA DO FURO DO ARROZAL</name>
+        <description><![CDATA[NRORD: 302.2<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.464500000S, 048.709500000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDO<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>302.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.464500000S, 048.709500000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.7095,-1.4645,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRA DA MANTEIGA</name>
+        <description><![CDATA[NRORD: 304<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.474528700S, 048.709310100W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>304</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.474528700S, 048.709310100W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.7093101,-1.4745287,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRA DO ARROZAL</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6zq6p5AnPvSTwqCr_NZZvoOJUWOk39yjHA2WojiBpumQMn68JhEIkQIMQPceSFfMQV2PuyH8C2s3MmG3Lkh9-JTwk_ZMsygfjkKVDdimeYsWcSx32Ek-PY_VT1ZGLpE15h5edlv7AbSQibXE3ef2nG56u5wc0bF3g1L5HLK5M7h1gRBT1CVUSoy-7L29lJjXVcXX4f9HovoQ8oW5qGMuJg9qrK2gZd-_AJ0q9ylJwdpzYqBFBH9DjPSoM?fife=s16383" height="200" width="auto" /><br><br>NRORD: 306<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.4921667, -48.6508333<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>306</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4921667, -48.6508333</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6zq6p5AnPvSTwqCr_NZZvoOJUWOk39yjHA2WojiBpumQMn68JhEIkQIMQPceSFfMQV2PuyH8C2s3MmG3Lkh9-JTwk_ZMsygfjkKVDdimeYsWcSx32Ek-PY_VT1ZGLpE15h5edlv7AbSQibXE3ef2nG56u5wc0bF3g1L5HLK5M7h1gRBT1CVUSoy-7L29lJjXVcXX4f9HovoQ8oW5qGMuJg9qrK2gZd-_AJ0q9ylJwdpzYqBFBH9DjPSoM?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.6508333,-1.4921667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ITAGUARÍ</name>
+        <description><![CDATA[NRORD: 308<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.425641500S, 048.817536800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>308</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.425641500S, 048.817536800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.8175368,-1.4256415,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CAPIM</name>
+        <description><![CDATA[NRORD: 312<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.555166667S, 048.864833333W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>312</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.555166667S, 048.864833333W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.864833333,-1.555166667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SIRIPANA</name>
+        <description><![CDATA[NRORD: 316<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.652500000S, 048.891166700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>316</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.652500000S, 048.891166700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.8911667,-1.6525,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ATUÁ</name>
+        <description><![CDATA[NRORD: 318<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.534166700S, 049.007000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>318</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.534166700S, 049.007000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.007,-1.5341667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MARAPATÁ</name>
+        <description><![CDATA[NRORD: 319<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.620000000S, 049.052000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>319</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.620000000S, 049.052000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.052,-1.62,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>TUCUMANDUBA</name>
+        <description><![CDATA[NRORD: 319.2<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.713488000S, 049.044350800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>319.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.713488000S, 049.044350800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.0443508,-1.713488,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PIRAMENHA</name>
+        <description><![CDATA[NRORD: 319.3<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.701666700S, 049.108666700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDA<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>319.3</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.701666700S, 049.108666700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.1086667,-1.7016667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO DO OTELO</name>
+        <description><![CDATA[NRORD: 320<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.6155, -49.1086667<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADA<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>320</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.6155, -49.1086667</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADA</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.1086667,-1.6155,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MANDIÍ</name>
+        <description><![CDATA[NRORD: 324<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 01.615986200S, 049.147934200W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>324</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.615986200S, 049.147934200W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.1479342,-1.6159862,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MANDIÍ NR 01</name>
+        <description><![CDATA[NRORD: 328<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.631666700S, 049.162833300W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>328</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.631666700S, 049.162833300W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.1628333,-1.6316667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>YACUMANA</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7I715aD8Yw5u32_kYg9h53k6SlglSdw1zFoemYBHKzjN-7T3aQzVFwTVRJXACo0Gx3rR7BxYirPf8A2-Pl9wbLNstldyva-SO5tO-RO_LTKqbtmFzu5oeSOpQRpDbe6tZ5wFvztDnkQ80v7KGELw_p7TMBklkJcoAC-iH4C_8-q1-OR6ZlBXaPO8anYEkn1X5nTWMq6exdm_FNJHf08XqG5PucYPW-xoG_V1Jatr7YdpOS6uh6A_VxAAw?fife=s16383" height="200" width="auto" /><br><br>NRORD: 345<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -1.6497973, -49.262996<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: Última inspeção MAR26]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>345</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.6497973, -49.262996</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>Última inspeção MAR26</value>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR7I715aD8Yw5u32_kYg9h53k6SlglSdw1zFoemYBHKzjN-7T3aQzVFwTVRJXACo0Gx3rR7BxYirPf8A2-Pl9wbLNstldyva-SO5tO-RO_LTKqbtmFzu5oeSOpQRpDbe6tZ5wFvztDnkQ80v7KGELw_p7TMBklkJcoAC-iH4C_8-q1-OR6ZlBXaPO8anYEkn1X5nTWMq6exdm_FNJHf08XqG5PucYPW-xoG_V1Jatr7YdpOS6uh6A_VxAAw?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.262996,-1.6497973,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA DO FRECHAL</name>
+        <description><![CDATA[NRORD: 345.1<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.723500000S, 049.278000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>345.1</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.723500000S, 049.278000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.278,-1.7235,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO FRECHAL</name>
+        <description><![CDATA[NRORD: 346<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.729000000S, 049.234166700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>346</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.729000000S, 049.234166700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.2341667,-1.729,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO JUPATITUBA SUESTE</name>
+        <description><![CDATA[NRORD: 347<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.725000000S, 049.172000000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>347</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.725000000S, 049.172000000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.172,-1.725,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO JUPATITUBA SUDOESTE</name>
+        <description><![CDATA[NRORD: 347.1<br>TIPO: BL<br>LATITUDE, LONGITUDE: -1.725, -49.2253333<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>347.1</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.725, -49.2253333</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.2253333,-1.725,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>JARARAQUINHA</name>
+        <description><![CDATA[NRORD: 350<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.689666700S, 049.405833300W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>350</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.689666700S, 049.405833300W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.4058333,-1.6896667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRAS SANTO ANTÔNIO</name>
+        <description><![CDATA[NRORD: 351<br>TIPO: BL<br>LATITUDE, LONGITUDE: 1° 44' 53.9999" S 49° 29' 13.2" W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: RETIRADA TEMPORARIAMENTE<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>351</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[1° 44' 53.9999" S 49° 29' 13.2" W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>RETIRADA TEMPORARIAMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.487,-1.74833330555556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRAS CURRALINHO</name>
+        <description><![CDATA[NRORD: 353<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.825057200S, 049.797104800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>353</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.825057200S, 049.797104800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.7971048,-1.8250572,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MUCURAS</name>
+        <description><![CDATA[NRORD: 354<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -1.8411002, -49.8283544<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO, inspeção em MAR/26<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>354</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.8411002, -49.8283544</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO, inspeção em MAR/26</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.8283544,-1.8411002,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO ILHA NOVA</name>
+        <description><![CDATA[NRORD: 355<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.825057200S, 049.878774800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>355</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.825057200S, 049.878774800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.8787748,-1.8250572,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CAMALEÃO</name>
+        <description><![CDATA[NRORD: 356<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.819677800S, 049.946488900W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>356</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.819677800S, 049.946488900W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -49.9464889,-1.8196778,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA DA TAPERA</name>
+        <description><![CDATA[NRORD: 357.3<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.800056900S, 050.007113400W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>357.3</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.800056900S, 050.007113400W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.0071134,-1.8000569,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ITABOCA</name>
+        <description><![CDATA[NRORD: 358<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.795056800S, 050.030447700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>358</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.795056800S, 050.030447700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.0304477,-1.7950568,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ILHA DAS ARARAS</name>
+        <description><![CDATA[NRORD: 360<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.810911400S, 050.148977000W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>360</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.810911400S, 050.148977000W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.148977,-1.8109114,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO OIÁ</name>
+        <description><![CDATA[NRORD: 361<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.822135900S, 050.184613100W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>361</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.822135900S, 050.184613100W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.1846131,-1.8221359,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO SAPATEIRO</name>
+        <description><![CDATA[NRORD: 362<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.801722200S, 050.250456700W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>362</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.801722200S, 050.250456700W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.2504567,-1.8017222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO SIRIRI</name>
+        <description><![CDATA[NRORD: 372<br>TIPO: BL<br>LATITUDE, LONGITUDE: 01.802890200S, 050.292125100W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>372</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.802890200S, 050.292125100W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.2921251,-1.8028902,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BOIUÇU</name>
+        <description><![CDATA[NRORD: 380<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 01.808225800S, 050.307518500W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>380</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>01.808225800S, 050.307518500W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.3075185,-1.8082258,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BANCO VIRA-SAIA</name>
+        <description><![CDATA[NRORD: 384<br>TIPO: BL<br>LATITUDE, LONGITUDE: 1° 43' 23.9999" S 50° 33' 54" W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>384</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[1° 43' 23.9999" S 50° 33' 54" W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -50.565,-1.72333330555556,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>FLORESTA</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR59lBL0ayp7hmWqHnwmlNNsCsiAKNqA-XEFiW0VQ2hvv69yFqpvjY9Eao886AO-b1SFQQlDLpi7PYN-oOcOFXzxKeeEEXN8396bxkt_FwGyVxq45cJyIi-PBe7mNWhtc3pgBkBJXMGnlQDsQ8kh58hy50dOv-BZ62Zh1_Y5nhNiX1oD0e-BSkismExr_4WfDlBr3Ji5Zj0H3zqqD05f_ajodFylpbron9eWTVSqW71t8xQefuVqIzwOzVU?fife=s16383" height="200" width="auto" /><br><br>NRORD: 388<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 1°10'36.0"S 51°13'41.4"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>388</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[1°10'36.0"S 51°13'41.4"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR59lBL0ayp7hmWqHnwmlNNsCsiAKNqA-XEFiW0VQ2hvv69yFqpvjY9Eao886AO-b1SFQQlDLpi7PYN-oOcOFXzxKeeEEXN8396bxkt_FwGyVxq45cJyIi-PBe7mNWhtc3pgBkBJXMGnlQDsQ8kh58hy50dOv-BZ62Zh1_Y5nhNiX1oD0e-BSkismExr_4WfDlBr3Ji5Zj0H3zqqD05f_ajodFylpbron9eWTVSqW71t8xQefuVqIzwOzVU?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -51.2281666666667,-1.17666666666667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>MONTE ALEGRE</name>
+        <description><![CDATA[NRORD: 394<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 02.013926700S, 054.034986800W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>394</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>02.013926700S, 054.034986800W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -54.0349868,-2.0139267,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÁ</name>
+        <description><![CDATA[NRORD: 394.1<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 02.304997300S, 054.112536200W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>394.1</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>02.304997300S, 054.112536200W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -54.1125362,-2.3049973,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SURUCUÁ NR 02</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5X_iXkn2K-SWtR99E9L9jBnKGzd68q0Gi-qLa2zy0iP5kQspxzZpMIwqadZDixalCrWlnfswlYQgOqiS3QVIuqYAoK3NwRyP6iKU35Mxy1PdUg12sXw4fSc7tsWlrp2PY1TqqgU-FAlATX3OYZ4QnAZ7K3vQPL-7Strae0lJmJtPmDpCVRPe8UZVrwCD3rZBxDSh10lTINuy1Awwmr7ABJTZr0pRV-qA0lS39fVgLQqSjhMqCkobHkyiM?fife=s16383" height="200" width="auto" /><br><br>NRORD: 395.17<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 2°53'42.6"S 55°09'30.0"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: P-121704Z/JUN/15 SINNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>395.17</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[2°53'42.6"S 55°09'30.0"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-121704Z/JUN/15 SINNOR</value>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5X_iXkn2K-SWtR99E9L9jBnKGzd68q0Gi-qLa2zy0iP5kQspxzZpMIwqadZDixalCrWlnfswlYQgOqiS3QVIuqYAoK3NwRyP6iKU35Mxy1PdUg12sXw4fSc7tsWlrp2PY1TqqgU-FAlATX3OYZ4QnAZ7K3vQPL-7Strae0lJmJtPmDpCVRPe8UZVrwCD3rZBxDSh10lTINuy1Awwmr7ABJTZr0pRV-qA0lS39fVgLQqSjhMqCkobHkyiM?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.1583333333333,-2.89516666666667,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PEDRAS DE SÃO TOMÉ</name>
+        <description><![CDATA[NRORD: 395.2<br>TIPO: BL<br>LATITUDE, LONGITUDE: 3°03'12.6"S 55°12'16.2"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESAPARECIDO<br>MENSAGEM DE ALTERAÇÃO: P-252208Z/MAR/26 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>395.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>BL</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[3°03'12.6"S 55°12'16.2"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESAPARECIDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-252208Z/MAR/26 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.2045,-3.0535,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SÃO TOMÉ NR 02</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5yN_HAispNvuV1-aNgSIREyK-dKQB1QhVIoTuZFlZAANt603o0eFHD7Mg8LbMM3J9HghlUPIFgvNHAfQ4S7f55UcasbuIT0PpE3Vl1UAvvmrmUXrFaPPla1af7CBxz5_mrcGhYv6Z3miEtInKaPBBG4IHfcmdyK_y0lQpGZ9Y_LfOCeKmlDCfPt3nIkCHfJlxQe1K5ayCuDgNyd6SrbxYi7H-YwYf0Z4GOILw7ypmUik_5DpKHuBJ6LqM?fife=s16383" height="200" width="auto" /><br><br>NRORD: 395.3<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -3.0617366, -55.2019917<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>395.3</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-3.0617366, -55.2019917</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR5yN_HAispNvuV1-aNgSIREyK-dKQB1QhVIoTuZFlZAANt603o0eFHD7Mg8LbMM3J9HghlUPIFgvNHAfQ4S7f55UcasbuIT0PpE3Vl1UAvvmrmUXrFaPPla1af7CBxz5_mrcGhYv6Z3miEtInKaPBBG4IHfcmdyK_y0lQpGZ9Y_LfOCeKmlDCfPt3nIkCHfJlxQe1K5ayCuDgNyd6SrbxYi7H-YwYf0Z4GOILw7ypmUik_5DpKHuBJ6LqM?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.2019917,-3.0617366,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ILHA DO PATACHO</name>
+        <description><![CDATA[NRORD: 400<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 2°11'03.6"S 55°02'22.8"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: R-042032Z/ABR/25 CFAREM]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>400</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[2°11'03.6"S 55°02'22.8"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>R-042032Z/ABR/25 CFAREM</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -55.0396666666667,-2.18433333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CACHOERI</name>
+        <description><![CDATA[NRORD: 406<br>TIPO: FTE<br>LATITUDE, LONGITUDE: 1°56'12.6"S 56°04'30.6"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>406</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[1°56'12.6"S 56°04'30.6"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -56.0751666666667,-1.93683333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CURUÇÁ</name>
+        <description><![CDATA[NRORD: 472<br>TIPO: FAR<br>LATITUDE, LONGITUDE: -0.5646428, -47.766434<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: APAGADO<br><br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>472</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.5646428, -47.766434</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>APAGADO
+</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.766434,-0.5646428,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>ALGODOAL</name>
+        <description><![CDATA[NRORD: 476<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.580170000S, 047.584521300W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>476</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.580170000S, 047.584521300W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.5845213,-0.58017,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>SALINÓPOLIS</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6fGdibmC8bxzjIvrRjzYTLPEIeF6YQt4M9kFrWUpSyNVpBR4tVz8173sirQfeEphjbdngGSO5To3rSOO_o1aDgYJsQdlKy2FjqeRM05ppBOpdRGPOHhECqe2TEFXPqt0URdjbQGeM0VkhM2LoJiUwZp0PCEjE6FoOPC37D_HhmW3XwFg09s8rDahmbE5Vfuj4asYLWgFckkSnm8GYTmha00erTrdgLANrxLYQ8t3wW4JQYpwUz2H3_EdE?fife=s16383" height="200" width="auto" /><br><br>NRORD: 480<br>TIPO: FG<br>LATITUDE, LONGITUDE: -0.6154497, -47.3564638<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>480</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FG</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.6154497, -47.3564638</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+          <Data name="gx_media_links">
+            <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6fGdibmC8bxzjIvrRjzYTLPEIeF6YQt4M9kFrWUpSyNVpBR4tVz8173sirQfeEphjbdngGSO5To3rSOO_o1aDgYJsQdlKy2FjqeRM05ppBOpdRGPOHhECqe2TEFXPqt0URdjbQGeM0VkhM2LoJiUwZp0PCEjE6FoOPC37D_HhmW3XwFg09s8rDahmbE5Vfuj4asYLWgFckkSnm8GYTmha00erTrdgLANrxLYQ8t3wW4JQYpwUz2H3_EdE?fife=s16383</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -47.3564638,-0.6154497,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>CAETÉ</name>
+        <description><![CDATA[NRORD: 484<br>TIPO: FAR<br>LATITUDE, LONGITUDE: -0.8169759, -46.6143068<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>484</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-0.8169759, -46.6143068</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -46.6143068,-0.8169759,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>APEÚ</name>
+        <description><![CDATA[NRORD: 488<br>TIPO: FAR<br>LATITUDE, LONGITUDE: 00.910334400S, 046.189040900W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: DESTRUÍDO<br>MENSAGEM DE ALTERAÇÃO: P-181123Z/ABR/18 CHNNOR]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>488</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FAR</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>00.910334400S, 046.189040900W</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>DESTRUÍDO</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value>P-181123Z/ABR/18 CHNNOR</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -46.1890409,-0.9103344,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL TAPANÃ CDP</name>
+        <description><![CDATA[NRORD: 204.2<br>TIPO: Lateral Boreste Encarnado<br>LATITUDE, LONGITUDE: -1.3098, -48.4997<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>204.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>Lateral Boreste Encarnado</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3098, -48.4997</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4997,-1.3098,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL PERIQUITO BE</name>
+        <description><![CDATA[NRORD: 205.2<br>TIPO: Lateral Boreste Encarnado <br>LATITUDE, LONGITUDE: -1.34, -48.4928<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>205.2</value>
+          </Data>
+          <Data name="TIPO">
+            <value>Lateral Boreste Encarnado </value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.34, -48.4928</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4928,-1.34,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL PEDRAS DA BARRA CDP</name>
+        <description><![CDATA[NRORD: 206<br>TIPO: LATERAL BB VERDE<br>LATITUDE, LONGITUDE: -1.3712, -48.4915<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>206</value>
+          </Data>
+          <Data name="TIPO">
+            <value>LATERAL BB VERDE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3712, -48.4915</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4915,-1.3712,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL ILHA DA BARRA CDP</name>
+        <description><![CDATA[NRORD: 206.4<br>TIPO: LATERAL BB<br>LATITUDE, LONGITUDE: -1.3630, -48.4935<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>206.4</value>
+          </Data>
+          <Data name="TIPO">
+            <value>LATERAL BB</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3630, -48.4935</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4935,-1.363,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL PEDRAS DO FORTE CDP</name>
+        <description><![CDATA[NRORD: 212<br>TIPO: <br>LATITUDE, LONGITUDE: -1.3780915, -48.4948646<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>212</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3780915, -48.4948646</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4948646,-1.3780915,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL VAL DE CÃES NORTE</name>
+        <description><![CDATA[NRORD: <br>TIPO: <br>LATITUDE, LONGITUDE: -1.3902, -48.4952<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value/>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3902, -48.4952</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4952,-1.3902,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL VAL DE CÃES </name>
+        <description><![CDATA[NRORD: 220<br>TIPO: <br>LATITUDE, LONGITUDE: -1.3917, -48.4967<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>220</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.3917, -48.4967</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4967,-1.3917,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL VAL DE CÃES SUL</name>
+        <description><![CDATA[NRORD: 222<br>TIPO: <br>LATITUDE, LONGITUDE: -1.393, -48.4962<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>222</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.393, -48.4962</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4962,-1.393,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PORTO DE BELEM N° 1</name>
+        <description><![CDATA[NRORD: 236<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4077, -48.4983<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>236</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4077, -48.4983</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4983,-1.4077,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bl PORTO DE BELEM N° 2</name>
+        <description><![CDATA[NRORD: 236<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4288, -48.4937<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>236</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4288, -48.4937</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4937,-1.4288,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL PORTO DE BELÉM N°3</name>
+        <description><![CDATA[NRORD: 240<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4218, -48.4958<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>240</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4218, -48.4958</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4958,-1.4218,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PORTO DE BELEM N° 5</name>
+        <description><![CDATA[NRORD: 244<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4277, -48.4948<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>244</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4277, -48.4948</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4948,-1.4277,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PORTO DE BELEM N°7</name>
+        <description><![CDATA[NRORD: 248<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4392, -48.4962<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>248</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4392, -48.4962</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4962,-1.4392,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PORTO DE BELÉM N°9</name>
+        <description><![CDATA[NRORD: 252<br>TIPO: <br>LATITUDE, LONGITUDE: -1.4467, -48.5008<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>252</value>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.4467, -48.5008</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.5008,-1.4467,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL BAIXO DO MACAU CDP</name>
+        <description><![CDATA[NRORD: <br>TIPO: <br>LATITUDE, LONGITUDE: -1.5100, -48.7875<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value/>
+          </Data>
+          <Data name="TIPO">
+            <value/>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.5100, -48.7875</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.7875,-1.51,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BL ICOARACI CDP</name>
+        <description><![CDATA[NRORD: 204<br>TIPO: Lateral BB<br>LATITUDE, LONGITUDE: 1°17'45.0"S 48°29'37.2"W<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: <br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>204</value>
+          </Data>
+          <Data name="TIPO">
+            <value>Lateral BB</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value><![CDATA[1°17'45.0"S 48°29'37.2"W]]></value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value/>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -48.4936666666667,-1.29583333333333,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>PONTA PEREGRINO</name>
+        <description><![CDATA[NRORD: 392<br>TIPO: FTE<br>LATITUDE, LONGITUDE: -1.8995901, -53.8227445<br>SITUAÇÃO ACD ÚLTIMA INSPEÇÃO: OPERANDO NORMALMENTE<br>MENSAGEM DE ALTERAÇÃO: ]]></description>
+        <styleUrl>#icon-1899-DB4436-labelson</styleUrl>
+        <ExtendedData>
+          <Data name="NRORD">
+            <value>392</value>
+          </Data>
+          <Data name="TIPO">
+            <value>FTE</value>
+          </Data>
+          <Data name="LATITUDE, LONGITUDE">
+            <value>-1.8995901, -53.8227445</value>
+          </Data>
+          <Data name="SITUAÇÃO ACD ÚLTIMA INSPEÇÃO">
+            <value>OPERANDO NORMALMENTE</value>
+          </Data>
+          <Data name="MENSAGEM DE ALTERAÇÃO">
+            <value/>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -53.8227445,-1.8995901,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

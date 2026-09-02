@@ -1,0 +1,12 @@
+{
+  "name": "chn4-aton-gis-viewer",
+  "version": "1.0.0",
+  "description": "CHN-4 AtoN GIS Viewer - Visualizador Operacional de Auxílios à Navegação",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["aton", "gis", "marinha-do-brasil", "leaflet", "navigation"],
+  "author": "Centro de Hidrografia do Norte (CHN-4)",
+  "license": "UNLICENSED"
+}
