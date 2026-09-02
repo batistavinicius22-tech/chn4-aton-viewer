@@ -1816,8 +1816,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPhotoIndex = 0;
         renderSignalPhoto(signal);
 
-        document.getElementById('selectNewStatus').value = isOp ? 'OPERACIONAL' : signal.status;
-        document.getElementById('textOccurrenceReason').value = '';
+        const selectNewStatus = document.getElementById('selectNewStatus');
+        if (selectNewStatus) selectNewStatus.value = isOp ? 'OPERACIONAL' : signal.status;
+        const textOccurrenceReason = document.getElementById('textOccurrenceReason');
+        if (textOccurrenceReason) textOccurrenceReason.value = '';
 
         const btnAvradio = document.getElementById('btnGenerateAvradioModal');
         if (btnAvradio) btnAvradio.style.display = isOp ? 'none' : 'inline-flex';
@@ -2290,22 +2292,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const editForm = document.getElementById('formEditSpec');
         const textBtn = document.getElementById('textBtnEdit');
 
-        if (enable && selectedSignal) {
-            viewMode.style.display = 'none';
+        if (enable && selectedSignal && editForm) {
+            if (viewMode) viewMode.style.display = 'none';
             editForm.style.display = 'block';
-            textBtn.textContent = 'Cancelar Edição';
+            if (textBtn) textBtn.textContent = 'Cancelar Edição';
 
-            document.getElementById('editCode').value = selectedSignal.code;
-            document.getElementById('editName').value = selectedSignal.name;
-            document.getElementById('editType').value = selectedSignal.type;
-            document.getElementById('editCharacteristic').value = selectedSignal.characteristic;
-            document.getElementById('editRange').value = selectedSignal.rangeNM;
-            document.getElementById('editAltitude').value = selectedSignal.altitudeM;
-            document.getElementById('editLat').value = selectedSignal.lat;
-            document.getElementById('editLng').value = selectedSignal.lng;
-            document.getElementById('editJurisdiction').value = selectedSignal.jurisdiction || 'CHN-4';
+            if (document.getElementById('editCode')) document.getElementById('editCode').value = selectedSignal.code;
+            if (document.getElementById('editName')) document.getElementById('editName').value = selectedSignal.name;
+            if (document.getElementById('editType')) document.getElementById('editType').value = selectedSignal.type;
+            if (document.getElementById('editCharacteristic')) document.getElementById('editCharacteristic').value = selectedSignal.characteristic;
+            if (document.getElementById('editRange')) document.getElementById('editRange').value = selectedSignal.rangeNM;
+            if (document.getElementById('editAltitude')) document.getElementById('editAltitude').value = selectedSignal.altitudeM;
+            if (document.getElementById('editLat')) document.getElementById('editLat').value = selectedSignal.lat;
+            if (document.getElementById('editLng')) document.getElementById('editLng').value = selectedSignal.lng;
+            if (document.getElementById('editJurisdiction')) document.getElementById('editJurisdiction').value = selectedSignal.jurisdiction || 'CHN-4';
             
-            // Populate Nautical DDM fields
             const latDDM = decimalToDDM(selectedSignal.lat, true);
             const lngDDM = decimalToDDM(selectedSignal.lng, false);
             if (document.getElementById('editLatDeg')) document.getElementById('editLatDeg').value = latDDM.deg;
@@ -2315,7 +2316,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.getElementById('editLngMin')) document.getElementById('editLngMin').value = lngDDM.min;
             if (document.getElementById('editLngHem')) document.getElementById('editLngHem').value = lngDDM.hem;
 
-            // Default coordinate mode to Nautical
             document.getElementById('btnEditCoordModeGMS')?.classList.add('active');
             document.getElementById('btnEditCoordModeDecimal')?.classList.remove('active');
             if (document.getElementById('panelEditCoordGMS')) document.getElementById('panelEditCoordGMS').style.display = 'block';
@@ -2331,9 +2331,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const editContPlanEl = document.getElementById('editContingencyPlan');
             if (editContPlanEl) editContPlanEl.value = selectedSignal.contingencyPlan || selectedSignal.planoContingencia || '';
         } else {
-            viewMode.style.display = 'block';
-            editForm.style.display = 'none';
-            textBtn.textContent = 'Editar Ficha Técnica';
+            if (viewMode) viewMode.style.display = 'block';
+            if (editForm) editForm.style.display = 'none';
+            if (textBtn) textBtn.textContent = 'Editar Ficha Técnica';
         }
     }
 
