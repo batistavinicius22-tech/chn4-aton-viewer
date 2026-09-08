@@ -1,4 +1,17 @@
+# System & IDE files
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
 *.log
 node_modules/
+
+# KML & Google Earth (Não subir para evitar contaminação de dados)
+*.kml
+kml_signals.js
+
+# Cartas Náuticas GeoTIFF pesadas
+cartas_geotiff/*.tif
+cartas_geotiff/*.tiff
+cartas_geotiff/*.TIF
+cartas_geotiff/*.TIFF

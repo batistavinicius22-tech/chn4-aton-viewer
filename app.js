@@ -97,10 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // State Variables
-    let signalsData = (typeof googleEarthSignals !== 'undefined' && Array.isArray(googleEarthSignals) && googleEarthSignals.length > 0)
-        ? [...googleEarthSignals]
-        : [...initialSignals];
-    signalsData.sort(compareSignalCodes);
+    let signalsData = [];
     let selectedSignal = null;
     const selectedSignalCodes = new Set(); // Multi-signal selection for custom map view
     let currentFilter = 'all';
@@ -574,14 +571,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadSignalsFromBackend() {
-        // Se o Firebase estiver ativo, o listener em tempo real (onSnapshot) gerencia a sincronização
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            return;
-        }
-
         let loadedSignals = null;
 
-        // Tentar API REST do servidor central (node server.js / python server.py / server.ps1)
+        // 1. Tentar API REST do servidor central (node server.js / python server.py / server.ps1)
         try {
             const resp = await fetch('/api/signals');
             if (resp.ok) {
@@ -594,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn('API REST /api/signals indisponível.', e);
         }
 
-        // Tentar ler o arquivo de banco de dados central signals.json
+        // 2. Tentar ler o arquivo de banco de dados central signals.json
         if (!loadedSignals) {
             try {
                 const resp = await fetch('./signals.json');
@@ -609,7 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Fallback para IndexedDB e cache local no navegador
+        // 3. Fallback para IndexedDB e cache local no navegador
         if (!loadedSignals) {
             const idbSignals = await loadIndexedDB();
             if (idbSignals && idbSignals.length > 0) {
@@ -626,25 +618,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (loadedSignals && Array.isArray(loadedSignals) && loadedSignals.length > 0 && loadedSignals[0].code) {
             signalsData = loadedSignals;
+            signalsData.sort(compareSignalCodes);
             saveLocalCache();
-            console.log(`✅ Carregados ${signalsData.length} sinais do banco de dados central.`);
-        } else if (typeof googleEarthSignals !== 'undefined' && Array.isArray(googleEarthSignals) && googleEarthSignals.length > 0) {
-            signalsData = googleEarthSignals.map(s => {
-                if (!s.responsavel) {
-                    const code = s.code || '';
-                    const jur = s.jurisdiction || '';
-                    const name = s.name || '';
-                    if (jur.includes('Amapa') || name.includes('Amapa') || jur.includes('CPAP') || code.startsWith('AP-')) s.responsavel = 'CPAP';
-                    else if (jur.includes('Maranhao') || name.includes('Maranhao') || jur.includes('CPMA') || code.startsWith('MA-')) s.responsavel = 'CPMA';
-                    else if (jur.includes('Para') || name.includes('Para') || jur.includes('CPPA') || code.startsWith('PA-')) {
-                        if (jur.includes('Guajara') || jur.includes('Belem') || jur.includes('CHN-4')) s.responsavel = 'CHN-4';
-                        else s.responsavel = 'CPPA';
-                    } else if (jur.includes('Extra-MB') || jur.includes('Privado')) s.responsavel = 'Extra-MB';
-                    else s.responsavel = 'CHN-4';
-                }
-                return s;
-            });
-            console.log(`✅ Carregados ${signalsData.length} sinais do backup em memória.`);
+            console.log(`✅ Carregados ${signalsData.length} sinais da base de dados persistente.`);
+        } else if (signalsData.length === 0) {
+            signalsData = [...initialSignals];
+            signalsData.sort(compareSignalCodes);
+            console.log(`ℹ️ Inicializado com sinais padrão.`);
         }
 
         updateTypeFilterDropdown();
@@ -1630,9 +1610,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="display: flex; gap: 4px; align-items: center;">
                         <span class="responsavel-badge ${respClass}">${s.responsavel || 'CHN-4'}</span>
                         <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${s.status}</span>
-                        <button type="button" class="btn-card-delete" onclick="event.stopPropagation(); window.deleteSignalFromCard('${s.code}', '${s.name.replace(/'/g, "\\'")}')" title="Excluir Sinal Náutico">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="signal-card-body">
@@ -1731,24 +1708,9 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedSignal = clean;
         }
 
-        // 1. Sempre salva localmente no Cache / IndexedDB
+        // Modo Visualizador (Somente Leitura): gravações desativadas para proteção da nuvem
         saveLocalCache();
-
-        // 2. Persiste no Firebase Cloud Firestore na nuvem (se ativo)
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            db.collection("signals").doc(clean.code).set(clean, { merge: true })
-                .then(() => console.log(`🔥 Firestore: Sinal ${clean.code} (com foto/dados) salvo na nuvem com sucesso!`))
-                .catch(err => console.error("Erro ao salvar no Firestore:", err));
-        }
-
-        // 3. Persiste na API REST local (se o servidor node/python estiver rodando)
-        fetch(`/api/signals/${encodeURIComponent(clean.code)}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(clean)
-        }).then(r => {
-            if (r.ok) console.log(`💾 REST API: Sinal ${clean.code} gravado em signals.json!`);
-        }).catch(err => console.warn('API REST fallback:', err));
+        console.log(`ℹ️ Modo Visualizador: Sinal ${clean.code} em modo somente leitura.`);
     }
 
     function updateIndividualSignalIEDisplay(signal) {
@@ -2023,7 +1985,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.navigateSignalPhoto(1);
     });
 
-    // Delete photo function
+    // Delete photo function (Desativado no Modo Visualizador)
     async function deleteCurrentSignalPhoto() {
         if (!selectedSignal) return;
         const images = getSignalImages(selectedSignal);
@@ -2273,9 +2235,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (e.key === 'ArrowRight') {
             e.preventDefault();
             window.navigateSignalPhoto(1);
-        } else if (e.key === 'Delete') {
-            e.preventDefault();
-            deleteCurrentSignalPhoto();
         }
     });
 
@@ -2383,16 +2342,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const newResp = document.getElementById('editResponsavel')?.value || selectedSignal.responsavel || 'CHN-4';
         const newContPlan = document.getElementById('editContingencyPlan')?.value?.trim() || '';
 
-        // 1. If code changed, delete old document from Firestore/Backend first
+        // 1. Em modo visualizador, exclusões na nuvem são bloqueadas
         if (oldCode && oldCode !== newCode) {
-            if (mapMarkers[oldCode]) {
-                map.removeLayer(mapMarkers[oldCode]);
-                delete mapMarkers[oldCode];
-            }
-            if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-                db.collection("signals").doc(oldCode).delete().catch(console.warn);
-            }
-            fetch(`/api/signals/${encodeURIComponent(oldCode)}`, { method: 'DELETE' }).catch(console.warn);
             signalsData = signalsData.filter(s => s.code !== oldCode);
         }
 
@@ -2424,52 +2375,10 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(`Ficha Técnica do sinal ${newCode} salva com sucesso no banco de dados!`, 'success');
     });
 
-    // Delete Signal Function
+    // Delete Signal Function (Desativado no Modo Visualizador)
     async function deleteSignalPermanently(code, name) {
-        if (!confirm(`ATENÇÃO: Deseja realmente EXCLUIR PERMANENTEMENTE o auxílio à navegação [${code} - ${name}]?`)) {
-            return;
-        }
-
-        // Delete from Firebase Firestore or REST API
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            try {
-                await db.collection("signals").doc(code).delete();
-                console.log(`🔥 Firestore: Sinal ${code} excluído da nuvem!`);
-            } catch (err) {
-                console.error("Erro ao excluir do Firestore:", err);
-            }
-        } else {
-            try {
-                await fetch(`/api/signals/${encodeURIComponent(code)}`, {
-                    method: 'DELETE'
-                });
-            } catch (err) {
-                console.warn('Exclusão via API REST em modo fallback:', err);
-            }
-        }
-
-        // Update local array and cache
-        signalsData = signalsData.filter(s => s.code !== code);
-        saveLocalCache();
-
-        if (mapMarkers[code]) {
-            map.removeLayer(mapMarkers[code]);
-            delete mapMarkers[code];
-        }
-
-        routeWaypoints = routeWaypoints.filter(wp => wp.code !== code);
-        updateRoute();
-
-        document.getElementById('modalSignalDetail').classList.remove('active');
-        document.getElementById('modalAddSignal').classList.remove('active');
-        selectedSignal = null;
-
-        updateTypeFilterDropdown();
-        updateIE();
-        renderMapMarkers();
-        renderSignalList();
-
-        showToast(`Sinal ${code} excluído permanentemente do banco de dados!`, 'warning');
+        showToast('Modo Visualizador: Exclusão de sinais desativada.', 'warning');
+        return;
     }
 
     window.deleteSignalFromCard = (code, name) => {
@@ -3510,25 +3419,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
             ]
         };
 
-        // Persist to Firebase Firestore or REST API
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            try {
-                await db.collection("signals").doc(code).set(newSignal);
-                console.log(`🔥 Firestore: Sinal ${code} criado na nuvem!`);
-            } catch (err) {
-                console.error("Erro ao criar no Firestore:", err);
-            }
-        } else {
-            try {
-                await fetch('/api/signals', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newSignal)
-                });
-            } catch (err) {
-                console.warn('API REST POST fallback:', err);
-            }
-        }
+        // Modo Visualizador: Criação desativada na nuvem
 
         signalsData.push(newSignal);
         signalsData.sort(compareSignalCodes);
@@ -3582,7 +3473,10 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
                     console.log("🔥 Firestore snapshot recebido vazio no visualizador.");
                 }
             }, (err) => {
-                console.warn("Erro no listener Firestore:", err);
+                console.warn("⚠️ Aviso no listener Firestore (Viewer):", err);
+                if (syncText) syncText.textContent = 'OFFLINE / ERRO FIREBASE';
+                if (syncDot) syncDot.className = 'sync-dot sync-offline';
+                showToast('⚠️ Falha ao conectar ao Firebase Cloud. Operando com dados locais seguros.', 'warning');
             });
             return;
         }
@@ -4075,20 +3969,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
             renderMapMarkers();
             renderSignalList();
 
-            // Sync with Firestore if active
-            if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-                try {
-                    const batch = db.batch();
-                    restoredSignals.forEach(s => {
-                        const clean = sanitizeForDatabase(s);
-                        if (clean && clean.code) {
-                            const ref = db.collection("signals").doc(clean.code);
-                            batch.set(ref, clean, { merge: true });
-                        }
-                    });
-                    batch.commit().catch(console.warn);
-                } catch (e) {}
-            }
+            // Modo Visualizador: Restauração na nuvem desativada
 
             modalBackups?.classList.remove('active');
             showToast(`Base de dados restaurada com sucesso (${restoredSignals.length} sinais)!`, 'success');
