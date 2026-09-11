@@ -330,14 +330,14 @@
                         <div style="background: var(--navy-950); border: 1px solid var(--navy-700); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
                             <div style="font-family: var(--font-tech); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">IE Anual (NORMAM-601)</div>
                             <div id="ieAnualDisplay" style="font-family: var(--font-tech); font-size: 1.8rem; font-weight: 700; color: var(--status-op); margin: 4px 0;">100.0%</div>
-                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieAnualSubtitle">Ano até Mês D</div>
+                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieAnualSubtitle">12 Meses Regressivos</div>
                         </div>
                     </div>
 
                     <!-- Seletor de Mês Considerado D (NORMAM-601) -->
                     <div style="margin: 8px 0; background: var(--navy-900); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                         <label for="selectIeMonth" style="font-size: 0.76rem; font-weight: 700; color: var(--accent-gold); font-family: var(--font-tech); margin: 0; white-space: nowrap;">
-                            <i class="fa-solid fa-calendar-days"></i> Mês Considerado (D):
+                            <i class="fa-solid fa-calendar-days"></i> Mês Término (12m Regressivos):
                         </label>
                         <select id="selectIeMonth" class="form-control" style="font-size: 0.78rem; padding: 4px 8px; height: auto; width: auto; min-width: 140px; background: var(--navy-950); color: #fff; border: 1px solid var(--navy-700);">
                             <option value="1">1 — Janeiro</option>
@@ -371,15 +371,15 @@
                             <i class="fa-solid fa-calculator"></i> FÓRMULA OFICIAL NORMAM-601:
                         </div>
                         <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 8px;">
-                            • <strong>IE Anual Balizamento:</strong> <span style="color: #93c5fd; font-weight: 700;">IE = [1 - (A / (B × 30 × D))] × 100%</span><br>
-                            • <strong>IE Anual Sinal:</strong> <span style="color: #cbd5e1;">IE = [1 - (A / (30 × D))] × 100%</span><br>
+                            • <strong>IE Anual Balizamento:</strong> <span style="color: #93c5fd; font-weight: 700;">IE = [1 - (A / (B × 30 × 12))] × 100%</span> (12 meses regressivos)<br>
+                            • <strong>IE Anual Sinal:</strong> <span style="color: #cbd5e1;">IE = [1 - (A / (30 × 12))] × 100%</span><br>
                             • <strong>IE Mensal:</strong> <span style="color: #cbd5e1;">IE = [1 - (A / (B × 30))] × 100%</span>
                         </div>
                         <div style="border-top: 1px dashed var(--navy-700); padding-top: 6px; font-size: 0.75rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                             <div><strong>B (Sinais CHN-4):</strong> <span id="paramBVal" style="color: var(--accent-gold-light); font-weight: 700;">0</span></div>
-                            <div><strong>D (Mês):</strong> <span id="paramDVal" style="color: var(--accent-gold-light); font-weight: 700;">1</span></div>
-                            <div><strong>A (Dias Inop. no Ano):</strong> <span id="paramAAnualVal" style="color: var(--status-op); font-weight: 700;">0 dias</span></div>
-                            <div><strong>Denominador (B×30×D):</strong> <span id="paramDenomVal" style="color: var(--accent-gold-light); font-weight: 700;">0</span></div>
+                            <div><strong>Período:</strong> <span id="paramDVal" style="color: var(--accent-gold-light); font-weight: 700;">12 meses</span></div>
+                            <div><strong>A (Dias Inop. nos 12m):</strong> <span id="paramAAnualVal" style="color: var(--status-op); font-weight: 700;">0 dias</span></div>
+                            <div><strong>Denominador (B×30×12):</strong> <span id="paramDenomVal" style="color: var(--accent-gold-light); font-weight: 700;">0</span></div>
                         </div>
                     </div>
 
