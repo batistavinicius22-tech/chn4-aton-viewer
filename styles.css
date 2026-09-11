@@ -1426,6 +1426,269 @@ html, body {
     border-top-color: var(--accent-gold) !important;
 }
 
+/* Floating Pin Coordinate Inspection HUD */
+.pin-inspect-hud {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 850;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 58, 102, 0.92));
+    border: 1px solid var(--accent-gold);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5), 0 0 15px rgba(245, 158, 11, 0.25);
+    font-family: var(--font-tech);
+    animation: traySlideDown 0.25s ease;
+    max-width: 90vw;
+}
+
+.pin-inspect-hud-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.pin-inspect-hud-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.btn-pin-hud {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--font-tech);
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-pin-hud:hover {
+    background: rgba(245, 158, 11, 0.25);
+    border-color: var(--accent-gold);
+    color: #ffffff;
+}
+
+.btn-pin-close {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+}
+
+.btn-pin-close:hover {
+    background: rgba(239, 68, 68, 0.4);
+    border-color: #ef4444;
+    color: #ffffff;
+}
+
+/* Custom Live Pin Inspection Tooltip (Follows Cursor) */
+.leaflet-tooltip.pin-live-tooltip {
+    background: rgba(15, 23, 42, 0.96) !important;
+    border: 1px solid var(--accent-gold) !important;
+    color: #ffffff !important;
+    font-family: var(--font-tech) !important;
+    font-size: 0.82rem !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 10px rgba(245, 158, 11, 0.2) !important;
+    pointer-events: none !important;
+    line-height: 1.4 !important;
+}
+
+.leaflet-tooltip.pin-live-tooltip::before {
+    border-top-color: var(--accent-gold) !important;
+}
+
+/* Fixed Pin Marker Icon */
+.pin-fixed-icon-wrapper {
+    background: transparent;
+    border: none;
+}
+
+.pin-fixed-marker {
+    position: relative;
+    width: 32px;
+    height: 38px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    animation: pinDrop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pin-fixed-marker i {
+    font-size: 26px;
+    color: #f59e0b;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.8), 0 2px 4px rgba(0,0,0,0.8);
+    transform-origin: bottom center;
+}
+
+.pin-pulse {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+    animation: pinPulseAnimation 1.6s infinite ease-out;
+}
+
+@keyframes pinDrop {
+    0% { transform: translateY(-16px) scale(1.2); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes pinPulseAnimation {
+    0% { transform: translateX(-50%) scale(0.6); opacity: 0.9; }
+    70% { transform: translateX(-50%) scale(2.6); opacity: 0; }
+    100% { transform: translateX(-50%) scale(2.6); opacity: 0; }
+}
+
+/* Leaflet Popup for Pin Inspection */
+.leaflet-popup.pin-inspect-popup .leaflet-popup-content-wrapper {
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid var(--accent-gold);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(245, 158, 11, 0.25);
+    color: #f1f5f9;
+}
+
+.leaflet-popup.pin-inspect-popup .leaflet-popup-tip {
+    background: rgba(15, 23, 42, 0.98);
+}
+
+.leaflet-popup.pin-inspect-popup .leaflet-popup-close-button {
+    color: #94a3b8;
+    padding: 6px;
+}
+
+.leaflet-popup.pin-inspect-popup .leaflet-popup-close-button:hover {
+    color: #ef4444;
+}
+
+/* Rich Content Card inside Pin Popup */
+.pin-popup-card {
+    min-width: 250px;
+    font-family: var(--font-tech);
+    color: #f1f5f9;
+    padding: 4px 2px;
+}
+
+.pin-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.pin-popup-title {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pin-popup-coords {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pin-popup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.pin-popup-row:last-child {
+    margin-bottom: 0;
+}
+
+.pin-popup-label {
+    color: #94a3b8;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.pin-popup-val {
+    color: #ffffff;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.pin-popup-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.btn-pin-copy {
+    flex: 1;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid var(--accent-gold);
+    color: #fde68a;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-pin-copy:hover {
+    background: var(--accent-gold);
+    color: #041226;
+}
+
+.btn-pin-dismiss {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #cbd5e1;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-pin-dismiss:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+}
+
 .layer-badge {
     background: var(--glass-bg);
     backdrop-filter: blur(8px);

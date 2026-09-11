@@ -123,6 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let measureDynamicLine = null;
     let measureTooltip = null;
 
+    // Pin Coordinate Inspection State
+    let isPinInspectMode = false;
+    let pinInspectMarker = null;
+    let pinInspectTooltip = null;
+
     // GeoTIFF Overlays State
     let geotiffLayers = []; // Array of { id, name, layer, opacity }
     const dhnGeoTiffGroup = L.layerGroup(); // Dedicated Layer Group for DHN GeoTIFF charts
@@ -138,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     const measureLayerGroup = L.layerGroup().addTo(map);
+    const pinInspectLayerGroup = L.layerGroup().addTo(map);
     const routeLayerGroup = L.layerGroup().addTo(map);
 
     // Layer 1: Esri World Imagery
@@ -3035,6 +3041,9 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     }
 
     function startMeasureMode() {
+        if (isPinInspectMode) {
+            stopPinInspectMode();
+        }
         isMeasureMode = true;
         document.getElementById('btnToggleMeasure')?.classList.add('active');
         map.getContainer().style.cursor = 'crosshair';
@@ -3245,6 +3254,235 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
 
     document.getElementById('btnToggleMeasure')?.addEventListener('click', toggleMeasureMode);
 
+    // =========================================================================
+    // MODO INSPEÇÃO E FIXAÇÃO DE COORDENADAS POR ALFINETE (PIN INSPECT)
+    // =========================================================================
+    function togglePinInspectMode() {
+        if (isPinInspectMode) {
+            stopPinInspectMode();
+        } else {
+            startPinInspectMode();
+        }
+    }
+
+    function startPinInspectMode() {
+        if (isMeasureMode) {
+            stopMeasureMode();
+        }
+        if (typeof isDrawDerrotaMode !== 'undefined' && isDrawDerrotaMode) {
+            stopDrawDerrotaMode();
+        }
+
+        isPinInspectMode = true;
+        document.getElementById('btnTogglePinInspect')?.classList.add('active');
+        map.getContainer().style.cursor = 'crosshair';
+
+        let hud = document.getElementById('pinInspectHud');
+        if (!hud) {
+            hud = document.createElement('div');
+            hud.id = 'pinInspectHud';
+            hud.className = 'pin-inspect-hud';
+            hud.innerHTML = `
+                <div class="pin-inspect-hud-info">
+                    <i class="fa-solid fa-map-pin text-gold"></i>
+                    <span id="pinInspectHudText">Mova o mouse para ler coordenadas • Clique no mapa para fixar o alfinete.</span>
+                </div>
+                <div class="pin-inspect-hud-actions">
+                    <button type="button" class="btn-pin-hud" id="btnPinInspectClear" style="display:none;" title="Remover alfinete e continuar inspecionando"><i class="fa-solid fa-location-crosshairs"></i> Desafixar</button>
+                    <button type="button" class="btn-pin-hud btn-pin-close" id="btnPinInspectClose" title="Sair do modo alfinete (ESC)"><i class="fa-solid fa-xmark"></i> Sair</button>
+                </div>
+            `;
+            document.querySelector('.app-map-wrapper')?.appendChild(hud);
+            document.getElementById('btnPinInspectClear')?.addEventListener('click', clearPinInspectMarker);
+            document.getElementById('btnPinInspectClose')?.addEventListener('click', stopPinInspectMode);
+        } else {
+            hud.style.display = 'flex';
+            updatePinInspectHudText('Mova o mouse para ler coordenadas • Clique no mapa para fixar o alfinete.');
+            const clearBtn = document.getElementById('btnPinInspectClear');
+            if (clearBtn && !pinInspectMarker) clearBtn.style.display = 'none';
+        }
+
+        map.on('mousemove', onPinInspectMouseMove);
+        map.on('click', onPinInspectMapClick);
+
+        showToast('Modo Alfinete Ativado: Mova o mouse para ler ou clique no mapa para fixar coordenadas. (ESC para sair)', 'info');
+    }
+
+    function updatePinInspectHudText(text) {
+        const el = document.getElementById('pinInspectHudText');
+        if (el) el.innerHTML = text;
+    }
+
+    function formatCoordTexts(lat, lng) {
+        let latDDM = '';
+        let lngDDM = '';
+        if (typeof decimalToDDM === 'function') {
+            latDDM = decimalToDDM(lat, true).formatted;
+            lngDDM = decimalToDDM(lng, false).formatted;
+        } else {
+            latDDM = `${lat.toFixed(5)}°`;
+            lngDDM = `${lng.toFixed(5)}°`;
+        }
+        const decLat = lat.toFixed(6);
+        const decLng = lng.toFixed(6);
+        return { latDDM, lngDDM, decLat, decLng, fullCopy: `${latDDM}, ${lngDDM} (${decLat}, ${decLng})` };
+    }
+
+    function onPinInspectMouseMove(e) {
+        if (!isPinInspectMode) return;
+        const coords = formatCoordTexts(e.latlng.lat, e.latlng.lng);
+
+        if (!pinInspectMarker) {
+            updatePinInspectHudText(`Lat: <strong>${coords.latDDM}</strong> | Long: <strong>${coords.lngDDM}</strong> <small style="color:#94a3b8;">(${coords.decLat}, ${coords.decLng})</small> • Clique para fixar`);
+        }
+
+        const tooltipHtml = `
+            <div style="font-size:0.72rem; color:#f59e0b; font-weight:700; text-transform:uppercase; margin-bottom:2px;">
+                <i class="fa-solid fa-map-pin"></i> Inspecionar Ponto
+            </div>
+            <div style="font-weight:700; color:#ffffff; font-size:0.85rem; line-height:1.3;">
+                ${coords.latDDM}<br>${coords.lngDDM}
+            </div>
+            <div style="font-size:0.72rem; color:#94a3b8; margin-top:2px;">
+                ${coords.decLat}°, ${coords.decLng}°
+            </div>
+            <div style="font-size:0.68rem; color:#38bdf8; margin-top:3px; font-weight:600;">
+                Clique no mapa para fixar o alfinete
+            </div>
+        `;
+
+        if (!pinInspectTooltip) {
+            pinInspectTooltip = L.tooltip({
+                permanent: true,
+                direction: 'top',
+                offset: [0, -15],
+                className: 'pin-live-tooltip'
+            }).setLatLng(e.latlng).setContent(tooltipHtml).addTo(map);
+        } else {
+            pinInspectTooltip.setLatLng(e.latlng).setContent(tooltipHtml);
+        }
+    }
+
+    function onPinInspectMapClick(e) {
+        if (!isPinInspectMode) return;
+        const latlng = e.latlng || e;
+        const coords = formatCoordTexts(latlng.lat, latlng.lng);
+
+        if (pinInspectTooltip) {
+            map.removeLayer(pinInspectTooltip);
+            pinInspectTooltip = null;
+        }
+
+        const pinIcon = L.divIcon({
+            className: 'pin-fixed-icon-wrapper',
+            html: `
+                <div class="pin-fixed-marker">
+                    <i class="fa-solid fa-map-pin"></i>
+                    <span class="pin-pulse"></span>
+                </div>
+            `,
+            iconSize: [32, 38],
+            iconAnchor: [16, 36],
+            popupAnchor: [0, -36]
+        });
+
+        if (!pinInspectMarker) {
+            pinInspectMarker = L.marker(latlng, { icon: pinIcon, draggable: true }).addTo(pinInspectLayerGroup);
+            pinInspectMarker.on('dragend', (ev) => {
+                onPinInspectMapClick(ev.target.getLatLng());
+            });
+        } else {
+            pinInspectMarker.setLatLng(latlng);
+        }
+
+        const popupContent = `
+            <div class="pin-popup-card">
+                <div class="pin-popup-header">
+                    <div class="pin-popup-title">
+                        <i class="fa-solid fa-map-pin"></i> Alfinete Fixado
+                    </div>
+                </div>
+                <div class="pin-popup-coords">
+                    <div class="pin-popup-row">
+                        <span class="pin-popup-label">Latitude DDM:</span>
+                        <span class="pin-popup-val">${coords.latDDM}</span>
+                    </div>
+                    <div class="pin-popup-row">
+                        <span class="pin-popup-label">Longitude DDM:</span>
+                        <span class="pin-popup-val">${coords.lngDDM}</span>
+                    </div>
+                    <div class="pin-popup-row" style="margin-top:4px; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.1);">
+                        <span class="pin-popup-label">Decimal:</span>
+                        <span class="pin-popup-val" style="color:#93c5fd;">${coords.decLat}, ${coords.decLng}</span>
+                    </div>
+                </div>
+                <div class="pin-popup-actions">
+                    <button type="button" class="btn-pin-copy" id="btnCopyPinCoords">
+                        <i class="fa-solid fa-copy"></i> Copiar
+                    </button>
+                    <button type="button" class="btn-pin-dismiss" id="btnDismissPin">
+                        <i class="fa-solid fa-xmark"></i> Fechar
+                    </button>
+                </div>
+            </div>
+        `;
+
+        pinInspectMarker.bindPopup(popupContent, {
+            className: 'pin-inspect-popup',
+            offset: [0, -18],
+            closeOnClick: false
+        }).openPopup();
+
+        setTimeout(() => {
+            document.getElementById('btnCopyPinCoords')?.addEventListener('click', () => {
+                navigator.clipboard.writeText(coords.fullCopy).then(() => {
+                    showToast('Coordenadas copiadas para a área de transferência!', 'success');
+                    const copyBtn = document.getElementById('btnCopyPinCoords');
+                    if (copyBtn) copyBtn.innerHTML = '<i class="fa-solid fa-check" style="color:#22c55e;"></i> Copiado!';
+                }).catch(() => {
+                    showToast(`${coords.fullCopy}`, 'info');
+                });
+            });
+            document.getElementById('btnDismissPin')?.addEventListener('click', () => {
+                stopPinInspectMode();
+            });
+        }, 50);
+
+        updatePinInspectHudText(`Alfinete fixado: <strong>${coords.latDDM}</strong>, <strong>${coords.lngDDM}</strong> <small style="color:#93c5fd;">(${coords.decLat}, ${coords.decLng})</small> • Pressione ESC ou Fechar para sair`);
+
+        const clearBtn = document.getElementById('btnPinInspectClear');
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+    }
+
+    function clearPinInspectMarker() {
+        if (pinInspectMarker) {
+            pinInspectLayerGroup.removeLayer(pinInspectMarker);
+            pinInspectMarker = null;
+        }
+        const clearBtn = document.getElementById('btnPinInspectClear');
+        if (clearBtn) clearBtn.style.display = 'none';
+        updatePinInspectHudText('Mova o mouse para ler coordenadas • Clique no mapa para fixar o alfinete.');
+    }
+
+    function stopPinInspectMode() {
+        clearPinInspectMarker();
+        if (pinInspectTooltip) {
+            map.removeLayer(pinInspectTooltip);
+            pinInspectTooltip = null;
+        }
+        isPinInspectMode = false;
+        document.getElementById('btnTogglePinInspect')?.classList.remove('active');
+        map.getContainer().style.cursor = '';
+
+        map.off('mousemove', onPinInspectMouseMove);
+        map.off('click', onPinInspectMapClick);
+
+        const hud = document.getElementById('pinInspectHud');
+        if (hud) hud.remove();
+    }
+
+    document.getElementById('btnTogglePinInspect')?.addEventListener('click', togglePinInspectMode);
+
     document.getElementById('btnMapReset')?.addEventListener('click', () => {
         map.flyTo([-0.5, -49.0], 8, { duration: 1.2 });
     });
@@ -3262,9 +3500,13 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
         });
     });
 
-    // Close active modal, measurement mode, route drawing mode or photo lightbox on ESC key press
+    // Close active modal, measurement mode, route drawing mode, pin inspection mode or photo lightbox on ESC key press
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' || e.key === 'Esc') {
+            if (isPinInspectMode) {
+                stopPinInspectMode();
+                return;
+            }
             if (isMeasureMode) {
                 stopMeasureMode();
                 return;
