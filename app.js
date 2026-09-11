@@ -889,31 +889,69 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const curYear = now.getFullYear();
         const curRealMonth = now.getMonth() + 1;
+        const daysInMonth = new Date(curYear, curRealMonth, 0).getDate();
+        const startOfCurrentMonth = new Date(curYear, curRealMonth - 1, 1, 0, 0, 0);
 
-        // Mês considerado D (1 a 12) como mês de término da janela de 12 meses
-        const endMonth = Math.max(1, Math.min(12, targetMonth || curRealMonth));
-        const endYear = targetYear || curYear;
-
-        let inopStart = null;
+        // Início de inoperância para o cálculo mensal
+        let inopStartMensal = null;
         if (signal.occurrenceStartDate || signal.inoperableSince) {
             const dt = new Date(signal.occurrenceStartDate || signal.inoperableSince);
-            if (!isNaN(dt.getTime())) inopStart = dt;
+            if (!isNaN(dt.getTime())) inopStartMensal = dt;
         }
-        if (!inopStart && signal.photoDate) {
-            const dt = new Date(signal.photoDate);
-            if (!isNaN(dt.getTime())) inopStart = dt;
-        }
-        if (!inopStart && signal.history && signal.history.length > 0) {
-            const avHist = signal.history.filter(h => !isOperational(h.status));
-            if (avHist.length > 0) {
-                const dt = new Date(avHist[0].startDate || avHist[0].date);
-                if (!isNaN(dt.getTime())) inopStart = dt;
+
+        // =========================================================================
+        // 1. CÁLCULO ORIGINAL DO IE MENSAL (NORMAM-601 Art 2.48 / 2.49)
+        // =========================================================================
+        let a_mes = 0;
+        if (!isOp) {
+            if (!inopStartMensal) inopStartMensal = startOfCurrentMonth;
+
+            // Se o sinal apagou/avariou antes do início do mês atual e segue inoperante:
+            if (inopStartMensal <= startOfCurrentMonth) {
+                a_mes = 30; // 100% dos dias do mês inoperante
+            } else {
+                // Falhou durante o mês atual:
+                const diffMes = (now - inopStartMensal) / (1000 * 60 * 60 * 24);
+                if (diffMes >= 1) {
+                    a_mes = Math.min(30, diffMes);
+                }
             }
         }
 
-        let a_mes = 0;
-        let a_12m = 0;
+        // Histórico de ocorrências passadas (já restabelecidas) no mês corrente
+        if (signal.history && Array.isArray(signal.history) && signal.history.length > 0) {
+            let histInopStart = null;
+            signal.history.forEach(h => {
+                const hDate = new Date(h.startDate || h.date);
+                if (!isNaN(hDate.getTime())) {
+                    if (!isOperational(h.status)) {
+                        if (!histInopStart || hDate < histInopStart) histInopStart = hDate;
+                    } else if (histInopStart) {
+                        const inopEnd = hDate;
+                        const startMes = histInopStart < startOfCurrentMonth ? startOfCurrentMonth : histInopStart;
+                        if (inopEnd > startOfCurrentMonth && startMes < inopEnd) {
+                            const dMes = (inopEnd - startMes) / (1000 * 60 * 60 * 24);
+                            if (dMes >= 1 && isOp) a_mes += dMes;
+                        }
+                        histInopStart = null;
+                    }
+                }
+            });
+        }
 
+        // =========================================================================
+        // 2. CÁLCULO DO IE ANUAL (12 MESES REGRESSIVOS NORMAM-601)
+        // =========================================================================
+        const endMonth = Math.max(1, Math.min(12, targetMonth || curRealMonth));
+        const endYear = targetYear || curYear;
+
+        let inopStart12m = inopStartMensal;
+        if (!inopStart12m && signal.photoDate) {
+            const dt = new Date(signal.photoDate);
+            if (!isNaN(dt.getTime())) inopStart12m = dt;
+        }
+
+        let a_12m = 0;
         // Iterar pelos 12 meses regressivos terminando no mês selecionado (endYear, endMonth)
         for (let i = 11; i >= 0; i--) {
             const mDate = new Date(endYear, endMonth - 1 - i, 1);
@@ -921,29 +959,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const mo_m = mDate.getMonth() + 1;
             const mStart = new Date(y_m, mo_m - 1, 1, 0, 0, 0);
             const mEnd = new Date(y_m, mo_m, 0, 23, 59, 59);
-            const daysInMonth = new Date(y_m, mo_m, 0).getDate();
+            const daysInM = new Date(y_m, mo_m, 0).getDate();
 
             let daysThisMonth = 0;
 
-            // 1. Sinal atualmente avariado
             if (!isOp) {
-                const effInopStart = inopStart || new Date(curYear, curRealMonth - 1, 1, 0, 0, 0);
-                if (effInopStart <= mStart) {
+                const effStart = inopStart12m || startOfCurrentMonth;
+                if (effStart <= mStart) {
                     if (mStart <= now) {
-                        daysThisMonth = 30; // 1 mês completo inoperante = 30 dias na convenção NORMAM-601
+                        daysThisMonth = 30; // 1 mês completo inoperante
                     }
-                } else if (effInopStart <= mEnd) {
+                } else if (effStart <= mEnd) {
                     if (y_m === curYear && mo_m === curRealMonth && now < mEnd) {
-                        const diff = (now - effInopStart) / (1000 * 60 * 60 * 24);
+                        const diff = (now - effStart) / (1000 * 60 * 60 * 24);
                         daysThisMonth = Math.min(30, Math.max(0, diff));
-                    } else if (effInopStart <= now) {
-                        const daysRem = Math.max(0, daysInMonth - effInopStart.getDate() + 1);
+                    } else if (effStart <= now) {
+                        const daysRem = Math.max(0, daysInM - effStart.getDate() + 1);
                         daysThisMonth = Math.min(30, daysRem);
                     }
                 }
             }
 
-            // 2. Histórico de ocorrências passadas (sanadas)
             if (signal.history && Array.isArray(signal.history) && signal.history.length > 0) {
                 let histInopStart = null;
                 signal.history.forEach(h => {
@@ -968,9 +1004,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             a_12m += daysThisMonth;
-            if (i === 0) {
-                a_mes = daysThisMonth;
-            }
         }
 
         return {
@@ -1010,7 +1043,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startMonth = startMonthDate.getMonth() + 1;
 
         // 3. Somatório dos dias de alteração (A):
-        // - A_mensal_atual: no mês ATUAL (Métrica Principal em Destaque)
+        // - A_mensal_atual: cálculo original do mês corrente
         // - A_anual_12m: nos 12 MESES REGRESSIVOS terminando no mês D selecionado
         let A_mensal_atual = 0;
         let A_anual_12m = 0;
@@ -1022,17 +1055,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 chn4AvCount++;
             }
 
-            // Cômputo para o mês ATUAL (Métrica Principal em Destaque)
-            const inopAtual = computeSignalInoperableDays(signal, currentYear, currentRealMonth);
-            A_mensal_atual += inopAtual.a_mes;
-
-            // Cômputo para os 12 meses regressivos terminando no mês D
-            if (D === currentRealMonth) {
-                A_anual_12m += inopAtual.a_ano;
-            } else {
-                const inopD = computeSignalInoperableDays(signal, currentYear, D);
-                A_anual_12m += inopD.a_ano;
-            }
+            const inopData = computeSignalInoperableDays(signal, currentYear, D);
+            A_mensal_atual += inopData.a_mes;
+            A_anual_12m += inopData.a_ano;
         });
 
         const aMensalRounded = Math.round(A_mensal_atual * 10) / 10;
@@ -1040,11 +1065,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Fórmulas NORMAM-601:
         // IE mensal = [1 - (A / (B * 30))] * 100
-        // IE anual NORMAM-601 (12 meses regressivos) = [1 - (A / (B * 30 * 12))] * 100
+        // IE anual NORMAM-601 (12 meses regressivos) = [1 - (A / (B * 30 * 12))] * 100 = [1 - (A / (B * 360))] * 100
         let ieMensalVal = 100.0;
         let ieAnualVal = 100.0;
         const denomMensal = B * 30;
-        const denomAnual = B * 30 * 12; // 12 meses regressivos = B * 360
+        const denomAnual = B * 360; // 12 meses regressivos
 
         if (B > 0) {
             ieMensalVal = Math.max(0, Math.min(100, (1 - (aMensalRounded / denomMensal)) * 100));
