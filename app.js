@@ -884,16 +884,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'OTHER';
     }
 
-    function computeSignalInoperableDays(signal, currentYear, currentMonth) {
+    function computeSignalInoperableDays(signal, targetYear, targetMonth) {
         const isOp = isOperational(signal.status);
         const now = new Date();
-        const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
-        const startOfCurrentMonth = new Date(currentYear, currentMonth - 1, 1, 0, 0, 0);
-        
-        // Janela anual móvel dos 12 últimos meses (alterada no dia 01 de cada mês):
-        // Cobre exatamente os 12 meses anteriores/atuais (base de 12 x 30 = 360 dias)
-        // Ex: Em Agosto/2026, cobre de 01/Setembro/2025 a 31/Agosto/2026
-        const startOf12MonthsWindow = new Date(currentYear, currentMonth - 12, 1, 0, 0, 0);
+        const curYear = now.getFullYear();
+        const curRealMonth = now.getMonth() + 1;
+
+        // targetMonth D (1 a 12)
+        const D = Math.max(1, Math.min(12, targetMonth || curRealMonth));
+        const yr = targetYear || curYear;
 
         let inopStart = null;
         if (signal.occurrenceStartDate || signal.inoperableSince) {
@@ -904,48 +903,50 @@ document.addEventListener('DOMContentLoaded', () => {
         let a_mes = 0;
         let a_ano = 0;
 
+        // Cômputo para o sinal atualmente avariado
         if (!isOp) {
-            if (!inopStart) inopStart = startOfCurrentMonth;
+            if (!inopStart) {
+                inopStart = new Date(yr, D - 1, 1, 0, 0, 0);
+            }
 
-            // 1. CÔMPUTO NO MÊS CONSIDERADO (NORMAM-601 Art 2.48 / 2.49)
-            // Se o sinal apagou/avariou antes do início do mês atual e segue inoperante:
-            if (inopStart <= startOfCurrentMonth) {
-                a_mes = 30; // 100% dos dias do mês inoperante
-            } else {
-                // Falhou durante o mês atual:
-                const diffMes = (now - inopStart) / (1000 * 60 * 60 * 24);
-                if (diffMes >= 1) {
-                    a_mes = Math.min(30, diffMes);
+            // 1. CÔMPUTO NO MÊS CONSIDERADO D (NORMAM-601 Art 2.48 / 2.49)
+            const dStart = new Date(yr, D - 1, 1, 0, 0, 0);
+            const dEnd = new Date(yr, D, 0, 23, 59, 59);
+
+            if (inopStart <= dStart) {
+                a_mes = 30; // 1 mês completo inoperante = 30 dias na convenção NORMAM-601
+            } else if (inopStart <= dEnd) {
+                if (yr === curYear && D === curRealMonth && now < dEnd) {
+                    const diffMes = (now - inopStart) / (1000 * 60 * 60 * 24);
+                    a_mes = Math.min(30, Math.max(0, diffMes));
+                } else {
+                    const daysInD = new Date(yr, D, 0).getDate();
+                    const daysRem = Math.max(0, daysInD - inopStart.getDate() + 1);
+                    a_mes = Math.min(30, daysRem);
                 }
             }
 
-            // 2. CÔMPUTO NA JANELA ANUAL DOS 12 ÚLTIMOS MESES MÓVEIS (Base = 12 * 30 = 360 dias)
-            for (let m = 0; m < 12; m++) {
-                const mStart = new Date(currentYear, currentMonth - 12 + m, 1, 0, 0, 0);
-                const mEnd = new Date(currentYear, currentMonth - 12 + m + 1, 0, 23, 59, 59);
+            // 2. CÔMPUTO NO ANO ATÉ O MÊS D (Meses 1 a D)
+            for (let m = 1; m <= D; m++) {
+                const mStart = new Date(yr, m - 1, 1, 0, 0, 0);
+                const mEnd = new Date(yr, m, 0, 23, 59, 59);
 
-                if (m === 11) {
-                    // Mês corrente (12º mês da janela):
-                    if (inopStart <= mStart) {
-                        a_ano += 30;
-                    } else if (inopStart <= now) {
+                if (inopStart <= mStart) {
+                    a_ano += 30; // O sinal esteve inoperante durante todo o mês m
+                } else if (inopStart <= mEnd) {
+                    if (yr === curYear && m === curRealMonth && now < mEnd) {
                         const diffCur = (now - inopStart) / (1000 * 60 * 60 * 24);
                         a_ano += Math.min(30, Math.max(0, diffCur));
-                    }
-                } else {
-                    // Meses anteriores da janela de 12 meses:
-                    if (inopStart <= mStart) {
-                        a_ano += 30; // Esteve inoperante durante todo este mês
-                    } else if (inopStart <= mEnd) {
-                        const daysInThisMonth = new Date(mStart.getFullYear(), mStart.getMonth() + 1, 0).getDate();
-                        const daysRemaining = Math.max(0, daysInThisMonth - inopStart.getDate() + 1);
-                        a_ano += Math.min(30, daysRemaining);
+                    } else {
+                        const daysInM = new Date(yr, m, 0).getDate();
+                        const daysRem = Math.max(0, daysInM - inopStart.getDate() + 1);
+                        a_ano += Math.min(30, daysRem);
                     }
                 }
             }
         }
 
-        // Histórico de ocorrências passadas (já restabelecidas) dentro da janela de 12 meses
+        // 3. HISTÓRICO DE OCORRÊNCIAS PASSADAS (SANADAS) NO ANO ATÉ O MÊS D
         if (signal.history && Array.isArray(signal.history) && signal.history.length > 0) {
             let histInopStart = null;
             signal.history.forEach(h => {
@@ -955,17 +956,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!histInopStart || hDate < histInopStart) histInopStart = hDate;
                     } else if (histInopStart) {
                         const inopEnd = hDate;
-                        // Contabilizar período já sanado nos 12 últimos meses
-                        const startAno = histInopStart < startOf12MonthsWindow ? startOf12MonthsWindow : histInopStart;
-                        if (inopEnd > startOf12MonthsWindow && startAno < inopEnd) {
-                            const dAno = (inopEnd - startAno) / (1000 * 60 * 60 * 24);
-                            if (dAno >= 1 && isOp) a_ano += dAno;
-                        }
-                        // Contabilizar período já sanado no mês corrente
-                        const startMes = histInopStart < startOfCurrentMonth ? startOfCurrentMonth : histInopStart;
-                        if (inopEnd > startOfCurrentMonth && startMes < inopEnd) {
-                            const dMes = (inopEnd - startMes) / (1000 * 60 * 60 * 24);
-                            if (dMes >= 1 && isOp) a_mes += dMes;
+                        // Computar para cada mês m de 1 a D
+                        for (let m = 1; m <= D; m++) {
+                            const mStart = new Date(yr, m - 1, 1, 0, 0, 0);
+                            const mEnd = new Date(yr, m, 0, 23, 59, 59);
+
+                            if (inopEnd > mStart && histInopStart < mEnd) {
+                                const overlapStart = histInopStart < mStart ? mStart : histInopStart;
+                                const overlapEnd = inopEnd > mEnd ? mEnd : inopEnd;
+                                const days = (overlapEnd - overlapStart) / (1000 * 60 * 60 * 24);
+                                if (days > 0) {
+                                    const cappedDays = Math.min(30, days);
+                                    a_ano += cappedDays;
+                                    if (m === D) a_mes += cappedDays;
+                                }
+                            }
                         }
                         histInopStart = null;
                     }
@@ -975,30 +980,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return {
             a_mes: Math.min(30, a_mes),
-            a_ano: Math.min(360, a_ano),
-            daysInMonth
+            a_ano: Math.min(30 * D, a_ano),
+            D
         };
     }
 
-    function updateIE() {
+    function updateIE(selectedMonth) {
         const now = new Date();
         const currentYear = now.getFullYear();
-        const currentMonth = now.getMonth() + 1; // 1 a 12 (ex: 8 = Agosto)
+        const currentRealMonth = now.getMonth() + 1; // 1 a 12
+        const monthSelect = document.getElementById('selectIeMonth');
+        
+        let D = currentRealMonth;
+        if (selectedMonth !== undefined && selectedMonth !== null) {
+            D = parseInt(selectedMonth, 10);
+        } else if (monthSelect) {
+            D = parseInt(monthSelect.value, 10) || currentRealMonth;
+        }
+        D = Math.max(1, Math.min(12, D));
+        if (monthSelect && parseInt(monthSelect.value, 10) !== D) {
+            monthSelect.value = D;
+        }
+
         const monthNames = ['', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
         const monthShortNames = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-        // Janela dos 12 últimos meses móveis:
-        const startWindowDate = new Date(currentYear, currentMonth - 12, 1);
-        const startWindowMonthName = monthShortNames[startWindowDate.getMonth() + 1];
-        const startWindowYear = String(startWindowDate.getFullYear()).slice(-2);
-        const curMonthNameShort = monthShortNames[currentMonth];
-        const curYearShort = String(currentYear).slice(-2);
 
         // 1. Filtrar estritamente sinais sob jurisdição e responsabilidade do CHN-4
         const chn4Signals = signalsData.filter(s => (s.responsavel || 'CHN-4') === 'CHN-4');
         const B = chn4Signals.length; // Total de sinais do balizamento CHN-4
 
-        // 2. Calcular o somatório dos dias de alteração (A) no mês e nos 12 últimos meses
+        // 2. Calcular o somatório dos dias de alteração (A) no mês D e no ano acumulado até o mês D
         let A_mensal = 0;
         let A_anual = 0;
         let chn4AvCount = 0;
@@ -1009,36 +1020,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 chn4AvCount++;
             }
 
-            const inopData = computeSignalInoperableDays(signal, currentYear, currentMonth);
+            const inopData = computeSignalInoperableDays(signal, currentYear, D);
             A_mensal += inopData.a_mes;
             A_anual += inopData.a_ano;
         });
 
-        // Arredondamento para números inteiros ou 1 casa decimal de dias
         const aMensalRounded = Math.round(A_mensal * 10) / 10;
         const aAnualRounded = Math.round(A_anual * 10) / 10;
 
         // 3. Fórmulas NORMAM-601:
         // IE mensal = [1 - (A / (B * 30))] * 100
-        // IE anual (12 Últimos Meses) = [1 - (A / (B * 30 * 12))] * 100 = [1 - (A / (B * 360))] * 100
+        // IE anual NORMAM-601 = [1 - (A / (B * 30 * D))] * 100
         let ieMensalVal = 100.0;
         let ieAnualVal = 100.0;
+        const denomAnual = B * 30 * D;
+        const denomMensal = B * 30;
 
         if (B > 0) {
-            const factorMensal = B * 30;
-            const factorAnual = B * 360; // 12 meses móveis * 30 dias
-            ieMensalVal = Math.max(0, Math.min(100, (1 - (aMensalRounded / factorMensal)) * 100));
-            ieAnualVal = Math.max(0, Math.min(100, (1 - (aAnualRounded / factorAnual)) * 100));
+            ieMensalVal = Math.max(0, Math.min(100, (1 - (aMensalRounded / denomMensal)) * 100));
+            ieAnualVal = denomAnual > 0 ? Math.max(0, Math.min(100, (1 - (aAnualRounded / denomAnual)) * 100)) : 100.0;
         }
 
         const ieMensalStr = ieMensalVal.toFixed(2).replace('.', ',');
         const ieAnualStr = ieAnualVal.toFixed(2).replace('.', ',');
 
-        // Header pill
+        // Header pill (exibe IE Anual Oficial NORMAM-601)
         const headerVal = document.getElementById('headerIeValue');
         if (headerVal) {
-            headerVal.textContent = `${ieMensalStr}%`;
-            headerVal.style.color = ieMensalVal >= 95 ? 'var(--status-op)' : (ieMensalVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
+            headerVal.textContent = `${ieAnualStr}%`;
+            headerVal.style.color = ieAnualVal >= 95 ? 'var(--status-op)' : (ieAnualVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
         }
 
         // Tab IE DOM Elements
@@ -1051,19 +1061,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (iePercentDisplay) iePercentDisplay.textContent = `${ieMensalStr}%`;
         if (ieAnualDisplay) ieAnualDisplay.textContent = `${ieAnualStr}%`;
-        if (ieGaugeValue) ieGaugeValue.textContent = `${ieMensalStr}%`;
-        if (ieMensalSubtitle) ieMensalSubtitle.textContent = `Mês Atual: ${monthNames[currentMonth]}/${currentYear}`;
-        if (ieAnualSubtitle) ieAnualSubtitle.textContent = `Últimos 12 Meses (${startWindowMonthName}/${startWindowYear} a ${curMonthNameShort}/${curYearShort})`;
+        if (ieGaugeValue) ieGaugeValue.textContent = `${ieAnualStr}%`;
+        if (ieMensalSubtitle) ieMensalSubtitle.textContent = `Mês: ${monthNames[D]}/${currentYear}`;
+        if (ieAnualSubtitle) ieAnualSubtitle.textContent = `Ano ${currentYear} até Mês ${D} (${monthShortNames[D]})`;
 
         const paramBVal = document.getElementById('paramBVal');
         const paramDVal = document.getElementById('paramDVal');
         const paramAMensalVal = document.getElementById('paramAMensalVal');
         const paramAAnualVal = document.getElementById('paramAAnualVal');
+        const paramDenomVal = document.getElementById('paramDenomVal');
 
         if (paramBVal) paramBVal.textContent = `${B} sinais`;
-        if (paramDVal) paramDVal.textContent = `12 meses (Janela Móvel)`;
+        if (paramDVal) paramDVal.textContent = `${D} (${monthNames[D]})`;
         if (paramAMensalVal) paramAMensalVal.textContent = `${aMensalRounded} dias`;
-        if (paramAAnualVal) paramAAnualVal.textContent = `${aAnualRounded} dias (de ${B * 360} dias)`;
+        if (paramAAnualVal) paramAAnualVal.textContent = `${aAnualRounded} dias`;
+        if (paramDenomVal) paramDenomVal.textContent = `${denomAnual}`;
 
         const statOpCount = document.getElementById('statOpCount');
         const statAvCount = document.getElementById('statAvCount');
@@ -1083,8 +1095,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statFarolEl) statFarolEl.textContent = farolCount;
 
         if (circleGauge) {
-            const deg = (parseFloat(ieMensalStr) / 100) * 360;
-            const color = parseFloat(ieMensalStr) >= 95 ? 'var(--status-op)' : (parseFloat(ieMensalStr) >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
+            const deg = (ieAnualVal / 100) * 360;
+            const color = ieAnualVal >= 95 ? 'var(--status-op)' : (ieAnualVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
             circleGauge.style.background = `conic-gradient(${color} 0deg ${deg}deg, var(--navy-700) ${deg}deg 360deg)`;
         }
 
@@ -1097,56 +1109,210 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('countAv')) document.getElementById('countAv').textContent = totalAv;
     }
 
+    // =========================================================================
+    // SIMULADOR DE EFICÁCIA (MANUTENÇÃO / RECUPERAÇÃO vs AVARIA / DECRÉSCIMO)
+    // =========================================================================
+    let currentSimMode = 'repair'; // 'repair' | 'failure'
+
+    function setSimMode(mode) {
+        currentSimMode = mode;
+        const tabRepair = document.getElementById('simTabRepair');
+        const tabFailure = document.getElementById('simTabFailure');
+        const sectionRepair = document.getElementById('simSectionRepair');
+        const sectionFailure = document.getElementById('simSectionFailure');
+        const modeDesc = document.getElementById('simModeDescription');
+
+        if (mode === 'repair') {
+            tabRepair?.classList.add('active');
+            tabFailure?.classList.remove('active');
+            if (sectionRepair) sectionRepair.style.display = 'block';
+            if (sectionFailure) sectionFailure.style.display = 'none';
+            if (modeDesc) {
+                modeDesc.innerHTML = 'Selecione abaixo os sinais avariados do <strong>CHN-4</strong> que serão contemplados na próxima missão de manutenção. O sistema calcula em tempo real o novo Índice de Eficácia (IE) e o ganho percentual.';
+            }
+        } else {
+            tabFailure?.classList.add('active');
+            tabRepair?.classList.remove('active');
+            if (sectionFailure) sectionFailure.style.display = 'block';
+            if (sectionRepair) sectionRepair.style.display = 'none';
+            if (modeDesc) {
+                modeDesc.innerHTML = 'Selecione abaixo os sinais operacionais do <strong>CHN-4</strong> para simular uma avaria de <strong>1 mês (30 dias) no próximo mês</strong>. O sistema calcula o impacto e a queda projetada no IE Anual.';
+            }
+        }
+        calculateSimulation();
+    }
+
     function openSimulator() {
         const modal = document.getElementById('modalSimulator');
-        const checklist = document.getElementById('simChecklist');
-        if (!modal || !checklist) return;
+        const checklistRepair = document.getElementById('simChecklist');
+        const checklistFailure = document.getElementById('simFailureChecklist');
+        if (!modal) return;
 
-        const damagedSignals = signalsData.filter(s => !isOperational(s.status));
-        checklist.innerHTML = '';
+        // Base CHN-4 signals strictly
+        const chn4Signals = signalsData.filter(s => (s.responsavel || 'CHN-4') === 'CHN-4');
+        const damagedSignals = chn4Signals.filter(s => !isOperational(s.status));
+        const operationalSignals = chn4Signals.filter(s => isOperational(s.status));
 
-        if (damagedSignals.length === 0) {
-            checklist.innerHTML = '<div class="text-muted p-2">Nenhum sinal avariado registrado no momento. Todos operacionais!</div>';
-        } else {
-            damagedSignals.forEach(s => {
-                const item = document.createElement('label');
-                item.className = 'sim-item';
-                item.innerHTML = `
-                    <input type="checkbox" value="${s.code}" class="sim-checkbox" checked>
-                    <div>
-                        <strong>${s.code} - ${s.name}</strong>
-                        <div class="text-muted" style="font-size:0.75rem;">Status atual: <span class="text-danger">${s.status}</span> | ${s.characteristic}</div>
-                    </div>
-                `;
-                checklist.appendChild(item);
+        // 1. Setup Repair Checklist
+        if (checklistRepair) {
+            checklistRepair.innerHTML = '';
+            if (damagedSignals.length === 0) {
+                checklistRepair.innerHTML = '<div class="text-muted p-2">Nenhum sinal avariado do CHN-4 registrado no momento. Todos operacionais!</div>';
+            } else {
+                damagedSignals.forEach(s => {
+                    const item = document.createElement('label');
+                    item.className = 'sim-item';
+                    item.innerHTML = `
+                        <input type="checkbox" value="${s.code}" class="sim-checkbox" checked>
+                        <div>
+                            <strong>${s.code} - ${s.name}</strong>
+                            <div class="text-muted" style="font-size:0.75rem;">Status atual: <span class="text-danger">${s.status}</span> | ${s.characteristic || ''}</div>
+                        </div>
+                    `;
+                    checklistRepair.appendChild(item);
+                });
+            }
+            checklistRepair.querySelectorAll('.sim-checkbox').forEach(cb => {
+                cb.addEventListener('change', calculateSimulation);
             });
         }
 
-        calculateSimulation();
-        modal.classList.add('active');
+        // 2. Setup Failure Checklist (Operational signals)
+        if (checklistFailure) {
+            checklistFailure.innerHTML = '';
+            if (operationalSignals.length === 0) {
+                checklistFailure.innerHTML = '<div class="text-muted p-2">Nenhum sinal operacional disponível para simular avaria.</div>';
+            } else {
+                operationalSignals.forEach(s => {
+                    const item = document.createElement('label');
+                    item.className = 'sim-item sim-failure-item';
+                    item.dataset.code = (s.code || '').toLowerCase();
+                    item.dataset.name = (s.name || '').toLowerCase();
+                    item.dataset.type = (s.type || '').toLowerCase();
+                    item.innerHTML = `
+                        <input type="checkbox" value="${s.code}" class="sim-failure-checkbox">
+                        <div>
+                            <strong>${s.code} - ${s.name}</strong>
+                            <div class="text-muted" style="font-size:0.75rem;">Tipo: <span class="text-info">${s.type}</span> | ${s.characteristic || ''}</div>
+                        </div>
+                    `;
+                    checklistFailure.appendChild(item);
+                });
+            }
+            checklistFailure.querySelectorAll('.sim-failure-checkbox').forEach(cb => {
+                cb.addEventListener('change', calculateSimulation);
+            });
+        }
 
-        checklist.querySelectorAll('.sim-checkbox').forEach(cb => {
-            cb.addEventListener('change', calculateSimulation);
-        });
+        // Reset search input
+        const searchInput = document.getElementById('simFailureSearch');
+        if (searchInput) searchInput.value = '';
+
+        // Reset to repair mode
+        setSimMode('repair');
+        modal.classList.add('active');
     }
 
     function calculateSimulation() {
-        const total = signalsData.length;
-        const currentOp = signalsData.filter(s => isOperational(s.status)).length;
-        const currentIE = total > 0 ? (currentOp / total) * 100 : 0;
+        const chn4Signals = signalsData.filter(s => (s.responsavel || 'CHN-4') === 'CHN-4');
+        const B = chn4Signals.length;
+        const now = new Date();
+        const curYear = now.getFullYear();
+        const curRealMonth = now.getMonth() + 1;
+        const monthSelect = document.getElementById('selectIeMonth');
+        const D = monthSelect ? parseInt(monthSelect.value, 10) || curRealMonth : curRealMonth;
 
-        const checkedBoxes = document.querySelectorAll('.sim-checkbox:checked');
-        const countSimRepaired = checkedBoxes.length;
-        const projectedOp = currentOp + countSimRepaired;
-        const projectedIE = total > 0 ? (projectedOp / total) * 100 : 0;
-        const deltaIE = projectedIE - currentIE;
+        const curOpCount = chn4Signals.filter(s => isOperational(s.status)).length;
+        const curAvCount = B - curOpCount;
 
-        document.getElementById('simCurrentIe').textContent = `${currentIE.toFixed(2).replace('.', ',')}%`;
-        document.getElementById('simCurrentRatio').textContent = `${currentOp} / ${total} operacionais`;
-        document.getElementById('simProjectedIe').textContent = `${projectedIE.toFixed(2).replace('.', ',')}%`;
-        document.getElementById('simProjectedRatio').textContent = `${projectedOp} / ${total} operacionais`;
-        document.getElementById('simDeltaIe').textContent = `+${deltaIE.toFixed(2).replace('.', ',')}%`;
-        document.getElementById('simCountRepaired').textContent = countSimRepaired;
+        // Current A for CHN-4 signals up to month D
+        let A_atual = 0;
+        chn4Signals.forEach(s => {
+            A_atual += computeSignalInoperableDays(s, curYear, D).a_ano;
+        });
+
+        const denomAtual = B * 30 * D;
+        const currentIE = denomAtual > 0 ? Math.max(0, Math.min(100, (1 - (A_atual / denomAtual)) * 100)) : 100.0;
+
+        const currentIeEl = document.getElementById('simCurrentIe');
+        const currentRatioEl = document.getElementById('simCurrentRatio');
+        if (currentIeEl) currentIeEl.textContent = `${currentIE.toFixed(2).replace('.', ',')}%`;
+        if (currentRatioEl) currentRatioEl.textContent = `${curOpCount} / ${B} operacionais (CHN-4)`;
+
+        const arrowIcon = document.getElementById('simArrowIcon');
+        const projLabel = document.getElementById('simProjectedLabel');
+        const projIeEl = document.getElementById('simProjectedIe');
+        const projRatioEl = document.getElementById('simProjectedRatio');
+        const deltaLabel = document.getElementById('simDeltaLabel');
+        const deltaIeEl = document.getElementById('simDeltaIe');
+        const deltaSub = document.getElementById('simDeltaSub');
+
+        if (currentSimMode === 'repair') {
+            // MODE 1: REPAIR / RECOVERY
+            const checkedBoxes = document.querySelectorAll('.sim-checkbox:checked');
+            const countRepaired = checkedBoxes.length;
+            const projOpCount = curOpCount + countRepaired;
+
+            // Compute saved alteration days in month D for the repaired signals
+            let savedDays = 0;
+            checkedBoxes.forEach(cb => {
+                const sig = chn4Signals.find(s => s.code === cb.value);
+                if (sig) {
+                    const inop = computeSignalInoperableDays(sig, curYear, D);
+                    savedDays += inop.a_mes;
+                }
+            });
+
+            const A_proj = Math.max(0, A_atual - savedDays);
+            const projIE = denomAtual > 0 ? Math.max(0, Math.min(100, (1 - (A_proj / denomAtual)) * 100)) : 100.0;
+            const deltaIE = projIE - currentIE;
+
+            if (arrowIcon) {
+                arrowIcon.className = 'fa-solid fa-circle-arrow-right';
+                arrowIcon.style.color = 'var(--status-op)';
+            }
+            if (projLabel) projLabel.textContent = `NOVO IE SIMULADO (MÊS ${D})`;
+            if (projIeEl) projIeEl.textContent = `${projIE.toFixed(2).replace('.', ',')}%`;
+            if (projRatioEl) projRatioEl.textContent = `${projOpCount} / ${B} operacionais (CHN-4)`;
+            if (deltaLabel) deltaLabel.textContent = 'GANHO NO IE';
+            if (deltaIeEl) {
+                deltaIeEl.className = 'sim-val text-success';
+                deltaIeEl.textContent = `+${Math.abs(deltaIE).toFixed(2).replace('.', ',')}%`;
+            }
+            if (deltaSub) {
+                deltaSub.innerHTML = `<span id="simCountRepaired">${countRepaired}</span> sinal(is) reparado(s)`;
+            }
+        } else {
+            // MODE 2: FAILURE / DECREASE
+            // NORMAM-601: "o sinal fica 1 mês inoperante e o cálculo de IE é feito baseado no próximo mês"
+            const D_next = Math.min(12, D + 1);
+            const checkedBoxes = document.querySelectorAll('.sim-failure-checkbox:checked');
+            const countFailed = checkedBoxes.length;
+            const projOpCount = Math.max(0, curOpCount - countFailed);
+
+            const denomNext = B * 30 * D_next;
+            // Existing inoperable signals remain inoperable (+30 days in next month)
+            // Plus 30 days for each newly failed signal in next month
+            const A_next = A_atual + (curAvCount * 30) + (countFailed * 30);
+            const projIE = denomNext > 0 ? Math.max(0, Math.min(100, (1 - (A_next / denomNext)) * 100)) : 100.0;
+            const deltaIE = projIE - currentIE;
+
+            if (arrowIcon) {
+                arrowIcon.className = 'fa-solid fa-circle-arrow-right';
+                arrowIcon.style.color = 'var(--status-av)';
+            }
+            if (projLabel) projLabel.textContent = `IE PROJETADO (MÊS ${D_next} COM 1 MÊS DE AVARIA)`;
+            if (projIeEl) projIeEl.textContent = `${projIE.toFixed(2).replace('.', ',')}%`;
+            if (projRatioEl) projRatioEl.textContent = `${projOpCount} / ${B} operacionais (CHN-4)`;
+            if (deltaLabel) deltaLabel.textContent = 'QUEDA NO IE';
+            if (deltaIeEl) {
+                deltaIeEl.className = 'sim-val text-danger';
+                deltaIeEl.textContent = `${deltaIE.toFixed(2).replace('.', ',')}%`;
+            }
+            if (deltaSub) {
+                deltaSub.innerHTML = `<span id="simCountRepaired">${countFailed}</span> sinal(is) avariado(s)`;
+            }
+        }
     }
 
     // Type Filter Select Listener
@@ -1723,25 +1889,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!signal) return;
         const now = new Date();
         const curYear = now.getFullYear();
-        const curMonth = now.getMonth() + 1;
+        const curRealMonth = now.getMonth() + 1;
+        const monthSelect = document.getElementById('selectIeMonth');
+        const D = monthSelect ? parseInt(monthSelect.value, 10) || curRealMonth : curRealMonth;
 
-        const inopData = computeSignalInoperableDays(signal, curYear, curMonth);
+        const inopData = computeSignalInoperableDays(signal, curYear, D);
         const sigA_mes = inopData.a_mes;
         const sigA_ano = inopData.a_ano;
 
         // IE Individual NORMAM-601 Art. 2.49
         // Mensal: IE = [1 - (A / 30)] * 100
-        // Anual (12 Últimos Meses Móveis): IE = [1 - (A / 360)] * 100
+        // Anual: IE = [1 - (A / (30 * D))] * 100
+        const denomAno = 30 * D;
         const sigIeMesVal = Math.max(0, Math.min(100, (1 - (sigA_mes / 30)) * 100));
-        const sigIeAnoVal = Math.max(0, Math.min(100, (1 - (sigA_ano / 360)) * 100));
+        const sigIeAnoVal = denomAno > 0 ? Math.max(0, Math.min(100, (1 - (sigA_ano / denomAno)) * 100)) : 100.0;
 
         const sigIeMes = sigIeMesVal.toFixed(2).replace('.', ',');
         const sigIeAno = sigIeAnoVal.toFixed(2).replace('.', ',');
 
         const individualIeEl = document.getElementById('modalSpecIeIndividual');
         if (individualIeEl) {
-            individualIeEl.textContent = `${sigIeMes}% (Mensal) | ${sigIeAno}% (12 Meses)`;
-            individualIeEl.style.color = sigIeMesVal >= 95 ? 'var(--status-op)' : (sigIeMesVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
+            individualIeEl.textContent = `${sigIeMes}% (Mês ${D}) | ${sigIeAno}% (Anual até Mês ${D})`;
+            individualIeEl.style.color = sigIeAnoVal >= 95 ? 'var(--status-op)' : (sigIeAnoVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
         }
     }
 
@@ -3529,6 +3698,80 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
 
     document.getElementById('btnOpenSimulator')?.addEventListener('click', openSimulator);
     document.getElementById('btnOpenSimulator2')?.addEventListener('click', openSimulator);
+
+    // Simulator Tab Switchers & Controls
+    document.getElementById('simTabRepair')?.addEventListener('click', () => setSimMode('repair'));
+    document.getElementById('simTabFailure')?.addEventListener('click', () => setSimMode('failure'));
+
+    document.getElementById('btnSimSelectAll')?.addEventListener('click', () => {
+        document.querySelectorAll('#simChecklist .sim-checkbox').forEach(cb => { cb.checked = true; });
+        calculateSimulation();
+    });
+
+    document.getElementById('btnSimClearAll')?.addEventListener('click', () => {
+        document.querySelectorAll('#simChecklist .sim-checkbox').forEach(cb => { cb.checked = false; });
+        calculateSimulation();
+    });
+
+    document.getElementById('btnSimClearFailure')?.addEventListener('click', () => {
+        document.querySelectorAll('#simFailureChecklist .sim-failure-checkbox').forEach(cb => { cb.checked = false; });
+        calculateSimulation();
+    });
+
+    document.getElementById('simFailureSearch')?.addEventListener('input', (e) => {
+        const term = (e.target.value || '').trim().toLowerCase();
+        document.querySelectorAll('#simFailureChecklist .sim-failure-item').forEach(item => {
+            const match = !term || item.dataset.code.includes(term) || item.dataset.name.includes(term) || item.dataset.type.includes(term);
+            item.style.display = match ? 'flex' : 'none';
+        });
+    });
+
+    document.getElementById('btnApplySimulationToRoute')?.addEventListener('click', () => {
+        let selectedCodes = [];
+        if (currentSimMode === 'repair') {
+            document.querySelectorAll('#simChecklist .sim-checkbox:checked').forEach(cb => selectedCodes.push(cb.value));
+        } else {
+            document.querySelectorAll('#simFailureChecklist .sim-failure-checkbox:checked').forEach(cb => selectedCodes.push(cb.value));
+        }
+
+        if (selectedCodes.length === 0) {
+            showToast('Nenhum sinal selecionado no simulador.', 'warning');
+            return;
+        }
+
+        let addedCount = 0;
+        selectedCodes.forEach(code => {
+            const sig = signalsData.find(s => s.code === code);
+            if (sig) {
+                const exists = routeWaypoints.some(wp => wp.id === `sig_${sig.code}`);
+                if (!exists) {
+                    routeWaypoints.push({
+                        id: `sig_${sig.code}`,
+                        name: `${sig.code} - ${sig.name}`,
+                        lat: sig.lat,
+                        lng: sig.lng
+                    });
+                    addedCount++;
+                }
+            }
+        });
+
+        isRouteVisible = true;
+        updateRoute();
+        document.getElementById('modalSimulator')?.classList.remove('active');
+
+        // Switch to route tab in sidebar
+        const routeTabBtn = document.querySelector('.sidebar-tabs .tab-btn[data-tab="tab-route"]');
+        if (routeTabBtn) routeTabBtn.click();
+
+        showToast(`${addedCount} sinal(is) adicionado(s) à Derrota Náutica com sucesso!`, 'success');
+    });
+
+    // Month Selector Change Listener
+    document.getElementById('selectIeMonth')?.addEventListener('change', (e) => {
+        const val = parseInt(e.target.value, 10);
+        updateIE(val);
+    });
 
     // =========================================================================
     // 13. CRIAR E EXCLUIR SINAIS (COM SUPORTE A RESPONSÁVEL E PERSISTÊNCIA)

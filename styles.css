@@ -2772,6 +2772,90 @@ html, body {
     accent-color: var(--accent-gold);
 }
 
+/* Simulator Modal Tab Switcher & Failure Simulator */
+.sim-mode-switcher {
+    display: flex;
+    background: var(--navy-900);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.sim-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 10px 14px;
+    font-family: var(--font-tech);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.sim-tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sim-tab-btn.active {
+    background: var(--navy-700);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sim-tab-btn.tab-repair.active {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(16, 185, 129, 0.15));
+    border: 1px solid var(--status-op);
+    color: #86efac;
+}
+
+.sim-tab-btn.tab-failure.active {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.15));
+    border: 1px solid var(--status-av);
+    color: #fca5a5;
+}
+
+.sim-delta-negative {
+    color: var(--status-av) !important;
+}
+
+.sim-item.sim-item-op {
+    border-left: 3px solid var(--status-op);
+}
+
+.sim-item.sim-item-av {
+    border-left: 3px solid var(--status-av);
+}
+
+.sim-search-box {
+    margin-bottom: 10px;
+}
+
+.sim-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--navy-900);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-family: var(--font-tech);
+}
+
+.sim-search-input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+}
+
 /* Manage Mode Switcher (Criar / Excluir Sinal Modal) */
 .manage-mode-switcher-container {
     background: var(--navy-950);

@@ -323,15 +323,36 @@
                         <div style="background: var(--navy-950); border: 1px solid var(--navy-700); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
                             <div style="font-family: var(--font-tech); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">IE Mensal (CHN-4)</div>
                             <div id="iePercentDisplay" style="font-family: var(--font-tech); font-size: 1.8rem; font-weight: 700; color: var(--status-op); margin: 4px 0;">100.0%</div>
-                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieMensalSubtitle">Mês Corrente</div>
+                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieMensalSubtitle">Mês Atual</div>
                         </div>
 
-                        <!-- IE Anual (12 Últimos Meses) -->
+                        <!-- IE Anual NORMAM-601 -->
                         <div style="background: var(--navy-950); border: 1px solid var(--navy-700); border-radius: var(--radius-sm); padding: 12px; text-align: center;">
-                            <div style="font-family: var(--font-tech); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">IE Anual (12 Últimos Meses)</div>
+                            <div style="font-family: var(--font-tech); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">IE Anual (NORMAM-601)</div>
                             <div id="ieAnualDisplay" style="font-family: var(--font-tech); font-size: 1.8rem; font-weight: 700; color: var(--status-op); margin: 4px 0;">100.0%</div>
-                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieAnualSubtitle">Janela de 12 Meses Móveis</div>
+                            <div style="font-size: 0.7rem; color: var(--text-secondary);" id="ieAnualSubtitle">Ano até Mês D</div>
                         </div>
+                    </div>
+
+                    <!-- Seletor de Mês Considerado D (NORMAM-601) -->
+                    <div style="margin: 8px 0; background: var(--navy-900); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <label for="selectIeMonth" style="font-size: 0.76rem; font-weight: 700; color: var(--accent-gold); font-family: var(--font-tech); margin: 0; white-space: nowrap;">
+                            <i class="fa-solid fa-calendar-days"></i> Mês Considerado (D):
+                        </label>
+                        <select id="selectIeMonth" class="form-control" style="font-size: 0.78rem; padding: 4px 8px; height: auto; width: auto; min-width: 140px; background: var(--navy-950); color: #fff; border: 1px solid var(--navy-700);">
+                            <option value="1">1 — Janeiro</option>
+                            <option value="2">2 — Fevereiro</option>
+                            <option value="3">3 — Março</option>
+                            <option value="4">4 — Abril</option>
+                            <option value="5">5 — Maio</option>
+                            <option value="6">6 — Junho</option>
+                            <option value="7">7 — Julho</option>
+                            <option value="8">8 — Agosto</option>
+                            <option value="9">9 — Setembro</option>
+                            <option value="10">10 — Outubro</option>
+                            <option value="11">11 — Novembro</option>
+                            <option value="12">12 — Dezembro</option>
+                        </select>
                     </div>
 
                     <!-- Large Circular Gauge -->
@@ -339,7 +360,7 @@
                         <div class="gauge-circle" id="ieCircleGauge">
                             <div class="gauge-inner">
                                 <span class="gauge-percent" id="ieGaugeValue">100%</span>
-                                <span class="gauge-subtitle">IE MENSAL CHN-4</span>
+                                <span class="gauge-subtitle">IE ANUAL NORMAM-601</span>
                             </div>
                         </div>
                     </div>
@@ -347,17 +368,18 @@
                     <!-- NORMAM-601 Formulas & Parameters Box -->
                     <div class="ie-formula-box" style="text-align: left; padding: 12px;">
                         <div style="font-family: var(--font-tech); font-weight: 700; font-size: 0.8rem; color: var(--accent-gold); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                            <i class="fa-solid fa-calculator"></i> FÓRMULAS NORMAM-601 / DHN:
+                            <i class="fa-solid fa-calculator"></i> FÓRMULA OFICIAL NORMAM-601:
                         </div>
                         <div style="font-size: 0.78rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 8px;">
-                            • <strong>IE Mensal (Mês Corrente):</strong> $$IE = [1 - (A_{mês} / (B × 30))] × 100$$<br>
-                            • <strong>IE Anual (12 Meses Móveis):</strong> $$IE = [1 - (A_{12m} / (B × 360))] × 100$$
+                            • <strong>IE Anual Balizamento:</strong> <span style="color: #93c5fd; font-weight: 700;">IE = [1 - (A / (B × 30 × D))] × 100%</span><br>
+                            • <strong>IE Anual Sinal:</strong> <span style="color: #cbd5e1;">IE = [1 - (A / (30 × D))] × 100%</span><br>
+                            • <strong>IE Mensal:</strong> <span style="color: #cbd5e1;">IE = [1 - (A / (B × 30))] × 100%</span>
                         </div>
                         <div style="border-top: 1px dashed var(--navy-700); padding-top: 6px; font-size: 0.75rem; color: var(--text-secondary); display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                             <div><strong>B (Sinais CHN-4):</strong> <span id="paramBVal" style="color: var(--accent-gold-light); font-weight: 700;">0</span></div>
-                            <div><strong>Período Anual:</strong> <span id="paramDVal" style="color: var(--accent-gold-light); font-weight: 700;">12 meses</span></div>
-                            <div><strong>A (Inop. Mês):</strong> <span id="paramAMensalVal" style="color: var(--status-op); font-weight: 700;">0 dias</span></div>
-                            <div><strong>A (Inop. 12 Meses):</strong> <span id="paramAAnualVal" style="color: var(--status-op); font-weight: 700;">0 dias</span></div>
+                            <div><strong>D (Mês):</strong> <span id="paramDVal" style="color: var(--accent-gold-light); font-weight: 700;">1</span></div>
+                            <div><strong>A (Dias Inop. no Ano):</strong> <span id="paramAAnualVal" style="color: var(--status-op); font-weight: 700;">0 dias</span></div>
+                            <div><strong>Denominador (B×30×D):</strong> <span id="paramDenomVal" style="color: var(--accent-gold-light); font-weight: 700;">0</span></div>
                         </div>
                     </div>
 
@@ -585,36 +607,46 @@
                 </div>
 
                 <div class="modal-body">
-                    <p class="sim-description">
-                        Selecione abaixo os sinais atualmente avariados que serão contemplados na próxima missão de manutenção. O sistema calcula em tempo real o novo Índice de Eficácia (IE) e o ganho percentual.
+                    <!-- Mode Switcher Tabs -->
+                    <div class="sim-mode-switcher">
+                        <button type="button" class="sim-tab-btn tab-repair active" id="simTabRepair">
+                            <i class="fa-solid fa-wrench"></i> 1. Simular Manutenção (Recuperação do IE)
+                        </button>
+                        <button type="button" class="sim-tab-btn tab-failure" id="simTabFailure">
+                            <i class="fa-solid fa-triangle-exclamation"></i> 2. Simular Avaria (Decréscimo do IE)
+                        </button>
+                    </div>
+
+                    <p class="sim-description" id="simModeDescription">
+                        Selecione abaixo os sinais avariados do <strong>CHN-4</strong> que serão contemplados na próxima missão de manutenção. O sistema calcula em tempo real o novo Índice de Eficácia (IE) e o ganho percentual.
                     </p>
 
                     <!-- Comparative IE Telemetry -->
                     <div class="sim-telemetry-grid">
                         <div class="sim-card sim-current">
-                            <span class="sim-label">IE ATUAL</span>
+                            <span class="sim-label">IE ATUAL (CHN-4)</span>
                             <div class="sim-val" id="simCurrentIe">--%</div>
                             <span class="sim-sub" id="simCurrentRatio">0 / 0 operacionais</span>
                         </div>
                         <div class="sim-card sim-arrow">
-                            <i class="fa-solid fa-circle-arrow-right"></i>
+                            <i class="fa-solid fa-circle-arrow-right" id="simArrowIcon"></i>
                         </div>
                         <div class="sim-card sim-projected">
-                            <span class="sim-label">NOVO IE SIMULADO</span>
+                            <span class="sim-label" id="simProjectedLabel">NOVO IE SIMULADO</span>
                             <div class="sim-val" id="simProjectedIe">--%</div>
                             <span class="sim-sub" id="simProjectedRatio">0 / 0 operacionais</span>
                         </div>
                         <div class="sim-card sim-delta">
-                            <span class="sim-label">GANHO NO IE</span>
+                            <span class="sim-label" id="simDeltaLabel">GANHO NO IE</span>
                             <div class="sim-val text-success" id="simDeltaIe">+0.0%</div>
-                            <span class="sim-sub"><span id="simCountRepaired">0</span> sinal(is) reparados</span>
+                            <span class="sim-sub" id="simDeltaSub"><span id="simCountRepaired">0</span> sinal(is)</span>
                         </div>
                     </div>
 
-                    <!-- Checklist of damaged signals -->
-                    <div class="sim-list-section">
+                    <!-- Mode 1: Repair Checklist (Damaged CHN-4 Signals) -->
+                    <div class="sim-list-section" id="simSectionRepair">
                         <div class="sim-list-header">
-                            <span>SINAIS AVARIADOS DISPONÍVEIS PARA REPARO SIMULADO:</span>
+                            <span>SINAIS AVARIADOS CHN-4 DISPONÍVEIS PARA REPARO:</span>
                             <div class="sim-check-tools">
                                 <button class="btn-text" id="btnSimSelectAll">Marcar Todos</button> | 
                                 <button class="btn-text" id="btnSimClearAll">Desmarcar Todos</button>
@@ -622,7 +654,23 @@
                         </div>
 
                         <div class="sim-checklist" id="simChecklist">
-                            <!-- Dynamic checkboxes -->
+                            <!-- Dynamic checkboxes for damaged CHN-4 signals -->
+                        </div>
+                    </div>
+
+                    <!-- Mode 2: Failure / Decrease Checklist (Operational CHN-4 Signals) -->
+                    <div class="sim-list-section" id="simSectionFailure" style="display: none;">
+                        <div class="sim-list-header">
+                            <span>SINAIS OPERACIONAIS CHN-4 (SIMULAR AVARIA DE 1 MÊS / 30 DIAS NO PRÓXIMO MÊS):</span>
+                            <div class="sim-check-tools">
+                                <button class="btn-text" id="btnSimClearFailure">Limpar Seleção</button>
+                            </div>
+                        </div>
+                        <div class="sim-search-box">
+                            <input type="text" id="simFailureSearch" class="sim-search-input" placeholder="Buscar sinal operacional (código, nome, tipo)...">
+                        </div>
+                        <div class="sim-checklist" id="simFailureChecklist">
+                            <!-- Dynamic checkboxes for operational CHN-4 signals -->
                         </div>
                     </div>
                 </div>
