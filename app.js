@@ -1846,9 +1846,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             card.addEventListener('click', () => {
-                map.flyTo([s.lat, s.lng], 11, { duration: 1.2 });
-                if (mapMarkers[s.code]) {
-                    mapMarkers[s.code].openPopup();
+                try {
+                    const mapWrapper = document.querySelector('.app-map-wrapper');
+                    const isMapVisible = mapWrapper && window.getComputedStyle(mapWrapper).display !== 'none';
+                    if (isMapVisible && map && typeof map.flyTo === 'function') {
+                        map.flyTo([s.lat, s.lng], 11, { duration: 1.2 });
+                        if (mapMarkers[s.code]) {
+                            mapMarkers[s.code].openPopup();
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Map flyTo skipped on card click:', err);
                 }
                 openSignalDetail(s.code);
             });
@@ -3157,6 +3165,9 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
 
     function toggleSidebarPC(forceState) {
         if (!appSidebar) return;
+        // Impedir minimização da barra lateral em dispositivos móveis e tablets
+        if (window.innerWidth <= 1024) return;
+
         const willMinimize = (forceState !== undefined) 
             ? forceState 
             : !appSidebar.classList.contains('minimized');
@@ -3223,35 +3234,49 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
         if (mode === 'map') {
             appContainer.classList.add('mode-map-only');
             if (btnMobileShowMap) btnMobileShowMap.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (mode === 'sidebar') {
             appContainer.classList.add('mode-sidebar-only');
             if (btnMobileShowSidebar) btnMobileShowSidebar.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             // 'both' (Padrão: Mapa + Painel com rolagem)
             if (btnMobileShowBoth) btnMobileShowBoth.classList.add('active');
         }
 
         // Atualizar renderização das camadas do Leaflet
-        setTimeout(() => { if (map) map.invalidateSize(); }, 80);
-        setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+        setTimeout(() => { if (map) map.invalidateSize(); }, 50);
+        setTimeout(() => { if (map) map.invalidateSize(); }, 250);
     }
 
-    btnMobileShowBoth?.addEventListener('click', () => setMobileViewMode('both'));
-    btnMobileShowMap?.addEventListener('click', () => setMobileViewMode('map'));
-    btnMobileShowSidebar?.addEventListener('click', () => setMobileViewMode('sidebar'));
+    function attachMobileBtn(btn, mode) {
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setMobileViewMode(mode);
+        });
+        btn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            setMobileViewMode(mode);
+        }, { passive: false });
+    }
+
+    attachMobileBtn(btnMobileShowBoth, 'both');
+    attachMobileBtn(btnMobileShowMap, 'map');
+    attachMobileBtn(btnMobileShowSidebar, 'sidebar');
 
     // Limpeza de estado e ajuste do mapa no redimensionamento da janela
+    let lastKnownViewportWidth = window.innerWidth;
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 900) {
-            // Ao retornar para PC, remove classes de modo exclusivo mobile
-            if (appContainer) appContainer.classList.remove('mode-map-only', 'mode-sidebar-only');
-        } else {
-            // No celular, garante que a barra lateral não fique presa no minimized de PC
+        const currentW = window.innerWidth;
+        // Somente altera estado se cruzou a fronteira entre Desktop e Celular/Tablet (1024px)
+        if (lastKnownViewportWidth > 1024 && currentW <= 1024) {
+            // Entrou em modo mobile: garante que o sidebar não esteja minimizado
             if (appSidebar) appSidebar.classList.remove('minimized');
             if (btnExpandSidebar) btnExpandSidebar.style.display = 'none';
+        } else if (lastKnownViewportWidth <= 1024 && currentW > 1024) {
+            // Entrou em modo PC: remove os modos de visualização única do celular
+            if (appContainer) appContainer.classList.remove('mode-map-only', 'mode-sidebar-only');
         }
+        lastKnownViewportWidth = currentW;
         if (map) map.invalidateSize();
     });
 

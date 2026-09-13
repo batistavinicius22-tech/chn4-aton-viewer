@@ -188,113 +188,127 @@ html, body {
     position: relative;
 }
 
-.app-sidebar.minimized {
-    margin-right: -440px;
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Botão em pílula na lateral da aba para minimizar */
-.sidebar-edge-toggle {
-    position: absolute;
-    left: -11px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 22px;
-    height: 58px;
-    background: var(--navy-900, #0a1424);
-    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.16));
-    border-radius: 9999px;
-    color: var(--text-secondary, #94a3b8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 650;
-    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.5);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0;
-    outline: none;
-}
-
-.sidebar-edge-toggle:hover {
-    background: var(--navy-850, #131f33);
-    color: var(--accent-gold, #d4af37);
-    border-color: var(--accent-gold, #d4af37);
-    width: 24px;
-    left: -12px;
-    box-shadow: -4px 0 14px rgba(212, 175, 55, 0.35);
-}
-
-.sidebar-edge-toggle i {
-    font-size: 0.72rem;
-    transition: transform 0.15s ease;
-}
-
-.sidebar-edge-toggle:hover i {
-    transform: translateX(2px);
-}
-
+/* Controles de minimizar/expandir exclusivos para Desktop (PC) */
+.sidebar-edge-toggle,
+#btnEdgeMinimizeSidebar,
+.sidebar-expand-tab,
+#btnExpandSidebar,
 .sidebar-minimize-btn {
-    flex: 0 0 42px;
-    background: rgba(255, 255, 255, 0.04);
-    border: none;
-    border-left: 1px solid var(--border-color);
-    border-bottom: 3px solid transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
+    display: none !important;
 }
 
-.sidebar-minimize-btn:hover {
-    color: var(--accent-gold-light);
-    background: rgba(212, 175, 55, 0.15);
-}
+@media (min-width: 1025px) {
+    .app-sidebar.minimized {
+        margin-right: -440px;
+        opacity: 0;
+        pointer-events: none;
+    }
 
-.sidebar-expand-tab {
-    position: absolute;
-    top: 72px;
-    right: 0;
-    z-index: 850;
-    display: none;
-    align-items: center;
-    gap: 8px;
-    background: var(--navy-900);
-    color: var(--accent-gold-light);
-    border: 1px solid var(--border-color);
-    border-right: none;
-    border-left: 3px solid var(--accent-gold);
-    border-radius: 6px 0 0 6px;
-    padding: 9px 14px;
-    font-family: var(--font-tech);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.45);
-    transition: all 0.25s ease;
-}
+    .sidebar-edge-toggle,
+    #btnEdgeMinimizeSidebar {
+        position: absolute;
+        left: -11px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 22px;
+        height: 58px;
+        background: var(--navy-900, #0a1424);
+        border: 1px solid var(--border-color, rgba(255, 255, 255, 0.16));
+        border-radius: 9999px;
+        color: var(--text-secondary, #94a3b8);
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 650;
+        box-shadow: -3px 0 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
+        outline: none;
+    }
 
-.sidebar-expand-tab:hover {
-    background: var(--navy-850);
-    color: #fff;
-    padding-right: 18px;
-    box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.65);
-}
+    .sidebar-edge-toggle:hover,
+    #btnEdgeMinimizeSidebar:hover {
+        background: var(--navy-850, #131f33);
+        color: var(--accent-gold, #d4af37);
+        border-color: var(--accent-gold, #d4af37);
+        width: 24px;
+        left: -12px;
+        box-shadow: -4px 0 14px rgba(212, 175, 55, 0.35);
+    }
 
-.sidebar-expand-tab i {
-    font-size: 0.95rem;
-    color: var(--accent-gold);
-    transition: transform 0.2s ease;
-}
+    .sidebar-edge-toggle i,
+    #btnEdgeMinimizeSidebar i {
+        font-size: 0.72rem;
+        transition: transform 0.15s ease;
+    }
 
-.sidebar-expand-tab:hover i {
-    transform: translateX(-3px);
+    .sidebar-edge-toggle:hover i,
+    #btnEdgeMinimizeSidebar:hover i {
+        transform: translateX(2px);
+    }
+
+    .sidebar-expand-tab {
+        position: absolute;
+        top: 72px;
+        right: 0;
+        z-index: 850;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        background: var(--navy-900);
+        color: var(--accent-gold-light);
+        border: 1px solid var(--border-color);
+        border-right: none;
+        border-left: 3px solid var(--accent-gold);
+        border-radius: 6px 0 0 6px;
+        padding: 9px 14px;
+        font-family: var(--font-tech);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.45);
+        transition: all 0.25s ease;
+    }
+
+    .sidebar-expand-tab:hover {
+        background: var(--navy-850);
+        color: #fff;
+        padding-right: 18px;
+        box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.65);
+    }
+
+    .sidebar-expand-tab i {
+        font-size: 0.95rem;
+        color: var(--accent-gold);
+        transition: transform 0.2s ease;
+    }
+
+    .sidebar-expand-tab:hover i {
+        transform: translateX(-3px);
+    }
+
+    .sidebar-minimize-btn {
+        flex: 0 0 42px;
+        background: rgba(255, 255, 255, 0.04);
+        border: none;
+        border-left: 1px solid var(--border-color);
+        border-bottom: 3px solid transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar-minimize-btn:hover {
+        color: var(--accent-gold-light);
+        background: rgba(212, 175, 55, 0.15);
+    }
 }
 
 .sidebar-tabs {
@@ -1963,7 +1977,7 @@ html, body {
     display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     html, body {
         overflow-x: hidden;
         overflow-y: auto !important;
@@ -1996,7 +2010,7 @@ html, body {
     }
 
     .mobile-view-toggle {
-        display: flex;
+        display: flex !important;
         width: 100%;
         background: var(--navy-950);
         border-bottom: 1px solid var(--border-color);
@@ -2053,20 +2067,25 @@ html, body {
         position: relative;
     }
 
+    /* Ocultação total e absoluta de controles de PC no mobile e tablet */
     .sidebar-minimize-btn,
     .sidebar-edge-toggle,
+    #btnEdgeMinimizeSidebar,
     .sidebar-expand-tab,
+    #btnExpandSidebar,
     #btnToolToggleSidebar {
         display: none !important;
     }
 
     .app-sidebar {
         order: unset;
-        width: 100%;
-        min-width: 100%;
+        width: 100% !important;
+        min-width: 100% !important;
         margin-right: 0 !important;
         opacity: 1 !important;
         pointer-events: auto !important;
+        transform: none !important;
+        visibility: visible !important;
         border-left: none;
         box-shadow: none;
         flex: none;
@@ -2074,10 +2093,10 @@ html, body {
         overflow: visible;
     }
 
-    /* Single-view mode states on mobile */
+    /* Modo 1: Só Mapa */
     .app-container.mode-map-only {
-        height: calc(100dvh - 110px);
-        height: calc(100vh - 110px);
+        height: calc(100dvh - 100px);
+        height: calc(100vh - 100px);
         min-height: 0;
         overflow: hidden;
     }
@@ -2098,14 +2117,19 @@ html, body {
         min-height: 0;
     }
 
+    /* Modo 2: Só Painel */
     .app-container.mode-sidebar-only {
-        height: calc(100dvh - 110px);
-        height: calc(100vh - 110px);
+        height: calc(100dvh - 100px);
+        height: calc(100vh - 100px);
         min-height: 0;
         overflow: hidden;
     }
 
     .app-container.mode-sidebar-only .app-map-wrapper {
+        display: none !important;
+    }
+
+    .app-container.mode-sidebar-only .map-drag-handle {
         display: none !important;
     }
 
@@ -2124,6 +2148,23 @@ html, body {
         min-height: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        padding-bottom: 24px;
+    }
+
+    .app-container.mode-sidebar-only .signal-list {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    /* Modo 3 Padrão (Ambos ao rolar): dados rolam naturalmente */
+    .app-container:not(.mode-sidebar-only) .app-sidebar .tab-content.active {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .app-container:not(.mode-sidebar-only) .signal-list {
+        max-height: none !important;
+        overflow: visible !important;
     }
 
     .map-drag-handle {
