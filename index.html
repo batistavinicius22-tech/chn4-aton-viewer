@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHN-4 | Visualizador de Auxílios à Navegação (AtoN GIS Viewer)</title>
-    <meta name="description" content="Visualizador Operacional GIS e Painel de Monitoramento Tático de Auxílios à Navegação do Centro de Hidrografia do Norte (CHN-4 / 4º Distrito Naval).">
+    <title>CHN-4 | Sistema de Gestão de Auxílios à Navegação (AtoN)</title>
+    <meta name="description" content="Painel de Controle Operacional e Visualizador GIS de Auxílios à Navegação do Centro de Hidrografia do Norte (CHN-4 / 4º Distrito Naval).">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@
             </div>
             <div class="brand-text">
                 <h1>CENTRO DE HIDROGRAFIA DO NORTE — CHN-4</h1>
-                <h2>4º DISTRITO NAVAL | MARINHA DO BRASIL — VISUALIZADOR OPERACIONAL ATON</h2>
+                <h2>4º DISTRITO NAVAL | MARINHA DO BRASIL — SISTEMA DE GESTÃO DE ATON</h2>
             </div>
         </div>
 
@@ -49,15 +49,24 @@
             </div>
 
             <!-- Real-time Multi-User Sync Status Badge -->
-            <div class="sync-badge" id="syncStatusBadge" title="Status de Sincronização em Tempo Real">
+            <div class="sync-badge" id="syncStatusBadge" title="Status de Interoperabilidade Multi-Usuário em Tempo Real">
                 <span class="sync-dot sync-online"></span>
-                <span class="sync-text" id="syncStatusText">ONLINE</span>
+                <span class="sync-text" id="syncStatusText">ONLINE (MULTI-USUÁRIO)</span>
             </div>
 
-            <button class="btn btn-simulation" id="btnOpenSimulator" title="Abrir Simulador de Manutenção e Impacto no IE">
+            <!-- Pontos de Parada & Backups do Sistema -->
+            <button class="btn btn-outline" id="btnOpenBackupsModal" title="Pontos de Parada & Backups do Sistema (Histórico)">
+                <i class="fa-solid fa-clock-rotate-left"></i> Backups
+            </button>
+
+            <button class="btn btn-primary" id="btnOpenAddSignalHeader" title="Cadastrar novo auxílio à navegação no banco de dados">
+                <i class="fa-solid fa-plus-circle"></i> CRIAR SINAL
+            </button>
+
+            <button class="btn btn-simulation" id="btnOpenSimulator">
                 <i class="fa-solid fa-calculator"></i> Simulador IE
             </button>
-            <button class="btn btn-outline" id="btnToggleTheme" title="Alternar Tema Claro/Escuro">
+            <button class="btn btn-outline" id="btnToggleTheme" title="Alternar Tema">
                 <i class="fa-solid fa-moon"></i>
             </button>
         </div>
@@ -79,7 +88,7 @@
             </button>
         </div>
 
-        <!-- Main Map Display -->
+        <!-- Main Map Display (Comes first in HTML so mobile shows map at top when scrolling) -->
         <main class="app-map-wrapper">
             <div class="map-drag-handle">
                 <i class="fa-solid fa-arrows-up-down"></i> Role para baixo para ver o Painel de Sinais
@@ -428,7 +437,7 @@
         </aside>
     </div>
 
-    <!-- MODAL 1: DETALHES DO SINAL (DH2) & GALERIA DE FOTOS (SOMENTE LEITURA) -->
+    <!-- MODAL 1: DETALHES DO SINAL (DH2) + EDICAO & FOTO -->
     <div class="modal-backdrop" id="modalSignalDetail">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -438,6 +447,9 @@
                         <h2 id="modalSignalName">Farol de Salinópolis</h2>
                     </div>
                     <div class="header-action-buttons">
+                        <button class="btn btn-outline btn-sm" id="btnToggleEditMode">
+                            <i class="fa-solid fa-pen"></i> <span id="textBtnEdit">Editar Ficha Técnica</span>
+                        </button>
                         <button class="modal-close" data-close="modalSignalDetail">&times;</button>
                     </div>
                 </div>
@@ -449,7 +461,7 @@
                         <div class="spec-panel">
                             <h4><i class="fa-solid fa-book-bookmark"></i> Ficha Técnica (Lista de Faróis - DH2)</h4>
                             
-                            <!-- Display View Mode (Read-Only) -->
+                            <!-- Display View Mode -->
                             <div id="viewSpecMode">
                                 <table class="spec-table">
                                     <tr>
@@ -501,9 +513,133 @@
                                         <td id="modalSpecContingencyPlan" style="color: var(--accent-gold-light); font-size: 0.88rem; line-height: 1.4; white-space: pre-line;">--</td>
                                     </tr>
                                 </table>
+
+                                <!-- Direct Editable Computation Date Card -->
+                                <div class="computation-date-card" style="background: var(--navy-950); border: 1px solid var(--accent-gold); border-radius: var(--radius-sm); padding: 12px; margin-top: 12px;">
+                                    <label for="directOccurrenceDateInput" style="font-family: var(--font-tech); font-weight: 700; font-size: 0.8rem; color: var(--accent-gold-light); display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                                        <i class="fa-solid fa-calendar-check text-gold"></i> DATA INICIAL DE CÔMPUTO (NORMAM-601):
+                                    </label>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <input type="datetime-local" id="directOccurrenceDateInput" class="form-control" style="font-size: 0.85rem; padding: 6px 10px; border-color: var(--accent-gold); background: var(--navy-900); flex: 1;">
+                                        <button type="button" class="btn btn-warning btn-sm" id="btnSaveComputationDate" style="white-space: nowrap; font-weight: 700; padding: 7px 12px;">
+                                            <i class="fa-solid fa-floppy-disk"></i> Salvar Data
+                                        </button>
+                                    </div>
+                                    <div id="savedIndicatorBadge" style="font-size: 0.72rem; color: var(--status-op); font-weight: 700; display: none; margin-top: 6px;">
+                                        <i class="fa-solid fa-circle-check"></i> Data salva no banco de dados e IE recalculado com sucesso!
+                                    </div>
+                                    <small class="help-text" style="color: var(--text-secondary); font-size: 0.72rem; display: block; margin-top: 6px;">
+                                        <i class="fa-solid fa-info-circle text-gold"></i> Altere a data/hora e clique em <strong>Salvar Data</strong> para gravar no banco e recalcular o Índice de Eficácia (IE).
+                                    </small>
+                                </div>
                             </div>
 
-                            <!-- Photo Section (Galeria Multi-Fotos & Carousel - Modo Visualização) -->
+                            <!-- Edit View Mode -->
+                            <form id="formEditSpec" style="display: none;">
+                                <div class="form-group">
+                                    <label>Código DH2:</label>
+                                    <input type="text" id="editCode" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nome do Sinal:</label>
+                                    <input type="text" id="editName" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo de Sinal:</label>
+                                    <input type="text" id="editType" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Característica Luminosa:</label>
+                                    <input type="text" id="editCharacteristic" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Alcance (NM):</label>
+                                    <input type="number" id="editRange" class="form-control" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Altitude (m):</label>
+                                    <input type="number" id="editAltitude" class="form-control" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                        <label style="margin: 0; font-weight: 700; color: var(--accent-gold-light);"><i class="fa-solid fa-compass text-gold"></i> Coordenadas da Posição *</label>
+                                        <div class="coord-mode-toggle">
+                                            <button type="button" id="btnEditCoordModeGMS" class="coord-mode-btn active">Náutico (GG° MM.mm' S/N)</button>
+                                            <button type="button" id="btnEditCoordModeDecimal" class="coord-mode-btn">Decimal (DD)</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mode 1: Náutico (GG° MM.mm' S/N e GGG° MM.mm' E/W) -->
+                                    <div id="panelEditCoordGMS">
+                                        <div class="gms-input-block mb-2">
+                                            <span class="gms-label" style="font-weight: 600; min-width: 170px;">Latitude (GG° MM.mm' S/N):</span>
+                                            <div class="gms-fields">
+                                                <input type="number" id="editLatDeg" min="0" max="90" placeholder="00" class="form-control gms-field" style="width: 60px; text-align: center;" required>
+                                                <span class="unit">°</span>
+                                                <input type="number" id="editLatMin" min="0" max="59.99" step="0.01" placeholder="00.00" class="form-control gms-field gms-min" style="width: 85px; text-align: center;" required>
+                                                <span class="unit">'</span>
+                                                <select id="editLatHem" class="form-control gms-hem" style="width: 90px;">
+                                                    <option value="S" selected>S (Sul)</option>
+                                                    <option value="N">N (Norte)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="gms-input-block">
+                                            <span class="gms-label" style="font-weight: 600; min-width: 170px;">Longitude (GGG° MM.mm' E/W):</span>
+                                            <div class="gms-fields">
+                                                <input type="number" id="editLngDeg" min="0" max="180" placeholder="000" class="form-control gms-field" style="width: 70px; text-align: center;" required>
+                                                <span class="unit">°</span>
+                                                <input type="number" id="editLngMin" min="0" max="59.99" step="0.01" placeholder="00.00" class="form-control gms-field gms-min" style="width: 85px; text-align: center;" required>
+                                                <span class="unit">'</span>
+                                                <select id="editLngHem" class="form-control gms-hem" style="width: 95px;">
+                                                    <option value="E">E (Leste)</option>
+                                                    <option value="W" selected>W (Oeste)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mode 2: Decimal (DD.dddd) -->
+                                    <div id="panelEditCoordDecimal" style="display: none;">
+                                        <div class="coords-input-row">
+                                            <input type="number" id="editLat" class="form-control" placeholder="Latitude Decimal (ex: -1.371333)" step="any">
+                                            <input type="number" id="editLng" class="form-control" placeholder="Longitude Decimal (ex: -48.490500)" step="any">
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-outline btn-sm mt-2 w-full" id="btnPickPointOnMapEdit">
+                                        <i class="fa-solid fa-crosshairs"></i> Capturar Nova Posição no Mapa
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Jurisdição:</label>
+                                    <input type="text" id="editJurisdiction" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Órgão Responsável:</label>
+                                    <select id="editResponsavel" class="form-control" required>
+                                        <option value="CHN-4">CHN-4 (Centro de Hidrografia do Norte)</option>
+                                        <option value="CPAP">CPAP (Capitania dos Portos do Amapá)</option>
+                                        <option value="CPMA">CPMA (Capitania dos Portos do Maranhão)</option>
+                                        <option value="CPPA">CPPA (Capitania dos Portos do Pará)</option>
+                                        <option value="Extra-MB">Órgãos Extra-Marinha do Brasil</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-shield-halved text-gold"></i> Plano de Contingência:</label>
+                                    <textarea id="editContingencyPlan" class="form-control" rows="3" placeholder="Ação de contingência para restabelecer o sinal em caso de falha/avaria..."></textarea>
+                                </div>
+                                <div class="form-actions-grid mt-3">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+                                    </button>
+                                    <button type="button" class="btn btn-danger-outline" id="btnDeleteSignal" title="Excluir/Cancelar este sinal permanentemente">
+                                        <i class="fa-solid fa-trash-can"></i> Excluir Sinal
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Photo Section (Galeria Multi-Fotos & Carousel) -->
                             <div class="photo-section mt-3">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h4 style="margin: 0;"><i class="fa-solid fa-images"></i> Galeria de Fotos</h4>
@@ -513,6 +649,7 @@
                                     <div class="photo-placeholder" id="photoPlaceholder">
                                         <i class="fa-solid fa-image"></i>
                                         <span>Nenhuma foto anexada</span>
+                                        <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 4px;">Clique abaixo para adicionar fotos</small>
                                     </div>
                                     <div class="photo-img-wrapper" id="photoImgWrapper" style="display:none;" title="Clique para expandir em tela cheia">
                                         <!-- Prev / Next Navigation Arrows -->
@@ -531,6 +668,9 @@
                                     <div class="photo-info" id="photoInfoBox" style="display:none;">
                                         <span class="photo-date" id="photoDateDisplay"><i class="fa-solid fa-calendar-day"></i> Data: --/--/----</span>
                                         <div style="display: flex; gap: 6px; align-items: center;">
+                                            <button type="button" class="btn btn-outline btn-xs text-danger" id="btnDeleteCurrentPhoto" title="Excluir esta foto">
+                                                <i class="fa-solid fa-trash-can"></i> Excluir
+                                            </button>
                                             <button type="button" class="btn-photo-expand" id="btnExpandPhotoDetail" title="Expandir visualização com zoom">
                                                 <i class="fa-solid fa-expand"></i> Expandir
                                             </button>
@@ -538,6 +678,13 @@
                                     </div>
                                     <!-- Mini Thumbnail Preview Strip -->
                                     <div class="photo-thumb-strip" id="photoThumbStrip" style="display:none;"></div>
+                                </div>
+
+                                <div class="photo-actions mt-2" style="display: flex; gap: 8px;">
+                                    <button type="button" class="btn btn-outline btn-sm btn-block" id="btnTriggerPhotoUpload">
+                                        <i class="fa-solid fa-plus-circle text-gold"></i> Adicionar Foto(s)
+                                    </button>
+                                    <input type="file" id="inputPhotoFile" accept="image/*" multiple style="display:none;">
                                 </div>
                             </div>
 
@@ -548,17 +695,50 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Occurrence History Timeline & AVRADIO Generator -->
+                        <!-- Right Column: Status Update & History -->
                         <div class="update-panel">
-                            <h4><i class="fa-solid fa-clock-rotate-left"></i> Histórico de Registros &amp; Ocorrências</h4>
+                            <h4><i class="fa-solid fa-pen-to-square"></i> Registrar Ocorrência / Atualizar Status</h4>
+                            
+                            <form id="formUpdateStatus">
+                                <div class="form-group">
+                                    <label for="selectNewStatus">Novo Status Operacional / Ocorrência:</label>
+                                    <select id="selectNewStatus" class="form-control">
+                                        <option value="OPERACIONAL">🟢 Operacional (Restabelecido)</option>
+                                        <option value="Avariado - Apagado">🔴 Avariado - Apagado</option>
+                                        <option value="Avariado - À deriva / Fora de posição">🔴 Avariado - À deriva / Fora de posição</option>
+                                        <option value="Avariado - Destruído">🔴 Avariado - Destruído</option>
+                                        <option value="Avariado - Danificado">🔴 Avariado - Danificado</option>
+                                        <option value="Desaparecido">🔴 Desaparecido</option>
+                                        <option value="Avariado - Retirado temporariamente">🔴 Avariado - Retirado temporariamente</option>
+                                        <option value="Avariado - Exibindo Luz Fixa">🔴 Avariado - Exibindo Luz Fixa</option>
+                                        <option value="Inoperante">🔴 Inoperante</option>
+                                        <option value="Avariado - Característica Irregular">🔴 Avariado - Característica Irregular</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="textOccurrenceReason">
+                                        <i class="fa-solid fa-triangle-exclamation"></i> Formalização da Ocorrência (Obrigatório):
+                                    </label>
+                                    <textarea id="textOccurrenceReason" class="form-control" rows="3" placeholder="Descreva os detalhes técnicos da avaria, defeito no relampejador, baterias, vandalismo ou reparo efetuado..." required></textarea>
+                                </div>
+
+                                <div class="form-buttons">
+                                    <button type="submit" class="btn btn-primary" id="btnSaveStatus">
+                                        <i class="fa-solid fa-floppy-disk"></i> Salvar Registro
+                                    </button>
+                                    <button type="button" class="btn btn-warning" id="btnGenerateAvradioModal" style="display: none;">
+                                        <i class="fa-solid fa-tower-cell"></i> Gerar Minuta AVRADIO
+                                    </button>
+                                </div>
+                            </form>
+
+                            <hr class="divider">
+
+                            <!-- Occurrence Timeline History -->
+                            <h4><i class="fa-solid fa-clock-rotate-left"></i> Histórico de Registros</h4>
                             <div class="history-timeline" id="modalHistoryTimeline">
                                 <!-- Dynamic timeline entries -->
-                            </div>
-
-                            <div class="mt-3" style="text-align: right;">
-                                <button type="button" class="btn btn-warning" id="btnGenerateAvradioModal" style="display: none;">
-                                    <i class="fa-solid fa-tower-cell"></i> Visualizar Minuta AVRADIO
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -585,7 +765,7 @@
                     </p>
 
                     <div class="avradio-container">
-                        <textarea id="avradioTextarea" class="avradio-textbox" spellcheck="false" readonly></textarea>
+                        <textarea id="avradioTextarea" class="avradio-textbox" spellcheck="false"></textarea>
                     </div>
 
                     <div class="modal-footer-actions">
@@ -692,6 +872,257 @@
         </div>
     </div>
 
+    <!-- MODAL 4: CRIAR OU EXCLUIR SINAL NÁUTICO -->
+    <div class="modal-backdrop" id="modalAddSignal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title-wrapper">
+                        <span class="badge badge-navy">GESTÃO DE SINAIS NÁUTICOS</span>
+                        <h2><i class="fa-solid fa-plus-minus"></i> Criar ou Excluir Sinal</h2>
+                    </div>
+                    <button class="modal-close" data-close="modalAddSignal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    
+                    <!-- Horizontal Mode Switcher: OU CRIAR, OU EXCLUIR -->
+                    <div style="background: #0a1628; border: 2px solid #d4a017; border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; width: 100%; box-sizing: border-box;">
+                        <div style="font-family: 'Rajdhani', monospace; font-size: 0.8rem; font-weight: 700; color: #d4a017; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 7px;">
+                            <i class="fa-solid fa-sliders"></i> SELECIONE A OPERAÇÃO:
+                        </div>
+                        <div style="display: flex; gap: 10px; width: 100%;">
+                            <button type="button" id="btnTabCreateMode"
+                                style="flex: 1; padding: 13px 10px; border: 2px solid #34d399; border-radius: 6px; background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #fff; font-family: 'Rajdhani', monospace; font-weight: 700; font-size: 1rem; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(16,185,129,0.45); transition: all 0.2s;">
+                                <i class="fa-solid fa-circle-plus"></i> 1. CRIAR SINAL
+                            </button>
+                            <button type="button" id="btnTabDeleteMode"
+                                style="flex: 1; padding: 13px 10px; border: 2px solid #4a5568; border-radius: 6px; background: #1a2035; color: #94a3b8; font-family: 'Rajdhani', monospace; font-weight: 700; font-size: 1rem; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;">
+                                <i class="fa-solid fa-trash-can"></i> 2. EXCLUIR SINAL
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- MODE 1: CRIAR SINAL PANEL -->
+                    <div id="panelCreateSignal">
+                        <form id="formAddSignal" novalidate>
+                            <div class="form-grid-2col">
+                                <!-- Col 1: Identification -->
+                                <div class="form-section">
+                                    <h4 class="form-section-title"><i class="fa-solid fa-id-card"></i> Identificação</h4>
+                                    <div class="form-group">
+                                        <label for="addCode">Código DH2 / Identificador *</label>
+                                        <input type="text" id="addCode" class="form-control" placeholder="Ex: PA-55, CHN-012" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addName">Nome do Sinal *</label>
+                                        <input type="text" id="addName" class="form-control" placeholder="Ex: Farolete de Monte Alegre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addType">Tipo de Auxílio *</label>
+                                        <select id="addType" class="form-control" required>
+                                            <option value="BZ (Bóia de Balizamento)">Bóia de Balizamento (BZ)</option>
+                                            <option value="BC (Bóia Cega)">Bóia Cega / Sem Luz (BC)</option>
+                                            <option value="Baliza">Baliza</option>
+                                            <option value="Farolete">Farolete</option>
+                                            <option value="Farol">Farol</option>
+                                            <option value="Racon">Racon / Radar Beacon</option>
+                                            <option value="Marca Cardinal">Marca Cardinal (AISM)</option>
+                                            <option value="Luz de Porto">Luz de Porto</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addStatus">Status Operacional *</label>
+                                        <select id="addStatus" class="form-control" required>
+                                            <option value="OPERACIONAL">🟢 Operacional</option>
+                                            <option value="Avariado - Apagado">🔴 Avariado - Apagado</option>
+                                            <option value="Avariado - À deriva / Fora de posição">🔴 Avariado - À deriva / Fora de posição</option>
+                                            <option value="Avariado - Destruído">🔴 Avariado - Destruído</option>
+                                            <option value="Avariado - Danificado">🔴 Avariado - Danificado</option>
+                                            <option value="Desaparecido">🔴 Desaparecido</option>
+                                            <option value="Avariado - Retirado temporariamente">🔴 Avariado - Retirado temporariamente</option>
+                                            <option value="Avariado - Exibindo Luz Fixa">🔴 Avariado - Exibindo Luz Fixa</option>
+                                            <option value="Inoperante">🔴 Inoperante</option>
+                                            <option value="Avariado - Característica Irregular">🔴 Avariado - Característica Irregular</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-section">
+                                    <h4 class="form-section-title"><i class="fa-solid fa-map-pin"></i> Posição & Dados Técnicos</h4>
+                                    <div class="form-group">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                            <label style="margin: 0; font-weight: 700; color: var(--accent-gold-light);"><i class="fa-solid fa-compass text-gold"></i> Coordenadas da Posição *</label>
+                                            <div class="coord-mode-toggle">
+                                                <button type="button" id="btnCoordModeGMS" class="coord-mode-btn active">Náutico (GG° MM.mm' S/N)</button>
+                                                <button type="button" id="btnCoordModeDecimal" class="coord-mode-btn">Decimal (DD)</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mode 1: Náutico (GG° MM.mm' S/N e GGG° MM.mm' E/W) -->
+                                        <div id="panelCoordGMS">
+                                            <div class="gms-input-block mb-2">
+                                                <span class="gms-label" style="font-weight: 600; min-width: 170px;">Latitude (GG° MM.mm' S/N):</span>
+                                                <div class="gms-fields">
+                                                    <input type="number" id="addLatDeg" min="0" max="90" placeholder="00" class="form-control gms-field" style="width: 60px; text-align: center;" required>
+                                                    <span class="unit">°</span>
+                                                    <input type="number" id="addLatMin" min="0" max="59.99" step="0.01" placeholder="00.00" class="form-control gms-field gms-min" style="width: 85px; text-align: center;" required>
+                                                    <span class="unit">'</span>
+                                                    <select id="addLatHem" class="form-control gms-hem" style="width: 90px;">
+                                                        <option value="S" selected>S (Sul)</option>
+                                                        <option value="N">N (Norte)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="gms-input-block">
+                                                <span class="gms-label" style="font-weight: 600; min-width: 170px;">Longitude (GGG° MM.mm' E/W):</span>
+                                                <div class="gms-fields">
+                                                    <input type="number" id="addLngDeg" min="0" max="180" placeholder="000" class="form-control gms-field" style="width: 70px; text-align: center;" required>
+                                                    <span class="unit">°</span>
+                                                    <input type="number" id="addLngMin" min="0" max="59.99" step="0.01" placeholder="00.00" class="form-control gms-field gms-min" style="width: 85px; text-align: center;" required>
+                                                    <span class="unit">'</span>
+                                                    <select id="addLngHem" class="form-control gms-hem" style="width: 95px;">
+                                                        <option value="E">E (Leste)</option>
+                                                        <option value="W" selected>W (Oeste)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mode 2: Decimal (DD.dddd) -->
+                                        <div id="panelCoordDecimal" style="display: none;">
+                                            <div class="coords-input-row">
+                                                <input type="number" id="addLat" class="form-control" placeholder="Latitude Decimal (ex: -1.371333)" step="any">
+                                                <input type="number" id="addLng" class="form-control" placeholder="Longitude Decimal (ex: -48.490500)" step="any">
+                                            </div>
+                                        </div>
+
+                                        <button type="button" class="btn btn-outline btn-sm mt-2 w-full" id="btnPickPointOnMap">
+                                            <i class="fa-solid fa-crosshairs"></i> Capturar Posição Clicando no Mapa
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addCharacteristic">Característica do Sinal</label>
+                                        <input type="text" id="addCharacteristic" class="form-control" placeholder="Ex: Lp. V. 4s 6m 8NM">
+                                    </div>
+                                    <div class="form-grid-2col-inner">
+                                        <div class="form-group">
+                                            <label for="addRange">Alcance (NM)</label>
+                                            <input type="number" id="addRange" class="form-control" value="0" min="0" max="50" step="0.5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="addAltitude">Altitude (m)</label>
+                                            <input type="number" id="addAltitude" class="form-control" value="0" min="0" max="200">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addJurisdiction">Jurisdição / Capitania</label>
+                                        <input type="text" id="addJurisdiction" class="form-control" placeholder="Ex: CHN-4 / Baía do Guajará">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addResponsavel">Órgão Responsável *</label>
+                                        <select id="addResponsavel" class="form-control" required>
+                                            <option value="CHN-4">CHN-4 (Centro de Hidrografia do Norte)</option>
+                                            <option value="CPAP">CPAP (Capitania dos Portos do Amapá)</option>
+                                            <option value="CPMA">CPMA (Capitania dos Portos do Maranhão)</option>
+                                            <option value="CPPA">CPPA (Capitania dos Portos do Pará)</option>
+                                            <option value="Extra-MB">Órgãos Extra-Marinha do Brasil</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addContingencyPlan"><i class="fa-solid fa-shield-halved text-gold"></i> Plano de Contingência</label>
+                                        <textarea id="addContingencyPlan" class="form-control" rows="2" placeholder="Procedimento de contingência em caso de avaria ou falha..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-floppy-disk"></i> Registrar Novo Sinal no Sistema
+                                </button>
+                                <button type="button" class="btn btn-outline" data-close="modalAddSignal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- MODE 2: EXCLUIR SINAL PANEL -->
+                    <div id="panelDeleteSignal" style="display: none;">
+                        <div class="form-group">
+                            <label for="selectSignalToDeleteModal"><i class="fa-solid fa-tower-observation"></i> Selecione o Sinal Náutico a ser Excluído / Cancelado:</label>
+                            <select id="selectSignalToDeleteModal" class="form-control">
+                                <!-- Dynamically populated -->
+                            </select>
+                        </div>
+
+                        <!-- Live preview card of signal selected for deletion -->
+                        <div class="delete-preview-card" id="deletePreviewCard">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="badge badge-navy" id="delPreviewCode">PA-05</span>
+                                <span class="badge badge-op" id="delPreviewStatus">OPERACIONAL</span>
+                            </div>
+                            <h3 style="font-family: var(--font-tech); margin: 4px 0;" id="delPreviewName">PEDRAS DA BARRA</h3>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);" id="delPreviewType">Bóia de Balizamento</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" id="delPreviewPos">Lat: -1.3713, Lng: -48.4905</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);" id="delPreviewJurisdiction">Jurisdição: CHN-4</div>
+                            <div style="font-size: 0.8rem; color: #d4a017; font-weight: 600;" id="delPreviewResponsavel">Responsável: CHN-4</div>
+                        </div>
+
+                        <div class="modal-footer mt-4">
+                            <button type="button" class="btn btn-danger-outline btn-lg w-full" id="btnConfirmDeleteSignalModal">
+                                <i class="fa-solid fa-trash-can"></i> Excluir Sinal Permanentemente do Sistema
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: GESTÃO DE BACKUPS & PONTOS DE PARADA (DISCRETO) -->
+    <div class="modal-backdrop" id="modalBackups">
+        <div class="modal-window modal-lg">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-clock-rotate-left text-gold"></i> PONTOS DE PARADA & BACKUPS DO SISTEMA</h2>
+                <button class="modal-close" data-close="modalBackups">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="backup-actions-bar mb-3" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary btn-sm" id="btnCreateManualBackup">
+                            <i class="fa-solid fa-floppy-disk"></i> Criar Ponto de Parada Agora
+                        </button>
+                        <button class="btn btn-outline btn-sm" id="btnImportBackupFileTrigger">
+                            <i class="fa-solid fa-file-import"></i> Carregar Backup (.json)
+                        </button>
+                        <input type="file" id="inputBackupFile" accept=".json" style="display: none;">
+                    </div>
+                    <div class="text-muted" style="font-size: 0.8rem;">
+                        <i class="fa-solid fa-shield-halved text-gold"></i> Snapshots salvos antes de edições
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table-backups" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--border-color); text-align: left; font-size: 0.8rem; color: var(--text-muted);">
+                                <th style="padding: 8px;">DATA / HORA</th>
+                                <th style="padding: 8px;">SINAIS</th>
+                                <th style="padding: 8px;">DESCRIÇÃO / MOTIVO</th>
+                                <th style="padding: 8px; text-align: right;">AÇÕES DE RESTAURAÇÃO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="backupsListTableBody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-close="modalBackups">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL LIGHTBOX: VISUALIZAÇÃO EXPANDIDA DE FOTO COM ZOOM & PAN & GALERIA -->
     <div class="modal-backdrop modal-lightbox-backdrop" id="modalPhotoLightbox">
         <div class="lightbox-dialog">
@@ -717,6 +1148,11 @@
                     </div>
 
                     <span class="lightbox-date" id="lightboxPhotoDate"><i class="fa-solid fa-calendar-day"></i> --</span>
+                    
+                    <!-- Delete Current Photo Button -->
+                    <button type="button" class="btn btn-outline btn-sm text-danger" id="btnLightboxDeletePhoto" title="Excluir esta foto da galeria">
+                        <i class="fa-solid fa-trash-can"></i> Excluir
+                    </button>
 
                     <a id="lightboxBtnDownload" href="#" download="foto_sinal.jpg" class="btn btn-outline btn-sm" title="Baixar foto">
                         <i class="fa-solid fa-download"></i> Baixar
@@ -752,6 +1188,7 @@
     <!-- Notification Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
@@ -760,7 +1197,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
 
-    <!-- Application Logic (Viewer Mode) -->
+    <!-- Application Logic -->
     <script src="app.js"></script>
 </body>
 </html>

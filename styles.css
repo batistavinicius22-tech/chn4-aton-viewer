@@ -252,26 +252,6 @@ html, body {
     #btnExpandSidebar {
         display: none !important;
     }
-
-    .sidebar-minimize-btn {
-        flex: 0 0 42px;
-        background: rgba(255, 255, 255, 0.04);
-        border: none;
-        border-left: 1px solid var(--border-color);
-        border-bottom: 3px solid transparent;
-        color: var(--text-muted);
-        cursor: pointer;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
-    }
-
-    .sidebar-minimize-btn:hover {
-        color: var(--accent-gold-light);
-        background: rgba(212, 175, 55, 0.15);
-    }
 }
 
 .sidebar-tabs {
