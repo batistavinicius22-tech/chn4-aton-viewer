@@ -3145,6 +3145,110 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
         });
     });
 
+    // =========================================================================
+    // MINIMIZAR / EXPANDIR PAINEL LATERAL PARA A DIREITA (VISUALIZAÇÃO PC)
+    // =========================================================================
+    const appSidebar = document.getElementById('appSidebar');
+    const appContainer = document.querySelector('.app-container');
+    const btnMinimizeSidebar = document.getElementById('btnMinimizeSidebar');
+    const btnExpandSidebar = document.getElementById('btnExpandSidebar');
+    const btnToolToggleSidebar = document.getElementById('btnToolToggleSidebar');
+
+    function toggleSidebarPC(forceState) {
+        if (!appSidebar) return;
+        const willMinimize = (forceState !== undefined) 
+            ? forceState 
+            : !appSidebar.classList.contains('minimized');
+
+        if (willMinimize) {
+            appSidebar.classList.add('minimized');
+            if (btnExpandSidebar) btnExpandSidebar.style.display = 'flex';
+            if (btnToolToggleSidebar) {
+                btnToolToggleSidebar.classList.add('active');
+                btnToolToggleSidebar.title = "Restaurar / Exibir Painel Lateral (PC)";
+            }
+        } else {
+            appSidebar.classList.remove('minimized');
+            if (btnExpandSidebar) btnExpandSidebar.style.display = 'none';
+            if (btnToolToggleSidebar) {
+                btnToolToggleSidebar.classList.remove('active');
+                btnToolToggleSidebar.title = "Minimizar Painel Lateral (PC)";
+            }
+        }
+
+        // Recalcular dimensões do mapa Leaflet para preencher a tela sem falhas
+        setTimeout(() => { if (map) map.invalidateSize(); }, 80);
+        setTimeout(() => { if (map) map.invalidateSize(); }, 350);
+    }
+
+    btnMinimizeSidebar?.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebarPC(true);
+    });
+
+    btnExpandSidebar?.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebarPC(false);
+    });
+
+    btnToolToggleSidebar?.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebarPC();
+    });
+
+    // =========================================================================
+    // VISUALIZAÇÃO MOBILE (SÓ MAPA / SÓ PAINEL / MAPA + PAINEL)
+    // =========================================================================
+    const btnMobileShowBoth = document.getElementById('btnMobileShowBoth');
+    const btnMobileShowMap = document.getElementById('btnMobileShowMap');
+    const btnMobileShowSidebar = document.getElementById('btnMobileShowSidebar');
+
+    function setMobileViewMode(mode) {
+        if (!appContainer) return;
+
+        // Atualizar estado ativo dos botões seletores
+        [btnMobileShowBoth, btnMobileShowMap, btnMobileShowSidebar].forEach(btn => {
+            if (btn) btn.classList.remove('active');
+        });
+
+        // Limpar classes de modo
+        appContainer.classList.remove('mode-map-only', 'mode-sidebar-only');
+
+        if (mode === 'map') {
+            appContainer.classList.add('mode-map-only');
+            if (btnMobileShowMap) btnMobileShowMap.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (mode === 'sidebar') {
+            appContainer.classList.add('mode-sidebar-only');
+            if (btnMobileShowSidebar) btnMobileShowSidebar.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // 'both' (Padrão: Mapa + Painel com rolagem)
+            if (btnMobileShowBoth) btnMobileShowBoth.classList.add('active');
+        }
+
+        // Atualizar renderização das camadas do Leaflet
+        setTimeout(() => { if (map) map.invalidateSize(); }, 80);
+        setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+    }
+
+    btnMobileShowBoth?.addEventListener('click', () => setMobileViewMode('both'));
+    btnMobileShowMap?.addEventListener('click', () => setMobileViewMode('map'));
+    btnMobileShowSidebar?.addEventListener('click', () => setMobileViewMode('sidebar'));
+
+    // Limpeza de estado e ajuste do mapa no redimensionamento da janela
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+            // Ao retornar para PC, remove classes de modo exclusivo mobile
+            if (appContainer) appContainer.classList.remove('mode-map-only', 'mode-sidebar-only');
+        } else {
+            // No celular, garante que a barra lateral não fique presa no minimized de PC
+            if (appSidebar) appSidebar.classList.remove('minimized');
+            if (btnExpandSidebar) btnExpandSidebar.style.display = 'none';
+        }
+        if (map) map.invalidateSize();
+    });
+
     const searchInput = document.getElementById('searchInput');
     searchInput?.addEventListener('input', (e) => {
         currentSearch = e.target.value;
