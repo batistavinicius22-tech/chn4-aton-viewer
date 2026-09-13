@@ -3150,6 +3150,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     // =========================================================================
     const appSidebar = document.getElementById('appSidebar');
     const appContainer = document.querySelector('.app-container');
+    const btnEdgeMinimizeSidebar = document.getElementById('btnEdgeMinimizeSidebar');
     const btnMinimizeSidebar = document.getElementById('btnMinimizeSidebar');
     const btnExpandSidebar = document.getElementById('btnExpandSidebar');
     const btnToolToggleSidebar = document.getElementById('btnToolToggleSidebar');
@@ -3180,6 +3181,11 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
         setTimeout(() => { if (map) map.invalidateSize(); }, 80);
         setTimeout(() => { if (map) map.invalidateSize(); }, 350);
     }
+
+    btnEdgeMinimizeSidebar?.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleSidebarPC(true);
+    });
 
     btnMinimizeSidebar?.addEventListener('click', (e) => {
         e.preventDefault();

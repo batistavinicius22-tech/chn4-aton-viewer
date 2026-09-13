@@ -194,6 +194,47 @@ html, body {
     pointer-events: none;
 }
 
+/* Botão em pílula na lateral da aba para minimizar */
+.sidebar-edge-toggle {
+    position: absolute;
+    left: -11px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 58px;
+    background: var(--navy-900, #0a1424);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.16));
+    border-radius: 9999px;
+    color: var(--text-secondary, #94a3b8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 650;
+    box-shadow: -3px 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    outline: none;
+}
+
+.sidebar-edge-toggle:hover {
+    background: var(--navy-850, #131f33);
+    color: var(--accent-gold, #d4af37);
+    border-color: var(--accent-gold, #d4af37);
+    width: 24px;
+    left: -12px;
+    box-shadow: -4px 0 14px rgba(212, 175, 55, 0.35);
+}
+
+.sidebar-edge-toggle i {
+    font-size: 0.72rem;
+    transition: transform 0.15s ease;
+}
+
+.sidebar-edge-toggle:hover i {
+    transform: translateX(2px);
+}
+
 .sidebar-minimize-btn {
     flex: 0 0 42px;
     background: rgba(255, 255, 255, 0.04);
@@ -2013,6 +2054,7 @@ html, body {
     }
 
     .sidebar-minimize-btn,
+    .sidebar-edge-toggle,
     .sidebar-expand-tab,
     #btnToolToggleSidebar {
         display: none !important;
