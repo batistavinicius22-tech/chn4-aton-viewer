@@ -1138,6 +1138,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statBalizaEl) statBalizaEl.textContent = balizaCount;
         if (statFarolEl) statFarolEl.textContent = farolCount;
 
+        if (circleGauge) {
+            const deg = (ieAnualVal / 100) * 360;
+            const color = ieAnualVal >= 95 ? 'var(--status-op)' : (ieAnualVal >= 80 ? 'var(--accent-gold)' : 'var(--status-av)');
+            circleGauge.style.background = `conic-gradient(${color} 0deg ${deg}deg, var(--navy-700) ${deg}deg 360deg)`;
+        }
+
         // Global count badges for Tab 1
         const total = signalsData.length;
         const totalOp = signalsData.filter(s => isOperational(s.status)).length;
@@ -1813,9 +1819,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="display: flex; gap: 4px; align-items: center;">
                         <span class="responsavel-badge ${respClass}">${s.responsavel || 'CHN-4'}</span>
                         <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${s.status}</span>
-                        <button type="button" class="btn-card-delete" onclick="event.stopPropagation(); window.deleteSignalFromCard('${s.code}', '${s.name.replace(/'/g, "\\'")}')" title="Excluir Sinal Náutico">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="signal-card-body">
@@ -1825,6 +1828,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="signal-meta">
                     <span>${toDMS(s.lat, true)} | ${toDMS(s.lng, false)}</span>
                     <span>Alcance: ${s.rangeNM} NM</span>
+                </div>
+                <div class="signal-card-actions" style="margin-top: 8px; display: flex; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation(); window.openSignalDetail('${s.code}')" style="font-size: 0.76rem; padding: 3px 10px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; color: var(--accent-gold); border-color: var(--accent-gold); background: rgba(212,175,55,0.08);" title="Visualizar Ficha Técnica DH2 deste sinal">
+                        <i class="fa-solid fa-file-lines"></i> Ficha DH2
+                    </button>
                 </div>
             `;
 
@@ -1908,42 +1916,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveSignalToBackend(signal) {
-        const clean = sanitizeForDatabase(signal);
-        if (!clean || !clean.code) return;
-
-        const idx = signalsData.findIndex(s => s.code === clean.code);
-        if (idx !== -1) {
-            signalsData[idx] = clean;
-        } else {
-            signalsData.push(clean);
-        }
-
-        if (selectedSignal && selectedSignal.code === clean.code) {
-            selectedSignal = clean;
-        }
-
-        // 1. Sempre salva localmente no Cache / IndexedDB
-        saveLocalCache();
-
-        // 2. Persiste no Firebase Cloud Firestore na nuvem (se ativo e conectado)
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            if (window.isSystemOfflineOrCache || !navigator.onLine) {
-                showToast('⚠️ ATENÇÃO: Dispositivo operando em MODO OFFLINE (Cache). Alteração salva localmente, mas não enviada para a nuvem para evitar conflitos.', 'warning');
-            } else {
-                db.collection("signals").doc(clean.code).set(clean, { merge: true })
-                    .then(() => console.log(`🔥 Firestore: Sinal ${clean.code} salvo na nuvem com sucesso!`))
-                    .catch(err => console.error("Erro ao salvar no Firestore:", err));
-            }
-        }
-
-        // 3. Persiste na API REST local (se o servidor node/python estiver rodando)
-        fetch(`/api/signals/${encodeURIComponent(clean.code)}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(clean)
-        }).then(r => {
-            if (r.ok) console.log(`💾 REST API: Sinal ${clean.code} gravado em signals.json!`);
-        }).catch(err => console.warn('API REST fallback:', err));
+        // Modo Visualizador (Somente Leitura): gravações desativadas para proteção dos dados
+        return;
     }
 
     function updateIndividualSignalIEDisplay(signal) {
@@ -2010,88 +1984,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update Individual IE display
         updateIndividualSignalIEDisplay(signal);
 
-        toggleEditSpecMode(false);
         currentPhotoIndex = 0;
         renderSignalPhoto(signal);
 
-        document.getElementById('selectNewStatus').value = isOp ? 'OPERACIONAL' : signal.status;
-        document.getElementById('textOccurrenceReason').value = '';
-
         const btnAvradio = document.getElementById('btnGenerateAvradioModal');
         if (btnAvradio) btnAvradio.style.display = isOp ? 'none' : 'inline-flex';
-
-        // Initialize Direct Occurrence Date Input in Ficha DH2
-        const directInput = document.getElementById('directOccurrenceDateInput');
-        if (directInput) {
-            let currentCompDate = signal.occurrenceStartDate || signal.inoperableSince;
-            if (!currentCompDate && signal.history && signal.history.length > 0) {
-                const inopHistory = signal.history.slice().reverse().find(h => !isOperational(h.status));
-                if (inopHistory) {
-                    currentCompDate = inopHistory.startDate || inopHistory.date;
-                } else {
-                    const lastEntry = signal.history[signal.history.length - 1];
-                    currentCompDate = lastEntry.startDate || lastEntry.date;
-                }
-            }
-            if (!currentCompDate) {
-                const now = new Date();
-                const pad = (n) => String(n).padStart(2, '0');
-                currentCompDate = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-            } else {
-                currentCompDate = currentCompDate.replace(' ', 'T').slice(0, 16);
-            }
-            directInput.value = currentCompDate;
-        }
 
         renderHistoryTimeline(signal.history);
         modal.classList.add('active');
     }
     window.openSignalDetail = openSignalDetail;
-
-    // Save Computation Date Button Click Handler (Dedicated Button)
-    document.getElementById('btnSaveComputationDate')?.addEventListener('click', () => {
-        if (!selectedSignal) return;
-        const directInput = document.getElementById('directOccurrenceDateInput');
-        const newVal = directInput?.value;
-        if (!newVal) {
-            showToast('Por favor, selecione uma data válida!', 'warning');
-            return;
-        }
-
-        const formattedDate = newVal.replace('T', ' ');
-        selectedSignal.occurrenceStartDate = formattedDate;
-        selectedSignal.inoperableSince = formattedDate;
-
-        if (!selectedSignal.history) selectedSignal.history = [];
-        if (selectedSignal.history.length > 0) {
-            selectedSignal.history[selectedSignal.history.length - 1].startDate = formattedDate;
-        } else {
-            selectedSignal.history.push({
-                date: formattedDate,
-                startDate: formattedDate,
-                status: selectedSignal.status,
-                note: 'Data inicial de cômputo ajustada.'
-            });
-        }
-
-        // 1. Gravar no banco de dados e cache local
-        saveSignalToBackend(selectedSignal);
-        saveLocalCache();
-
-        // 2. Recalcular IE geral (CHN-4)
-        updateIE();
-
-        // 3. Atualizar exibição de IE individual e histórico
-        updateIndividualSignalIEDisplay(selectedSignal);
-        renderHistoryTimeline(selectedSignal.history);
-
-        const savedBadge = document.getElementById('savedIndicatorBadge');
-        if (savedBadge) {
-            savedBadge.style.display = 'block';
-            setTimeout(() => { savedBadge.style.display = 'none'; }, 3500);
-        }
-        showToast(`Data inicial do sinal ${selectedSignal.code} gravada com sucesso! Novo IE recalculado.`, 'success');
-    });
 
     // =========================================================================
     // MULTI-PHOTO GALLERY & LIGHTBOX SYSTEM
@@ -2217,60 +2119,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btnPhotoNext')?.addEventListener('click', (e) => {
         e.stopPropagation();
         window.navigateSignalPhoto(1);
-    });
-
-    // Delete photo function
-    async function deleteCurrentSignalPhoto() {
-        if (!selectedSignal) return;
-        const images = getSignalImages(selectedSignal);
-        if (images.length === 0) return;
-
-        const currentNum = currentPhotoIndex + 1;
-        const totalNum = images.length;
-        if (!confirm(`Deseja realmente EXCLUIR a foto (${currentNum} de ${totalNum}) do sinal náutico [${selectedSignal.code}]?`)) {
-            return;
-        }
-
-        // Remove photo at current index
-        images.splice(currentPhotoIndex, 1);
-        selectedSignal.images = images;
-
-        if (images.length > 0) {
-            if (currentPhotoIndex >= images.length) {
-                currentPhotoIndex = images.length - 1;
-            }
-            selectedSignal.image = images[0].url;
-            selectedSignal.photoDate = images[0].date;
-        } else {
-            currentPhotoIndex = 0;
-            selectedSignal.image = null;
-            selectedSignal.photoDate = null;
-        }
-
-        // Save to backend (IndexedDB, LocalStorage, Firestore, REST)
-        saveSignalToBackend(selectedSignal);
-
-        // Update UI
-        renderSignalPhoto(selectedSignal);
-        if (document.getElementById('modalPhotoLightbox')?.classList.contains('active')) {
-            if (images.length > 0) {
-                updateLightboxPhotoView();
-            } else {
-                document.getElementById('modalPhotoLightbox')?.classList.remove('active');
-            }
-        }
-
-        showToast(`Foto ${currentNum} excluída com sucesso!`, 'success');
-    }
-
-    document.getElementById('btnDeleteCurrentPhoto')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        deleteCurrentSignalPhoto();
-    });
-
-    document.getElementById('btnLightboxDeletePhoto')?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        deleteCurrentSignalPhoto();
     });
 
     // =========================================================================
@@ -2469,9 +2317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (e.key === 'ArrowRight') {
             e.preventDefault();
             window.navigateSignalPhoto(1);
-        } else if (e.key === 'Delete') {
-            e.preventDefault();
-            deleteCurrentSignalPhoto();
         }
     });
 
@@ -2483,262 +2328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openPhotoLightbox();
     });
 
-    function toggleEditSpecMode(enable) {
-        const viewMode = document.getElementById('viewSpecMode');
-        const editForm = document.getElementById('formEditSpec');
-        const textBtn = document.getElementById('textBtnEdit');
 
-        if (enable && selectedSignal) {
-            viewMode.style.display = 'none';
-            editForm.style.display = 'block';
-            textBtn.textContent = 'Cancelar Edição';
-
-            document.getElementById('editCode').value = selectedSignal.code;
-            document.getElementById('editName').value = selectedSignal.name;
-            document.getElementById('editType').value = selectedSignal.type;
-            document.getElementById('editCharacteristic').value = selectedSignal.characteristic;
-            document.getElementById('editRange').value = selectedSignal.rangeNM;
-            document.getElementById('editAltitude').value = selectedSignal.altitudeM;
-            document.getElementById('editLat').value = selectedSignal.lat;
-            document.getElementById('editLng').value = selectedSignal.lng;
-            document.getElementById('editJurisdiction').value = selectedSignal.jurisdiction || 'CHN-4';
-            
-            // Populate Nautical DDM fields
-            const latDDM = decimalToDDM(selectedSignal.lat, true);
-            const lngDDM = decimalToDDM(selectedSignal.lng, false);
-            if (document.getElementById('editLatDeg')) document.getElementById('editLatDeg').value = latDDM.deg;
-            if (document.getElementById('editLatMin')) document.getElementById('editLatMin').value = latDDM.min;
-            if (document.getElementById('editLatHem')) document.getElementById('editLatHem').value = latDDM.hem;
-            if (document.getElementById('editLngDeg')) document.getElementById('editLngDeg').value = lngDDM.deg;
-            if (document.getElementById('editLngMin')) document.getElementById('editLngMin').value = lngDDM.min;
-            if (document.getElementById('editLngHem')) document.getElementById('editLngHem').value = lngDDM.hem;
-
-            // Default coordinate mode to Nautical
-            document.getElementById('btnEditCoordModeGMS')?.classList.add('active');
-            document.getElementById('btnEditCoordModeDecimal')?.classList.remove('active');
-            if (document.getElementById('panelEditCoordGMS')) document.getElementById('panelEditCoordGMS').style.display = 'block';
-            if (document.getElementById('panelEditCoordDecimal')) document.getElementById('panelEditCoordDecimal').style.display = 'none';
-            if (document.getElementById('editLatDeg')) document.getElementById('editLatDeg').required = true;
-            if (document.getElementById('editLngDeg')) document.getElementById('editLngDeg').required = true;
-            if (document.getElementById('editLat')) document.getElementById('editLat').required = false;
-            if (document.getElementById('editLng')) document.getElementById('editLng').required = false;
-
-            const editRespEl = document.getElementById('editResponsavel');
-            if (editRespEl) editRespEl.value = selectedSignal.responsavel || 'CHN-4';
-
-            const editContPlanEl = document.getElementById('editContingencyPlan');
-            if (editContPlanEl) editContPlanEl.value = selectedSignal.contingencyPlan || selectedSignal.planoContingencia || '';
-        } else {
-            viewMode.style.display = 'block';
-            editForm.style.display = 'none';
-            textBtn.textContent = 'Editar Ficha Técnica';
-        }
-    }
-
-    document.getElementById('btnToggleEditMode').addEventListener('click', () => {
-        const editForm = document.getElementById('formEditSpec');
-        const isEditing = editForm.style.display === 'block';
-        toggleEditSpecMode(!isEditing);
-    });
-
-    // Save Technical Specification Edit
-    document.getElementById('formEditSpec').addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!selectedSignal) return;
-
-        const oldCode = selectedSignal.code;
-        const newCode = document.getElementById('editCode').value.trim();
-        const newName = document.getElementById('editName').value.trim();
-        const newType = document.getElementById('editType').value.trim();
-        const newChar = document.getElementById('editCharacteristic').value.trim();
-        const newRange = parseFloat(document.getElementById('editRange').value) || 0;
-        const newAlt = parseFloat(document.getElementById('editAltitude').value) || 0;
-        
-        let newLat = parseFloat(document.getElementById('editLat')?.value);
-        let newLng = parseFloat(document.getElementById('editLng')?.value);
-
-        const isGmsActive = document.getElementById('btnEditCoordModeGMS')?.classList.contains('active');
-        if (isGmsActive) {
-            const latDeg = document.getElementById('editLatDeg')?.value;
-            const latMin = document.getElementById('editLatMin')?.value;
-            const latHem = document.getElementById('editLatHem')?.value;
-            const lngDeg = document.getElementById('editLngDeg')?.value;
-            const lngMin = document.getElementById('editLngMin')?.value;
-            const lngHem = document.getElementById('editLngHem')?.value;
-
-            if (latDeg !== '' && latMin !== '') {
-                newLat = ddmToDecimal(latDeg, latMin, latHem);
-            }
-            if (lngDeg !== '' && lngMin !== '') {
-                newLng = ddmToDecimal(lngDeg, lngMin, lngHem);
-            }
-        }
-
-        if (isNaN(newLat)) newLat = selectedSignal.lat;
-        if (isNaN(newLng)) newLng = selectedSignal.lng;
-
-        const newJur = document.getElementById('editJurisdiction').value.trim();
-        const newResp = document.getElementById('editResponsavel')?.value || selectedSignal.responsavel || 'CHN-4';
-        const newContPlan = document.getElementById('editContingencyPlan')?.value?.trim() || '';
-
-        // 1. If code changed, delete old document from Firestore/Backend first
-        if (oldCode && oldCode !== newCode) {
-            if (mapMarkers[oldCode]) {
-                map.removeLayer(mapMarkers[oldCode]);
-                delete mapMarkers[oldCode];
-            }
-            if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-                db.collection("signals").doc(oldCode).delete().catch(console.warn);
-            }
-            fetch(`/api/signals/${encodeURIComponent(oldCode)}`, { method: 'DELETE' }).catch(console.warn);
-            signalsData = signalsData.filter(s => s.code !== oldCode);
-        }
-
-        // 2. Update object fields
-        selectedSignal.code = newCode;
-        selectedSignal.name = newName;
-        selectedSignal.type = newType;
-        selectedSignal.characteristic = newChar;
-        selectedSignal.rangeNM = newRange;
-        selectedSignal.altitudeM = newAlt;
-        selectedSignal.lat = newLat;
-        selectedSignal.lng = newLng;
-        selectedSignal.jurisdiction = newJur;
-        selectedSignal.responsavel = newResp;
-        selectedSignal.contingencyPlan = newContPlan;
-
-        // 3. Save to backend (Cloud Firestore + REST API / signals.json)
-        saveSignalToBackend(selectedSignal);
-
-        // 4. Update UI in real-time "in hot"
-        toggleEditSpecMode(false);
-        openSignalDetail(selectedSignal.code);
-        saveLocalCache();
-        updateTypeFilterDropdown();
-        updateIE();
-        renderMapMarkers();
-        renderSignalList();
-
-        showToast(`Ficha Técnica do sinal ${newCode} salva com sucesso no banco de dados!`, 'success');
-    });
-
-    // Delete Signal Function
-    async function deleteSignalPermanently(code, name) {
-        if (!confirm(`ATENÇÃO: Deseja realmente EXCLUIR PERMANENTEMENTE o auxílio à navegação [${code} - ${name}]?`)) {
-            return;
-        }
-
-        if (window.isSystemOfflineOrCache || !navigator.onLine) {
-            showToast('⚠️ Operação bloqueada: Não é possível excluir sinais enquanto o dispositivo estiver OFFLINE.', 'danger');
-            return;
-        }
-
-        // Delete from Firebase Firestore or REST API
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            try {
-                await db.collection("signals").doc(code).delete();
-                console.log(`🔥 Firestore: Sinal ${code} excluído da nuvem!`);
-            } catch (err) {
-                console.error("Erro ao excluir do Firestore:", err);
-            }
-        } else {
-            try {
-                await fetch(`/api/signals/${encodeURIComponent(code)}`, {
-                    method: 'DELETE'
-                });
-            } catch (err) {
-                console.warn('Exclusão via API REST em modo fallback:', err);
-            }
-        }
-
-        // Update local array and cache
-        signalsData = signalsData.filter(s => s.code !== code);
-        saveLocalCache();
-
-        if (mapMarkers[code]) {
-            map.removeLayer(mapMarkers[code]);
-            delete mapMarkers[code];
-        }
-
-        routeWaypoints = routeWaypoints.filter(wp => wp.code !== code);
-        updateRoute();
-
-        document.getElementById('modalSignalDetail').classList.remove('active');
-        document.getElementById('modalAddSignal').classList.remove('active');
-        selectedSignal = null;
-
-        updateTypeFilterDropdown();
-        updateIE();
-        renderMapMarkers();
-        renderSignalList();
-
-        showToast(`Sinal ${code} excluído permanentemente do banco de dados!`, 'warning');
-    }
-
-    window.deleteSignalFromCard = (code, name) => {
-        deleteSignalPermanently(code, name);
-    };
-
-    // Delete Button in Signal Detail Modal
-    document.getElementById('btnDeleteSignal')?.addEventListener('click', () => {
-        if (!selectedSignal) return;
-        deleteSignalPermanently(selectedSignal.code, selectedSignal.name);
-    });
-
-    // Attach/Upload Signal Photo Listener
-    const inputPhotoFile = document.getElementById('inputPhotoFile');
-    document.getElementById('btnTriggerPhotoUpload')?.addEventListener('click', () => inputPhotoFile?.click());
-
-    inputPhotoFile?.addEventListener('change', async (e) => {
-        const files = Array.from(e.target.files || []);
-        if (files.length === 0 || !selectedSignal) return;
-
-        showToast(`Processando ${files.length} foto(s) para a galeria do sinal...`, 'info');
-
-        try {
-            const images = getSignalImages(selectedSignal);
-            const now = new Date();
-            const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
-
-            let addedCount = 0;
-            for (const file of files) {
-                const optimizedBase64 = await optimizeImage(file, 1280, 1280, 0.82);
-                if (optimizedBase64) {
-                    images.push({
-                        id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                        url: optimizedBase64,
-                        date: dateStr
-                    });
-                    addedCount++;
-                }
-            }
-
-            if (addedCount > 0) {
-                selectedSignal.images = images;
-                selectedSignal.image = images[images.length - 1].url;
-                selectedSignal.photoDate = images[images.length - 1].date;
-                currentPhotoIndex = images.length - 1; // View the newest added photo
-
-                // Salva na memória, Firestore, LocalStorage, IndexedDB e REST API
-                saveSignalToBackend(selectedSignal);
-
-                // Atualiza a interface gráfica imediatamente
-                renderSignalPhoto(selectedSignal);
-                if (document.getElementById('modalPhotoLightbox')?.classList.contains('active')) {
-                    updateLightboxPhotoView();
-                }
-
-                showToast(`${addedCount} foto(s) adicionada(s) à galeria do sinal ${selectedSignal.code}!`, 'success');
-            } else {
-                showToast('Nenhuma imagem pôde ser processada.', 'warning');
-            }
-        } catch (err) {
-            console.error('Erro ao processar imagem(ns):', err);
-            showToast('Erro ao processar a(s) imagem(ns) anexada(s).', 'danger');
-        } finally {
-            inputPhotoFile.value = '';
-        }
-    });
 
     function renderHistoryTimeline(history) {
         const container = document.getElementById('modalHistoryTimeline');
@@ -2763,53 +2353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.getElementById('formUpdateStatus').addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!selectedSignal) return;
 
-        const newStatus = document.getElementById('selectNewStatus').value;
-        const reason = document.getElementById('textOccurrenceReason').value.trim();
-        const directDateVal = document.getElementById('directOccurrenceDateInput')?.value;
-
-        if (!reason) {
-            showToast('O campo de formalização da ocorrência é obrigatório!', 'danger');
-            return;
-        }
-
-        const now = new Date();
-        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-        const initialDateStr = directDateVal ? directDateVal.replace('T', ' ') : dateStr;
-
-        selectedSignal.status = newStatus;
-        if (!selectedSignal.history) selectedSignal.history = [];
-        selectedSignal.history.push({
-            date: dateStr,
-            startDate: initialDateStr,
-            status: newStatus,
-            note: reason
-        });
-
-        // Immediate Ficha DH2 close & real-time "in hot" UI update
-        const modalDetail = document.getElementById('modalSignalDetail');
-        if (modalDetail) modalDetail.classList.remove('active');
-
-        saveSignalToBackend(selectedSignal);
-
-        saveLocalCache();
-        updateTypeFilterDropdown();
-        updateIE();
-        renderMapMarkers();
-        renderSignalList();
-
-        showToast(`Status do sinal ${selectedSignal.code} atualizado com sucesso!`, 'success');
-
-        // Automatically open AVRADIO modal if status is damaged/inoperable
-        if (!isOperational(newStatus)) {
-            setTimeout(() => {
-                generateAVRADIO(selectedSignal, reason);
-            }, 120);
-        }
-    });
 
     // =========================================================================
     // 10. EMISSÃO DE AVRADIO (NORMAM-601/DHN)
@@ -3228,7 +2772,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     });
 
     // =========================================================================
-    // MINIMIZAR / EXPANDIR PAINEL LATERAL PARA A DIREITA (EXCLUSIVO PARA PC)
+    // MINIMIZAR / EXPANDIR PAINEL LATERAL PARA A DIREITA (VISUALIZAÇÃO PC)
     // =========================================================================
     const appSidebar = document.getElementById('appSidebar');
     const appContainer = document.querySelector('.app-container');
@@ -3238,9 +2782,9 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     const btnToolToggleSidebar = document.getElementById('btnToolToggleSidebar');
 
     function toggleSidebarPC(forceState) {
-        // Proteção estrita: no celular/tablet (<= 1024px) NUNCA minimiza a barra de PC!
-        if (window.innerWidth <= 1024) return;
         if (!appSidebar) return;
+        // Impedir minimização da barra lateral em dispositivos móveis e tablets
+        if (window.innerWidth <= 1024) return;
 
         const willMinimize = (forceState !== undefined) 
             ? forceState 
@@ -4019,170 +3563,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
         updateIE(val);
     });
 
-    // =========================================================================
-    // 13. CRIAR E EXCLUIR SINAIS (COM SUPORTE A RESPONSÁVEL E PERSISTÊNCIA)
-    // =========================================================================
-    const modalAddSignal = document.getElementById('modalAddSignal');
-    const btnTabCreateMode = document.getElementById('btnTabCreateMode');
-    const btnTabDeleteMode = document.getElementById('btnTabDeleteMode');
-    const panelCreateSignal = document.getElementById('panelCreateSignal');
-    const panelDeleteSignal = document.getElementById('panelDeleteSignal');
 
-    function switchManageMode(mode) {
-        if (mode === 'create') {
-            if (panelCreateSignal) panelCreateSignal.style.display = 'block';
-            if (panelDeleteSignal) panelDeleteSignal.style.display = 'none';
-        } else {
-            if (panelDeleteSignal) panelDeleteSignal.style.display = 'block';
-            if (panelCreateSignal) panelCreateSignal.style.display = 'none';
-            populateDeleteSignalSelectModal();
-        }
-    }
-
-    if (btnTabCreateMode && btnTabDeleteMode) {
-        btnTabCreateMode.addEventListener('click', () => switchManageMode('create'));
-        btnTabDeleteMode.addEventListener('click', () => switchManageMode('delete'));
-    }
-
-    document.getElementById('btnOpenAddSignalHeader')?.addEventListener('click', () => {
-        document.getElementById('formAddSignal')?.reset();
-        switchManageMode('create');
-        modalAddSignal?.classList.add('active');
-    });
-
-    function populateDeleteSignalSelectModal() {
-        const select = document.getElementById('selectSignalToDeleteModal');
-        if (!select) return;
-
-        if (signalsData.length === 0) {
-            select.innerHTML = '<option value="">Nenhum sinal cadastrado</option>';
-            return;
-        }
-
-        select.innerHTML = signalsData.map(s => `
-            <option value="${s.code}">${s.code} - ${s.name} (${s.type}) [${s.responsavel || 'CHN-4'}]</option>
-        `).join('');
-
-        select.value = signalsData[0].code;
-        updateDeletePreviewCardModal(signalsData[0].code);
-    }
-
-    function updateDeletePreviewCardModal(code) {
-        const signal = signalsData.find(s => s.code === code);
-        if (!signal) return;
-
-        const isOp = isOperational(signal.status);
-        document.getElementById('delPreviewCode').textContent = signal.code;
-        document.getElementById('delPreviewStatus').textContent = signal.status;
-        document.getElementById('delPreviewStatus').className = `badge ${isOp ? 'badge-op' : 'badge-av'}`;
-        document.getElementById('delPreviewName').textContent = signal.name;
-        document.getElementById('delPreviewType').textContent = signal.type;
-        document.getElementById('delPreviewPos').textContent = `Lat: ${toDMS(signal.lat, true)}, Lng: ${toDMS(signal.lng, false)}`;
-        document.getElementById('delPreviewJurisdiction').textContent = `Jurisdição: ${signal.jurisdiction || 'CHN-4'}`;
-        document.getElementById('delPreviewResponsavel').textContent = `Responsável: ${signal.responsavel || 'CHN-4'}`;
-    }
-
-    document.getElementById('selectSignalToDeleteModal')?.addEventListener('change', (e) => {
-        updateDeletePreviewCardModal(e.target.value);
-    });
-
-    document.getElementById('btnConfirmDeleteSignalModal')?.addEventListener('click', () => {
-        const select = document.getElementById('selectSignalToDeleteModal');
-        if (!select || !select.value) return;
-
-        deleteSignalPermanently(select.value, select.options[select.selectedIndex].text);
-    });
-
-    // Form Submit: Save New Signal
-    document.getElementById('formAddSignal')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        let lat = parseFloat(document.getElementById('addLat')?.value);
-        let lng = parseFloat(document.getElementById('addLng')?.value);
-
-        if (isNaN(lat) || isNaN(lng) || lat === 0 || lng === 0) {
-            const latDeg = document.getElementById('addLatDeg')?.value;
-            const latMin = document.getElementById('addLatMin')?.value;
-            const latHem = document.getElementById('addLatHem')?.value;
-            const lngDeg = document.getElementById('addLngDeg')?.value;
-            const lngMin = document.getElementById('addLngMin')?.value;
-            const lngHem = document.getElementById('addLngHem')?.value;
-
-            if (latDeg !== '' && latMin !== '' && lngDeg !== '' && lngMin !== '') {
-                lat = ddmToDecimal(latDeg, latMin, latHem);
-                lng = ddmToDecimal(lngDeg, lngMin, lngHem);
-            }
-        }
-
-        if (isNaN(lat) || isNaN(lng) || lat === 0 || lng === 0) {
-            showToast('Informe as coordenadas de posição válidas.', 'danger');
-            return;
-        }
-
-        const code = document.getElementById('addCode').value.trim();
-        if (signalsData.some(s => s.code === code)) {
-            showToast(`Já existe um sinal com o código ${code}.`, 'danger');
-            return;
-        }
-
-        const now = new Date();
-        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-        const statusVal = document.getElementById('addStatus').value;
-        const responsavelVal = document.getElementById('addResponsavel').value;
-
-        const newSignal = {
-            code: code,
-            name: document.getElementById('addName').value.trim(),
-            type: document.getElementById('addType').value,
-            status: statusVal,
-            lat: lat,
-            lng: lng,
-            characteristic: document.getElementById('addCharacteristic').value.trim() || 'Lp. W. 5s 6m 8NM',
-            rangeNM: parseFloat(document.getElementById('addRange').value) || 6,
-            altitudeM: parseFloat(document.getElementById('addAltitude').value) || 5,
-            jurisdiction: document.getElementById('addJurisdiction').value.trim() || `Jurisdição ${responsavelVal}`,
-            responsavel: responsavelVal,
-            contingencyPlan: document.getElementById('addContingencyPlan')?.value?.trim() || '',
-            image: null,
-            photoDate: null,
-            history: [
-                { date: dateStr, status: statusVal, note: `Sinal cadastrado no sistema. Responsável: ${responsavelVal}` }
-            ]
-        };
-
-        // Persist to Firebase Firestore or REST API
-        if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            try {
-                await db.collection("signals").doc(code).set(newSignal);
-                console.log(`🔥 Firestore: Sinal ${code} criado na nuvem!`);
-            } catch (err) {
-                console.error("Erro ao criar no Firestore:", err);
-            }
-        } else {
-            try {
-                await fetch('/api/signals', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newSignal)
-                });
-            } catch (err) {
-                console.warn('API REST POST fallback:', err);
-            }
-        }
-
-        signalsData.push(newSignal);
-        signalsData.sort(compareSignalCodes);
-        saveLocalCache();
-        updateIE();
-        renderMapMarkers();
-        renderSignalList();
-
-        modalAddSignal?.classList.remove('active');
-        showToast(`Sinal ${code} registrado e salvo no banco de dados!`, 'success');
-
-        map.flyTo([lat, lng], 12, { duration: 1.2 });
-        if (mapMarkers[code]) mapMarkers[code].openPopup();
-    });
 
     // =========================================================================
     // 14. INTEROPERABILIDADE E SINCRONIZAÇÃO EM TEMPO REAL (FIREBASE FIRESTORE / SSE)
@@ -4190,23 +3571,6 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     function setupRealtimeSync() {
         const syncText = document.getElementById('syncStatusText');
         const syncDot = document.querySelector('#syncStatusBadge .sync-dot');
-
-        // Auto-espelhamento do Firebase Cloud para o disco local (Opção 3)
-        let lastAutoMirrorTime = 0;
-        function autoMirrorSignalsToServer(signals) {
-            const now = Date.now();
-            if (now - lastAutoMirrorTime < 20000) return; // Debounce de 20s
-            lastAutoMirrorTime = now;
-
-            if (!signals || !Array.isArray(signals) || signals.length === 0) return;
-            fetch('/api/signals/bulk', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ signals: signals, note: 'Espelho automático do Firebase Cloud' })
-            }).then(r => {
-                if (r.ok) console.log('💾 signals.json no disco atualizado com dados frescos da nuvem.');
-            }).catch(() => {});
-        }
 
         // Priority 1: Firebase Cloud Firestore Real-time listener (Nuvem / GitHub Pages)
         if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
@@ -4216,7 +3580,6 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
             db.collection("signals").onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
                 const isFromCache = snapshot.metadata && snapshot.metadata.fromCache;
                 const isOnline = navigator.onLine && !isFromCache;
-                window.isSystemOfflineOrCache = !isOnline;
 
                 if (isOnline) {
                     if (syncText) syncText.textContent = 'ONLINE (FIREBASE CLOUD)';
@@ -4246,27 +3609,20 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
                             renderSignalPhoto(selectedSignal);
                         }
                     }
-
-                    if (isOnline) {
-                        autoMirrorSignalsToServer(remoteSignals);
-                    }
                     console.log(`🔥 Cloud Firestore: ${signalsData.length} sinais sincronizados (${isOnline ? 'ONLINE' : 'CACHE'}).`);
                 } else {
-                    console.log("ℹ️ Cloud Firestore: Coleção de sinais na nuvem está vazia.");
+                    console.log("🔥 Firestore snapshot recebido vazio no visualizador.");
                 }
             }, (err) => {
-                window.isSystemOfflineOrCache = true;
-                console.warn("⚠️ Aviso no listener Firestore:", err);
+                console.warn("⚠️ Aviso no listener Firestore (Viewer):", err);
                 if (syncText) syncText.textContent = 'OFFLINE / ERRO FIREBASE';
                 if (syncDot) syncDot.className = 'sync-dot sync-offline';
                 showToast('⚠️ Falha ao conectar ao Firebase Cloud. Operando com dados locais seguros.', 'warning');
             });
 
             window.addEventListener('offline', () => {
-                window.isSystemOfflineOrCache = true;
                 if (syncText) syncText.textContent = 'OFFLINE (SEM CONEXÃO)';
                 if (syncDot) syncDot.className = 'sync-dot sync-offline';
-                showToast('⚠️ Conexão perdida. Gravações bloqueadas para proteger a nuvem.', 'warning');
             });
 
             window.addEventListener('online', () => {
@@ -4359,484 +3715,37 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
     const gmsToDecimal = ddmToDecimal;
     const decimalToGMS = decimalToDDM;
 
-    document.getElementById('btnCoordModeGMS')?.addEventListener('click', () => {
-        document.getElementById('btnCoordModeGMS')?.classList.add('active');
-        document.getElementById('btnCoordModeDecimal')?.classList.remove('active');
-        document.getElementById('panelCoordGMS').style.display = 'block';
-        document.getElementById('panelCoordDecimal').style.display = 'none';
-        const addLatDeg = document.getElementById('addLatDeg');
-        const addLngDeg = document.getElementById('addLngDeg');
-        if (addLatDeg) addLatDeg.required = true;
-        if (addLngDeg) addLngDeg.required = true;
-        const addLat = document.getElementById('addLat');
-        const addLng = document.getElementById('addLng');
-        if (addLat) addLat.required = false;
-        if (addLng) addLng.required = false;
-    });
 
-    document.getElementById('btnCoordModeDecimal')?.addEventListener('click', () => {
-        document.getElementById('btnCoordModeDecimal')?.classList.add('active');
-        document.getElementById('btnCoordModeGMS')?.classList.remove('active');
-        document.getElementById('panelCoordDecimal').style.display = 'block';
-        document.getElementById('panelCoordGMS').style.display = 'none';
-        const addLat = document.getElementById('addLat');
-        const addLng = document.getElementById('addLng');
-        if (addLat) addLat.required = true;
-        if (addLng) addLng.required = true;
-        const addLatDeg = document.getElementById('addLatDeg');
-        const addLngDeg = document.getElementById('addLngDeg');
-        if (addLatDeg) addLatDeg.required = false;
-        if (addLngDeg) addLngDeg.required = false;
-    });
-
-    function syncGmsToDecimal() {
-        const latDeg = document.getElementById('addLatDeg')?.value;
-        const latMin = document.getElementById('addLatMin')?.value;
-        const latHem = document.getElementById('addLatHem')?.value;
-
-        if (latDeg !== '' && latMin !== '') {
-            const latDec = ddmToDecimal(latDeg, latMin, latHem);
-            const addLatEl = document.getElementById('addLat');
-            if (addLatEl) addLatEl.value = latDec.toFixed(7);
-        }
-
-        const lngDeg = document.getElementById('addLngDeg')?.value;
-        const lngMin = document.getElementById('addLngMin')?.value;
-        const lngHem = document.getElementById('addLngHem')?.value;
-
-        if (lngDeg !== '' && lngMin !== '') {
-            const lngDec = ddmToDecimal(lngDeg, lngMin, lngHem);
-            const addLngEl = document.getElementById('addLng');
-            if (addLngEl) addLngEl.value = lngDec.toFixed(7);
-        }
-    }
-
-    function syncDecimalToGms() {
-        const latVal = document.getElementById('addLat')?.value;
-        if (latVal !== '') {
-            const ddm = decimalToDDM(latVal, true);
-            if (document.getElementById('addLatDeg')) document.getElementById('addLatDeg').value = ddm.deg;
-            if (document.getElementById('addLatMin')) document.getElementById('addLatMin').value = ddm.min;
-            if (document.getElementById('addLatHem')) document.getElementById('addLatHem').value = ddm.hem;
-        }
-
-        const lngVal = document.getElementById('addLng')?.value;
-        if (lngVal !== '') {
-            const ddm = decimalToDDM(lngVal, false);
-            if (document.getElementById('addLngDeg')) document.getElementById('addLngDeg').value = ddm.deg;
-            if (document.getElementById('addLngMin')) document.getElementById('addLngMin').value = ddm.min;
-            if (document.getElementById('addLngHem')) document.getElementById('addLngHem').value = ddm.hem;
-        }
-    }
-
-    ['addLatDeg', 'addLatMin', 'addLatHem', 'addLngDeg', 'addLngMin', 'addLngHem'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', syncGmsToDecimal);
-        document.getElementById(id)?.addEventListener('change', syncGmsToDecimal);
-    });
-
-    ['addLat', 'addLng'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', syncDecimalToGms);
-        document.getElementById(id)?.addEventListener('change', syncDecimalToGms);
-    });
-
-    // Map Click Point Capture Listener
-    document.getElementById('btnPickPointOnMap')?.addEventListener('click', () => {
-        const modalAdd = document.getElementById('modalAddSignal');
-        if (modalAdd) modalAdd.classList.remove('active');
-        showToast('Clique no mapa na posição exata do novo sinal náutico...', 'info');
-        map.getContainer().style.cursor = 'crosshair';
-
-        map.once('click', (e) => {
-            map.getContainer().style.cursor = '';
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
-
-            const addLatEl = document.getElementById('addLat');
-            const addLngEl = document.getElementById('addLng');
-            if (addLatEl) addLatEl.value = lat.toFixed(7);
-            if (addLngEl) addLngEl.value = lng.toFixed(7);
-
-            syncDecimalToGms();
-
-            if (modalAdd) modalAdd.classList.add('active');
-            showToast(`Posição capturada: ${formatNauticalCoord(lat, true)} | ${formatNauticalCoord(lng, false)}`, 'success');
-        });
-    });
 
     // =========================================================================
-    // EDIT FICHA TÉCNICA COORDINATE MODE & SYNC HANDLERS
+    // SPLASH SCREEN EXPERIMENTAL DE ABERTURA (CHN-4)
+    // (Basta alterar ENABLE_SPLASH para false para desativar instantaneamente)
     // =========================================================================
-    document.getElementById('btnEditCoordModeGMS')?.addEventListener('click', () => {
-        document.getElementById('btnEditCoordModeGMS')?.classList.add('active');
-        document.getElementById('btnEditCoordModeDecimal')?.classList.remove('active');
-        const panelGms = document.getElementById('panelEditCoordGMS');
-        const panelDec = document.getElementById('panelEditCoordDecimal');
-        if (panelGms) panelGms.style.display = 'block';
-        if (panelDec) panelDec.style.display = 'none';
-        const editLatDeg = document.getElementById('editLatDeg');
-        const editLngDeg = document.getElementById('editLngDeg');
-        if (editLatDeg) editLatDeg.required = true;
-        if (editLngDeg) editLngDeg.required = true;
-        const editLat = document.getElementById('editLat');
-        const editLng = document.getElementById('editLng');
-        if (editLat) editLat.required = false;
-        if (editLng) editLng.required = false;
-    });
+    const ENABLE_SPLASH = true;
 
-    document.getElementById('btnEditCoordModeDecimal')?.addEventListener('click', () => {
-        document.getElementById('btnEditCoordModeDecimal')?.classList.add('active');
-        document.getElementById('btnEditCoordModeGMS')?.classList.remove('active');
-        const panelGms = document.getElementById('panelEditCoordGMS');
-        const panelDec = document.getElementById('panelEditCoordDecimal');
-        if (panelDec) panelDec.style.display = 'block';
-        if (panelGms) panelGms.style.display = 'none';
-        const editLat = document.getElementById('editLat');
-        const editLng = document.getElementById('editLng');
-        if (editLat) editLat.required = true;
-        if (editLng) editLng.required = true;
-        const editLatDeg = document.getElementById('editLatDeg');
-        const editLngDeg = document.getElementById('editLngDeg');
-        if (editLatDeg) editLatDeg.required = false;
-        if (editLngDeg) editLngDeg.required = false;
-    });
+    function initSplashScreen() {
+        const splash = document.getElementById('splashScreen');
+        if (!splash) return;
 
-    function syncEditGmsToDecimal() {
-        const latDeg = document.getElementById('editLatDeg')?.value;
-        const latMin = document.getElementById('editLatMin')?.value;
-        const latHem = document.getElementById('editLatHem')?.value;
-
-        if (latDeg !== '' && latMin !== '') {
-            const latDec = ddmToDecimal(latDeg, latMin, latHem);
-            const editLatEl = document.getElementById('editLat');
-            if (editLatEl) editLatEl.value = latDec.toFixed(7);
-        }
-
-        const lngDeg = document.getElementById('editLngDeg')?.value;
-        const lngMin = document.getElementById('editLngMin')?.value;
-        const lngHem = document.getElementById('editLngHem')?.value;
-
-        if (lngDeg !== '' && lngMin !== '') {
-            const lngDec = ddmToDecimal(lngDeg, lngMin, lngHem);
-            const editLngEl = document.getElementById('editLng');
-            if (editLngEl) editLngEl.value = lngDec.toFixed(7);
-        }
-    }
-
-    function syncEditDecimalToGms() {
-        const latVal = document.getElementById('editLat')?.value;
-        if (latVal !== '') {
-            const ddm = decimalToDDM(latVal, true);
-            if (document.getElementById('editLatDeg')) document.getElementById('editLatDeg').value = ddm.deg;
-            if (document.getElementById('editLatMin')) document.getElementById('editLatMin').value = ddm.min;
-            if (document.getElementById('editLatHem')) document.getElementById('editLatHem').value = ddm.hem;
-        }
-
-        const lngVal = document.getElementById('editLng')?.value;
-        if (lngVal !== '') {
-            const ddm = decimalToDDM(lngVal, false);
-            if (document.getElementById('editLngDeg')) document.getElementById('editLngDeg').value = ddm.deg;
-            if (document.getElementById('editLngMin')) document.getElementById('editLngMin').value = ddm.min;
-            if (document.getElementById('editLngHem')) document.getElementById('editLngHem').value = ddm.hem;
-        }
-    }
-
-    ['editLatDeg', 'editLatMin', 'editLatHem', 'editLngDeg', 'editLngMin', 'editLngHem'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', syncEditGmsToDecimal);
-        document.getElementById(id)?.addEventListener('change', syncEditGmsToDecimal);
-    });
-
-    ['editLat', 'editLng'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', syncEditDecimalToGms);
-        document.getElementById(id)?.addEventListener('change', syncEditDecimalToGms);
-    });
-
-    // Map Click Point Capture Listener for Edit Form
-    document.getElementById('btnPickPointOnMapEdit')?.addEventListener('click', () => {
-        const modalDetail = document.getElementById('modalSignalDetail');
-        if (modalDetail) modalDetail.classList.remove('active');
-        showToast('Clique no mapa na nova posição do sinal náutico...', 'info');
-        map.getContainer().style.cursor = 'crosshair';
-
-        map.once('click', (e) => {
-            map.getContainer().style.cursor = '';
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
-
-            const editLatEl = document.getElementById('editLat');
-            const editLngEl = document.getElementById('editLng');
-            if (editLatEl) editLatEl.value = lat.toFixed(7);
-            if (editLngEl) editLngEl.value = lng.toFixed(7);
-
-            syncEditDecimalToGms();
-
-            if (modalDetail) modalDetail.classList.add('active');
-            showToast(`Nova posição capturada: ${formatNauticalCoord(lat, true)} | ${formatNauticalCoord(lng, false)}`, 'success');
-        });
-    });
-
-    // =========================================================================
-    // 16. GESTÃO DE PONTOS DE PARADA & BACKUPS
-    // =========================================================================
-    const modalBackups = document.getElementById('modalBackups');
-    const btnOpenBackupsModal = document.getElementById('btnOpenBackupsModal');
-    const btnCreateManualBackup = document.getElementById('btnCreateManualBackup');
-    const btnImportBackupFileTrigger = document.getElementById('btnImportBackupFileTrigger');
-    const inputBackupFile = document.getElementById('inputBackupFile');
-
-    btnOpenBackupsModal?.addEventListener('click', () => {
-        loadBackupsList();
-        modalBackups?.classList.add('active');
-    });
-
-    async function loadBackupsList() {
-        const tableBody = document.getElementById('backupsListTableBody');
-        if (!tableBody) return;
-
-        tableBody.innerHTML = '<tr><td colspan="4" class="text-center p-3 text-muted">Buscando pontos de parada...</td></tr>';
-
-        let serverBackups = [];
-        try {
-            const resp = await fetch('/api/backups');
-            if (resp.ok) {
-                serverBackups = await resp.json();
-            }
-        } catch (e) {
-            console.warn('API REST /api/backups indisponível.', e);
-        }
-
-        let localBackups = [];
-        try {
-            const localRaw = localStorage.getItem('chn4_aton_backups_history');
-            if (localRaw) localBackups = JSON.parse(localRaw);
-        } catch (e) {}
-
-        const allBackups = [];
-        if (Array.isArray(serverBackups)) {
-            serverBackups.forEach(b => allBackups.push({ ...b, isLocal: false }));
-        }
-        if (Array.isArray(localBackups)) {
-            localBackups.forEach((b, idx) => {
-                allBackups.push({ ...b, localIndex: idx, isLocal: true, filename: b.filename || null });
-            });
-        }
-
-        if (allBackups.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="4" class="text-center p-3 text-muted">Nenhum ponto de parada ou backup encontrado. Clique em "Criar Ponto de Parada Agora".</td></tr>';
+        if (!ENABLE_SPLASH) {
+            splash.style.display = 'none';
             return;
         }
 
-        tableBody.innerHTML = '';
-        allBackups.forEach(b => {
-            const tr = document.createElement('tr');
-            tr.style.borderBottom = '1px solid var(--border-color)';
-
-            const badgeOrigin = b.isLocal 
-                ? '<span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(255,193,7,0.15); color: var(--accent-gold); border: 1px solid var(--accent-gold); margin-left: 6px;">Navegador</span>' 
-                : '<span style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: rgba(76,175,80,0.15); color: var(--status-op); border: 1px solid var(--status-op); margin-left: 6px;">Disco</span>';
-
-            const restoreParam = b.filename ? `'${b.filename}', false, null` : `null, true, ${b.localIndex}`;
-
-            tr.innerHTML = `
-                <td style="padding: 10px 8px; font-weight: 500;">
-                    <i class="fa-solid fa-calendar-check text-gold"></i> ${b.formattedDate || b.createdAt} ${badgeOrigin}
-                </td>
-                <td style="padding: 10px 8px;">
-                    <span class="backup-badge-count">${b.count || (b.signals ? b.signals.length : 0)} sinais</span>
-                </td>
-                <td style="padding: 10px 8px; color: var(--text-secondary);">
-                    ${b.note || 'Ponto de Parada'}
-                </td>
-                <td style="padding: 10px 8px; text-align: right;">
-                    <div style="display: flex; gap: 6px; justify-content: flex-end;">
-                        <button class="btn btn-primary btn-sm" onclick="window.restoreBackupPoint(${restoreParam})" title="Restaurar base de dados para este ponto">
-                            <i class="fa-solid fa-rotate-left"></i> Restaurar
-                        </button>
-                        ${b.filename ? `<button class="btn btn-outline btn-sm" onclick="window.downloadBackupFile('${b.filename}')" title="Baixar arquivo JSON de backup"><i class="fa-solid fa-download"></i></button>` : ''}
-                    </div>
-                </td>
-            `;
-            tableBody.appendChild(tr);
-        });
+        // Permanece por 2.0 segundos, depois executa fade-out suave de 0.8s
+        setTimeout(() => {
+            splash.classList.add('splash-hidden');
+            setTimeout(() => {
+                splash.style.display = 'none';
+            }, 850);
+        }, 2000);
     }
-
-    btnCreateManualBackup?.addEventListener('click', async () => {
-        const notePrompt = prompt("Digite uma descrição / nota para este Ponto de Parada (opcional):", "Backup manual do operador");
-        if (notePrompt === null) return;
-
-        const note = notePrompt.trim() || 'Ponto de parada manual';
-
-        try {
-            const resp = await fetch('/api/backups/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ note: note })
-            });
-            if (resp.ok) {
-                showToast('Ponto de parada criado e salvo no disco com sucesso!', 'success');
-                loadBackupsList();
-                return;
-            }
-        } catch (e) {
-            console.warn('API REST criar backup fallback local.', e);
-        }
-
-        try {
-            let localBackups = [];
-            const raw = localStorage.getItem('chn4_aton_backups_history');
-            if (raw) localBackups = JSON.parse(raw);
-
-            const now = new Date();
-            localBackups.unshift({
-                filename: null,
-                createdAt: now.toISOString(),
-                formattedDate: now.toLocaleString('pt-BR'),
-                count: signalsData.length,
-                note: note,
-                signals: [...signalsData]
-            });
-            localStorage.setItem('chn4_aton_backups_history', JSON.stringify(localBackups.slice(0, 30)));
-            showToast('Ponto de parada salvo localmente no navegador!', 'success');
-            loadBackupsList();
-        } catch (e) {
-            showToast('Erro ao criar ponto de parada.', 'danger');
-        }
-    });
-
-    window.restoreBackupPoint = async (filename, isLocal, localIndex) => {
-        if (!confirm(`ATENÇÃO: Deseja restaurar o banco de dados para o Ponto de Parada escolhido?\n\nEsta ação irá atualizar o mapa e a lista de sinais em todos os dispositivos conectados.`)) {
-            return;
-        }
-
-        let restoredSignals = null;
-
-        if (filename && !isLocal) {
-            try {
-                const resp = await fetch('/api/backups/restore', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ filename: filename })
-                });
-
-                if (resp.ok) {
-                    const resData = await resp.json();
-                    if (resData.signals && Array.isArray(resData.signals)) {
-                        restoredSignals = resData.signals;
-                    }
-                }
-            } catch (e) {
-                console.warn('Erro ao restaurar via REST API:', e);
-            }
-        }
-
-        // If local backup was selected or REST API filename failed
-        if (!restoredSignals && (isLocal || localIndex !== undefined)) {
-            try {
-                const raw = localStorage.getItem('chn4_aton_backups_history');
-                if (raw) {
-                    const localBackups = JSON.parse(raw);
-                    const target = localIndex !== undefined && localIndex !== null && localBackups[localIndex] 
-                        ? localBackups[localIndex] 
-                        : localBackups.find(b => b.filename === filename || (!filename && b.signals));
-                    
-                    if (target && Array.isArray(target.signals) && target.signals.length > 0) {
-                        restoredSignals = target.signals;
-                        // Synchronize this local backup immediately to the server and signals.json!
-                        try {
-                            await fetch('/api/backups/restore', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ signals: target.signals, note: target.note || 'Restaurado do navegador' })
-                            });
-                        } catch (err) {
-                            console.warn('Sync local backup to server warning:', err);
-                        }
-                    }
-                }
-            } catch (e) {
-                console.error('Erro ao ler backup local:', e);
-            }
-        }
-
-        if (restoredSignals && Array.isArray(restoredSignals) && restoredSignals.length > 0) {
-            signalsData = restoredSignals;
-            saveLocalCache();
-            updateTypeFilterDropdown();
-            updateIE();
-            renderMapMarkers();
-            renderSignalList();
-
-            // Sync with Firestore if active
-            if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-                try {
-                    const batch = db.batch();
-                    restoredSignals.forEach(s => {
-                        const clean = sanitizeForDatabase(s);
-                        if (clean && clean.code) {
-                            const ref = db.collection("signals").doc(clean.code);
-                            batch.set(ref, clean, { merge: true });
-                        }
-                    });
-                    batch.commit().catch(console.warn);
-                } catch (e) {}
-            }
-
-            modalBackups?.classList.remove('active');
-            showToast(`Base de dados restaurada com sucesso (${restoredSignals.length} sinais)!`, 'success');
-        } else {
-            showToast('Erro ao restaurar o ponto de parada selecionado.', 'danger');
-        }
-    };
-
-    window.downloadBackupFile = (filename) => {
-        window.open(`/api/backups/download?file=${encodeURIComponent(filename)}`, '_blank');
-    };
-
-    btnImportBackupFileTrigger?.addEventListener('click', () => inputBackupFile?.click());
-
-    inputBackupFile?.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async (evt) => {
-            try {
-                const parsed = JSON.parse(evt.target.result);
-                const restored = Array.isArray(parsed.signals) ? parsed.signals : (Array.isArray(parsed) ? parsed : null);
-                if (!restored || restored.length === 0 || !restored[0].code) {
-                    showToast('Arquivo de backup inválido ou sem sinais válidos.', 'danger');
-                    return;
-                }
-
-                if (!confirm(`Confirmar restauração de ${restored.length} sinais a partir do arquivo [${file.name}]?`)) {
-                    return;
-                }
-
-                signalsData = restored;
-                saveLocalCache();
-                updateTypeFilterDropdown();
-                updateIE();
-                renderMapMarkers();
-                renderSignalList();
-
-                try {
-                    for (const sig of restored) {
-                        saveSignalToBackend(sig);
-                    }
-                } catch (e) {}
-
-                modalBackups?.classList.remove('active');
-                showToast(`Base restaurada a partir do arquivo ${file.name}!`, 'success');
-            } catch (err) {
-                showToast('Erro ao ler o arquivo de backup.', 'danger');
-            }
-        };
-        reader.readAsText(file);
-    });
 
     // =========================================================================
     // 15. INITIAL BOOTSTRAP
     // =========================================================================
     async function init() {
+        initSplashScreen();
         await loadSignalsFromBackend();
         setupRealtimeSync();
         updateRoute();
