@@ -1829,6 +1829,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>${toDMS(s.lat, true)} | ${toDMS(s.lng, false)}</span>
                     <span>Alcance: ${s.rangeNM} NM</span>
                 </div>
+                <div class="signal-card-actions" style="margin-top: 8px; display: flex; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation(); window.openSignalDetail('${s.code}')" style="font-size: 0.76rem; padding: 3px 10px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; color: var(--accent-gold); border-color: var(--accent-gold); background: rgba(212,175,55,0.08);" title="Visualizar Ficha Técnica DH2 deste sinal">
+                        <i class="fa-solid fa-file-lines"></i> Ficha DH2
+                    </button>
+                </div>
             `;
 
             // Drag and Drop listeners on card
@@ -1979,40 +1984,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update Individual IE display
         updateIndividualSignalIEDisplay(signal);
 
-        toggleEditSpecMode(false);
         currentPhotoIndex = 0;
         renderSignalPhoto(signal);
 
-        const selectNewStatus = document.getElementById('selectNewStatus');
-        if (selectNewStatus) selectNewStatus.value = isOp ? 'OPERACIONAL' : signal.status;
-        const textOccurrenceReason = document.getElementById('textOccurrenceReason');
-        if (textOccurrenceReason) textOccurrenceReason.value = '';
-
         const btnAvradio = document.getElementById('btnGenerateAvradioModal');
         if (btnAvradio) btnAvradio.style.display = isOp ? 'none' : 'inline-flex';
-
-        // Initialize Direct Occurrence Date Input in Ficha DH2
-        const directInput = document.getElementById('directOccurrenceDateInput');
-        if (directInput) {
-            let currentCompDate = signal.occurrenceStartDate || signal.inoperableSince;
-            if (!currentCompDate && signal.history && signal.history.length > 0) {
-                const inopHistory = signal.history.slice().reverse().find(h => !isOperational(h.status));
-                if (inopHistory) {
-                    currentCompDate = inopHistory.startDate || inopHistory.date;
-                } else {
-                    const lastEntry = signal.history[signal.history.length - 1];
-                    currentCompDate = lastEntry.startDate || lastEntry.date;
-                }
-            }
-            if (!currentCompDate) {
-                const now = new Date();
-                const pad = (n) => String(n).padStart(2, '0');
-                currentCompDate = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-            } else {
-                currentCompDate = currentCompDate.replace(' ', 'T').slice(0, 16);
-            }
-            directInput.value = currentCompDate;
-        }
 
         renderHistoryTimeline(signal.history);
         modal.classList.add('active');
@@ -3598,10 +3574,21 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
 
         // Priority 1: Firebase Cloud Firestore Real-time listener (Nuvem / GitHub Pages)
         if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive && db) {
-            if (syncText) syncText.textContent = 'ONLINE (FIREBASE CLOUD)';
-            if (syncDot) syncDot.className = 'sync-dot sync-online';
+            if (syncText) syncText.textContent = 'CONECTANDO NUVEM...';
+            if (syncDot) syncDot.className = 'sync-dot sync-offline';
 
-            db.collection("signals").onSnapshot((snapshot) => {
+            db.collection("signals").onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
+                const isFromCache = snapshot.metadata && snapshot.metadata.fromCache;
+                const isOnline = navigator.onLine && !isFromCache;
+
+                if (isOnline) {
+                    if (syncText) syncText.textContent = 'ONLINE (FIREBASE CLOUD)';
+                    if (syncDot) syncDot.className = 'sync-dot sync-online';
+                } else {
+                    if (syncText) syncText.textContent = 'OFFLINE (CACHE LOCAL)';
+                    if (syncDot) syncDot.className = 'sync-dot sync-offline';
+                }
+
                 if (!snapshot.empty) {
                     const remoteSignals = [];
                     snapshot.forEach(doc => {
@@ -3622,7 +3609,7 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
                             renderSignalPhoto(selectedSignal);
                         }
                     }
-                    console.log(`🔥 Cloud Firestore: ${signalsData.length} sinais sincronizados em tempo real.`);
+                    console.log(`🔥 Cloud Firestore: ${signalsData.length} sinais sincronizados (${isOnline ? 'ONLINE' : 'CACHE'}).`);
                 } else {
                     console.log("🔥 Firestore snapshot recebido vazio no visualizador.");
                 }
@@ -3632,6 +3619,17 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
                 if (syncDot) syncDot.className = 'sync-dot sync-offline';
                 showToast('⚠️ Falha ao conectar ao Firebase Cloud. Operando com dados locais seguros.', 'warning');
             });
+
+            window.addEventListener('offline', () => {
+                if (syncText) syncText.textContent = 'OFFLINE (SEM CONEXÃO)';
+                if (syncDot) syncDot.className = 'sync-dot sync-offline';
+            });
+
+            window.addEventListener('online', () => {
+                if (syncText) syncText.textContent = 'RECONECTANDO...';
+                if (syncDot) syncDot.className = 'sync-dot sync-offline';
+            });
+
             return;
         }
 
