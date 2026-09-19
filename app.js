@@ -3688,13 +3688,13 @@ QUATRO - NAVEGANTES DEVEM NAVEGAR COM CAUTELA NA ÁREA.`;
             return;
         }
 
-        // Permanece por 2.0 segundos, depois executa fade-out suave de 0.8s
+        // Permanece por 4.0 segundos, depois executa fade-out suave de 0.8s
         setTimeout(() => {
             splash.classList.add('splash-hidden');
             setTimeout(() => {
                 splash.style.display = 'none';
             }, 850);
-        }, 2000);
+        }, 4000);
     }
 
     // =========================================================================

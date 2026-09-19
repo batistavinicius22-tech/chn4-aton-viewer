@@ -3765,7 +3765,7 @@ html, body {
     height: 100%;
     background: linear-gradient(90deg, #b48312, #002b66);
     border-radius: 4px;
-    animation: splashProgressFill 2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+    animation: splashProgressFill 4s cubic-bezier(0.2, 0, 0.2, 1) forwards;
 }
 
 @keyframes splashAppear {
