@@ -885,71 +885,129 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'OTHER';
     }
 
+    function parseSafeDate(dStr) {
+        if (!dStr) return null;
+        if (dStr instanceof Date) return isNaN(dStr.getTime()) ? null : dStr;
+        const str = String(dStr).trim();
+        // Trata formato brasileiro DD/MM/YYYY ou DD/MM/YYYY HH:mm
+        const brMatch = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{1,2}))?/);
+        if (brMatch) {
+            const day = parseInt(brMatch[1], 10);
+            const mon = parseInt(brMatch[2], 10) - 1;
+            const yr = parseInt(brMatch[3], 10);
+            const hr = brMatch[4] ? parseInt(brMatch[4], 10) : 8;
+            const min = brMatch[5] ? parseInt(brMatch[5], 10) : 0;
+            return new Date(yr, mon, day, hr, min, 0);
+        }
+        const d = new Date(str);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    // Reconstrói os períodos de inoperância de um sinal a partir do histórico
     function getSignalInopPeriods(signal) {
         const now = new Date();
-        const hist = (signal.history || []).filter(h => h.date || h.startDate);
-        hist.sort((a, b) => new Date(a.date || a.startDate) - new Date(b.date || b.startDate));
+        const isCurrentOp = isOperational(signal.status);
+
+        // Mapeia histórico usando a data do evento real (startDate tem prioridade sobre data de registro/importação)
+        const rawHist = (signal.history || [])
+            .map(h => {
+                const eventDate = parseSafeDate(h.startDate) || parseSafeDate(h.date);
+                return {
+                    eventDate,
+                    status: h.status,
+                    isOp: isOperational(h.status),
+                    raw: h
+                };
+            })
+            .filter(h => h.eventDate !== null);
+
+        // Se houver registros específicos com startDate, ignorar entradas genéricas de importação (2026-08-10 OPERACIONAL) que conflitam com avarias reais antigas
+        const hasSpecificStartDate = rawHist.some(h => h.raw.startDate);
+        const hist = rawHist.filter(h => {
+            if (hasSpecificStartDate && !h.raw.startDate && h.raw.date && String(h.raw.date).startsWith('2026-08-10') && h.isOp) {
+                return false;
+            }
+            return true;
+        });
+
+        hist.sort((a, b) => a.eventDate - b.eventDate);
 
         const periods = [];
         let pendingStart = null;
 
         for (const h of hist) {
-            if (!isOperational(h.status)) {
-                const s = h.startDate ? new Date(h.startDate) : new Date(h.date);
-                if (!pendingStart || s < pendingStart) pendingStart = s;
+            if (!h.isOp) {
+                if (!pendingStart || h.eventDate < pendingStart) pendingStart = h.eventDate;
             } else {
                 if (pendingStart !== null) {
-                    const end = new Date(h.date || h.startDate);
+                    const end = h.eventDate;
                     if (end > pendingStart) periods.push({ start: pendingStart, end });
                     pendingStart = null;
                 }
             }
         }
 
-        if (!isOperational(signal.status)) {
-            periods.push({ start: pendingStart || now, end: now });
+        // Se o status atual do sinal é avariado, o último período está aberto (ainda avariado)
+        if (!isCurrentOp) {
+            if (!pendingStart) {
+                const avHist = hist.filter(h => !h.isOp);
+                if (avHist.length > 0) pendingStart = avHist[avHist.length - 1].eventDate;
+                else if (signal.photoDate) pendingStart = parseSafeDate(signal.photoDate);
+                else pendingStart = new Date(2025, 0, 1);
+            }
+            periods.push({ start: pendingStart, end: null });
         }
 
         return periods;
     }
 
+    // Calcula dias de inoperância para IE Mensal (projeção) e IE Anual (acumulado jan→D)
+    // NORMAM-601 Art. 2.48 e 2.49
     function computeSignalInoperableDays(signal) {
         const now = new Date();
         const curYear = now.getFullYear();
-        const curMonth = now.getMonth() + 1;
+        const curMonth = now.getMonth() + 1; // 1-indexed (9 = Setembro)
         const D = curMonth;
 
-        const day1_8am    = new Date(curYear, curMonth - 1, 1, 8, 0, 0);
-        const mensalStart = new Date(curYear, curMonth - 1, 1, 0, 0, 0);
-        const anualStart  = new Date(curYear, 0, 1, 0, 0, 0);
+        // Referências de tempo
+        const day1_8am    = new Date(curYear, curMonth - 1, 1, 8, 0, 0);  // 08h do dia 1 do mês
+        const anualStart  = new Date(curYear, 0, 1, 0, 0, 0);             // 01/jan do ano corrente
 
         const periods = getSignalInopPeriods(signal);
 
-        // IE MENSAL: projeção estática para fim do mês
         let a_mes = 0;
-        for (const p of periods) {
-            if (p.end <= mensalStart) continue;
-            if (p.start > now) continue;
-
-            const effStart = p.start < day1_8am ? day1_8am : p.start;
-
-            let avariaDayNum;
-            if (effStart <= day1_8am) {
-                avariaDayNum = 1;
-            } else {
-                avariaDayNum = Math.floor((effStart - day1_8am) / 86400000) + 1;
-            }
-            a_mes += Math.max(0, 31 - avariaDayNum);
-        }
-        a_mes = Math.min(30, Math.max(0, a_mes));
-
-        // IE ANUAL: dias reais acumulados de 01/jan até hoje
         let a_ano = 0;
+
         for (const p of periods) {
+            // ── IE MENSAL: projeção estática para fim do mês (base 30 dias CAMR)
+            if (p.end && p.end <= day1_8am) {
+                // Período encerrado antes do dia 01 do mês às 08h → 0 dias no mês corrente
+            } else if (p.start > now) {
+                // Período no futuro (ignora)
+            } else {
+                const effStart = p.start < day1_8am ? day1_8am : p.start;
+                const avariaDayNum = effStart <= day1_8am ? 1 : (Math.floor((effStart - day1_8am) / 86400000) + 1);
+
+                if (!p.end) {
+                    // AINDA AVARIADO: projeta do dia de início até o dia 30
+                    a_mes += Math.max(0, 31 - avariaDayNum);
+                } else {
+                    // RESTABELECIDO DURANTE O MÊS: conta apenas os dias reais em que permaneceu inoperante no mês
+                    const repDayNum = Math.floor((p.end - day1_8am) / 86400000) + 1;
+                    const daysInMonth = Math.max(0, repDayNum - avariaDayNum + 1);
+                    a_mes += Math.min(30, daysInMonth);
+                }
+            }
+
+            // ── IE ANUAL: dias reais acumulados de 01/jan até hoje
             const oStart = p.start > anualStart ? p.start : anualStart;
-            const oEnd   = p.end < now ? p.end : now;
-            if (oEnd > oStart) a_ano += (oEnd - oStart) / 86400000;
+            const oEnd   = p.end ? (p.end < now ? p.end : now) : now;
+            if (oEnd > oStart) {
+                a_ano += (oEnd - oStart) / 86400000;
+            }
         }
+
+        a_mes = Math.min(30, Math.max(0, a_mes));
         a_ano = Math.max(0, a_ano);
 
         return { a_mes, a_ano, D };
