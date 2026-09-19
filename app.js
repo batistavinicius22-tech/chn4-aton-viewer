@@ -1105,11 +1105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('statBalizaCount') && (document.getElementById('statBalizaCount').textContent = balizaCount);
         document.getElementById('statFarolCount') && (document.getElementById('statFarolCount').textContent = farolCount);
 
-        const total   = signalsData.length;
-        const totalOp = signalsData.filter(s => isOperational(s.status)).length;
-        if (document.getElementById('countAll')) document.getElementById('countAll').textContent = total;
-        if (document.getElementById('countOp')) document.getElementById('countOp').textContent = totalOp;
-        if (document.getElementById('countAv')) document.getElementById('countAv').textContent = total - totalOp;
+        updateFilterCounts();
     }
 
     // =========================================================================
@@ -1321,6 +1317,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Responsável Layer Checkbox Listeners
     ['chkRespCHN4', 'chkRespCPAP', 'chkRespCPMA', 'chkRespExtra'].forEach(id => {
         document.getElementById(id)?.addEventListener('change', () => {
+            updateFilterCounts();
             renderMapMarkers();
             renderSignalList();
         });
@@ -1335,6 +1332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (c2) c2.checked = false;
         if (c3) c3.checked = false;
         if (c5) c5.checked = false;
+        updateFilterCounts();
         renderMapMarkers();
         renderSignalList();
     });
@@ -1348,6 +1346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (c2) c2.checked = true;
         if (c3) c3.checked = true;
         if (c5) c5.checked = true;
+        updateFilterCounts();
         renderMapMarkers();
         renderSignalList();
     });
@@ -1451,6 +1450,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'OUTROS';
     }
 
+    function updateFilterCounts() {
+        const respSignals = signalsData.filter(s => matchesResponsavelFilter(s));
+        const total = respSignals.length;
+        const totalOp = respSignals.filter(s => isOperational(s.status)).length;
+        const totalAv = total - totalOp;
+
+        if (document.getElementById('countAll')) document.getElementById('countAll').textContent = total;
+        if (document.getElementById('countOp')) document.getElementById('countOp').textContent = totalOp;
+        if (document.getElementById('countAv')) document.getElementById('countAv').textContent = totalAv;
+
+        updateTypeFilterDropdown();
+    }
+
     function updateTypeFilterDropdown() {
         const select = document.getElementById('typeFilterSelect');
         if (!select) return;
@@ -1458,12 +1470,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSelection = select.value || 'ALL';
         const counts = {};
 
-        signalsData.forEach(s => {
+        const respSignals = signalsData.filter(s => matchesResponsavelFilter(s));
+
+        respSignals.forEach(s => {
             const key = getSignalTypeKey(s);
             counts[key] = (counts[key] || 0) + 1;
         });
 
-        let html = `<option value="ALL">Todos os Tipos (${signalsData.length})</option>`;
+        let html = `<option value="ALL">Todos os Tipos (${respSignals.length})</option>`;
 
         const keysPresent = Object.keys(counts).sort((a, b) => {
             const orderA = NAVAL_TYPE_MAP[a] ? NAVAL_TYPE_MAP[a].order : 99;
@@ -1482,6 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
             select.value = currentSelection;
         } else {
             select.value = 'ALL';
+            currentTypeFilter = 'ALL';
         }
     }
 
@@ -1506,9 +1521,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const selected = getSelectedResponsaveis();
         if (selected.length === 0) return false;
 
+        const isExcluido = IE_EXCLUIDOS.includes(String(signal.code).trim());
         const resp = (signal.responsavel || 'CHN-4').toUpperCase();
 
         return selected.some(s => {
+            if (s === 'CHN-4') {
+                return (resp === 'CHN-4') && !isExcluido;
+            }
             if (s === 'EXTRA-MB') {
                 return resp.includes('EXTRA') || resp.includes('PRIVADO') || resp.includes('ÓRGÃOS');
             }
