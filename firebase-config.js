@@ -5,7 +5,10 @@
 
 // Configuração Oficial do Projeto Firebase CHN-4 AtoN GIS
 const firebaseConfig = {
-    apiKey: "AIzaSyDJL4FNu6LEVxaI8Gjion9L5ZA0wlSnvKc",
+    // Chave WEB do Firebase: identificador público, embutido em qualquer app web por design.
+    // Proteção real = restrição de HTTP referrer/APIs no Google Cloud + Firestore Security Rules.
+    // nosemgrep: generic.secrets.security.detected-generic-api-key.detected-generic-api-key
+    apiKey: "AIzaSyDJL4FNu6LEVxaI8Gjion9L5ZA0wlSnvKc", // gitleaks:allow
     authDomain: "chn4-aton-gis.firebaseapp.com",
     projectId: "chn4-aton-gis",
     storageBucket: "chn4-aton-gis.firebasestorage.app",
