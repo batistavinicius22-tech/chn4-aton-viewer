@@ -15,3 +15,11 @@ cartas_geotiff/*.tif
 cartas_geotiff/*.tiff
 cartas_geotiff/*.TIF
 cartas_geotiff/*.TIFF
+
+# Credenciais e Variáveis de Ambiente
+firebase-config.js
+!firebase-config.example.js
+.env
+.env.*
+backup_pre_auth/
+

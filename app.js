@@ -74,6 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
         custom: { name: "Ponto de Partida Personalizado", lat: -1.41111, lng: -48.48722 }
     };
 
+    // =========================================================================
+    // UTILITÁRIO DE SEGURANÇA: ESCAPE HTML (PROTEÇÃO CONTRA XSS NO VIEWER)
+    // =========================================================================
+    function escapeHTML(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     // Função de ordenação natural crescente:
     // 1. Códigos numéricos e decimais (ex: 32, 100, 319, 319.1, 319.3, 319A, 320) ordenados de forma crescente contínua.
     // 2. Códigos que iniciam com letras (ex: AP-01, BAP-01, PA-20) vêm na sequência em ordem alfabética natural.
@@ -1724,15 +1737,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const popupHtml = `
                 <div style="font-family: var(--font-sans); padding: 4px 6px; min-width: 210px;">
                     <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 4px;">
-                        <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${signal.status}</span>
-                        <span class="responsavel-badge ${respClass}"><i class="fa-solid fa-building-user"></i> ${signal.responsavel || 'CHN-4'}</span>
+                        <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${escapeHTML(signal.status)}</span>
+                        <span class="responsavel-badge ${respClass}"><i class="fa-solid fa-building-user"></i> ${escapeHTML(signal.responsavel || 'CHN-4')}</span>
                     </div>
-                    <h3 style="font-family: var(--font-tech); margin: 4px 0 2px 0; font-size: 1.05rem; color: #0f172a;">${signal.code} - ${signal.name}</h3>
-                    <p style="margin: 3px 0; font-size: 0.82rem; color: #334155;"><strong>Tipo:</strong> ${fullType}</p>
-                    <p style="margin: 3px 0; font-size: 0.82rem; color: #334155;"><strong>Carac:</strong> ${signal.characteristic}</p>
+                    <h3 style="font-family: var(--font-tech); margin: 4px 0 2px 0; font-size: 1.05rem; color: #0f172a;">${escapeHTML(signal.code)} - ${escapeHTML(signal.name)}</h3>
+                    <p style="margin: 3px 0; font-size: 0.82rem; color: #334155;"><strong>Tipo:</strong> ${escapeHTML(fullType)}</p>
+                    <p style="margin: 3px 0; font-size: 0.82rem; color: #334155;"><strong>Carac:</strong> ${escapeHTML(signal.characteristic)}</p>
                     <p style="margin: 3px 0 8px 0; font-size: 0.82rem; color: #334155;"><strong>Posição:</strong> <span style="font-weight: 600; color: #0f172a;">${formatNauticalCoord(signal.lat, true)} | ${formatNauticalCoord(signal.lng, false)}</span></p>
                     <div style="display: flex; gap: 6px;">
-                        <button type="button" onclick="window.openSignalDetail('${signal.code}')" style="background: #1e3a66; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <button type="button" class="btn-viewer-open-dh2" data-code="${escapeHTML(signal.code)}" style="background: #1e3a66; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
                             <i class="fa-solid fa-file-lines"></i> Ficha DH2
                         </button>
                     </div>
@@ -1742,6 +1755,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             marker.on('click', () => {
                 highlightSignalCard(signal.code);
+            });
+
+            marker.on('popupopen', () => {
+                const btn = document.querySelector(`.btn-viewer-open-dh2[data-code="${CSS.escape(signal.code)}"]`);
+                if (btn) {
+                    btn.onclick = () => window.openSignalDetail(signal.code);
+                }
             });
 
             mapMarkers[signal.code] = marker;
@@ -1789,31 +1809,42 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <div class="signal-card-head">
                     <div class="signal-code-title">
-                        <button type="button" class="btn-card-select ${isSelected ? 'checked' : ''}" onclick="event.stopPropagation(); window.toggleSelectSignal('${s.code}')" title="${isSelected ? 'Remover da visualização conjunta' : 'Marcar para visualizar no mapa'}">
+                        <button type="button" class="btn-card-select ${isSelected ? 'checked' : ''}" data-code="${escapeHTML(s.code)}" title="${isSelected ? 'Remover da visualização conjunta' : 'Marcar para visualizar no mapa'}">
                             <i class="fa-solid ${isSelected ? 'fa-square-check' : 'fa-square'}"></i>
                         </button>
                         <i class="fa-solid ${getSignalIconClass(s.type)}" style="color:${isOp ? 'var(--status-op)' : 'var(--status-av)'}"></i>
-                        <h4>${s.code}</h4>
+                        <h4>${escapeHTML(s.code)}</h4>
                     </div>
                     <div style="display: flex; gap: 4px; align-items: center;">
-                        <span class="responsavel-badge ${respClass}">${s.responsavel || 'CHN-4'}</span>
-                        <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${s.status}</span>
+                        <span class="responsavel-badge ${respClass}">${escapeHTML(s.responsavel || 'CHN-4')}</span>
+                        <span class="badge ${isOp ? 'badge-op' : 'badge-av'}">${escapeHTML(s.status)}</span>
                     </div>
                 </div>
                 <div class="signal-card-body">
-                    <strong>${s.name}</strong>
-                    <div class="signal-char"><i class="fa-solid fa-lightbulb"></i> ${fullType} — ${s.characteristic}</div>
+                    <strong>${escapeHTML(s.name)}</strong>
+                    <div class="signal-char"><i class="fa-solid fa-lightbulb"></i> ${escapeHTML(fullType)} — ${escapeHTML(s.characteristic)}</div>
                 </div>
                 <div class="signal-meta">
                     <span>${toDMS(s.lat, true)} | ${toDMS(s.lng, false)}</span>
-                    <span>Alcance: ${s.rangeNM} NM</span>
+                    <span>Alcance: ${escapeHTML(s.rangeNM)} NM</span>
                 </div>
                 <div class="signal-card-actions" style="margin-top: 8px; display: flex; justify-content: flex-end;">
-                    <button type="button" class="btn btn-outline btn-sm" onclick="event.stopPropagation(); window.openSignalDetail('${s.code}')" style="font-size: 0.76rem; padding: 3px 10px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; color: var(--accent-gold); border-color: var(--accent-gold); background: rgba(212,175,55,0.08);" title="Visualizar Ficha Técnica DH2 deste sinal">
+                    <button type="button" class="btn btn-outline btn-sm btn-viewer-card-dh2" data-code="${escapeHTML(s.code)}" style="font-size: 0.76rem; padding: 3px 10px; border-radius: 4px; display: inline-flex; align-items: center; gap: 5px; color: var(--accent-gold); border-color: var(--accent-gold); background: rgba(212,175,55,0.08);" title="Visualizar Ficha Técnica DH2 deste sinal">
                         <i class="fa-solid fa-file-lines"></i> Ficha DH2
                     </button>
                 </div>
             `;
+
+            // Listeners seguros no card do Viewer
+            card.querySelector('.btn-card-select')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.toggleSelectSignal(s.code);
+            });
+
+            card.querySelector('.btn-viewer-card-dh2')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.openSignalDetail(s.code);
+            });
 
             // Drag and Drop listeners on card
             card.addEventListener('dragstart', (e) => {
